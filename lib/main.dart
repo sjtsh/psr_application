@@ -33,16 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: LogInScreen(),
-      home: Column(
-        children: [
-          Container(
-            height: 60,
-            color: Colors.black,
-          ),
-          Expanded(child: BeatScreen()),
-        ],
-      ),
+      home: LogInScreen(),
     );
   }
 }

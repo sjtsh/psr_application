@@ -1,3 +1,3 @@
-import 'Entities/User.dart';
+import 'apis/Entities/User.dart';
 
 User? meUser;

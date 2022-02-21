@@ -1,10 +1,11 @@
 import 'package:psr_application/database.dart';
 
-import '../Entities/Beat.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+
+import '../Entities/Beat.dart';
 
 class BeatService {
   Future<List<Beat>> getBeats() async {

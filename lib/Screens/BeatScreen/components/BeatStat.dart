@@ -5,25 +5,26 @@ class BeatStat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        // Text("SKU Target"),
-        // Padding(
-        //   padding: const EdgeInsets.all(12.0),
-        //   child: Container(
-        //     height: 10,
-        //     color: Colors.grey,
-        //   ),
-        // ),
-        Text("Sales Target"),
-        Row(
-          children: [
-            Text("0", style: TextStyle(fontSize: 10),),
-            SizedBox(width: 6,),
-            Expanded(
-              child: Container(
+        Text(
+          "0",
+          style: TextStyle(fontSize: 10),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Sales Target"),
+              SizedBox(
+                height: 6,
+              ),
+              SizedBox(
                 height: 10,
                 child: Builder(builder: (context) {
                   double width = MediaQuery.of(context).size.width;
@@ -42,11 +43,16 @@ class BeatStat extends StatelessWidget {
                   );
                 }),
               ),
-            ),
-            SizedBox(width: 6,),
-            Text("10000",  style: TextStyle(fontSize: 10),),
-          ],
-        )
+            ],
+          ),
+        ),
+        SizedBox(
+          width: 6,
+        ),
+        Text(
+          "10000",
+          style: TextStyle(fontSize: 10),
+        ),
       ],
     );
   }
