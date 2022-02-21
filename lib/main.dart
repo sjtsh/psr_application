@@ -1,28 +1,19 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/Counter.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+
+import 'StateManagement/CameraUpload.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FirebaseApp secondaryApp = Firebase.app('psrapplication');
-  firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instanceFor(app: secondaryApp);
-  firebase_storage.Reference ref =
-      firebase_storage.FirebaseStorage.instance.ref('/hey.jpg');
-  print(ref.fullPath);
-  print(ref.getDownloadURL());
-  // runApp(MultiProvider(providers: [
-  //   ChangeNotifierProvider(
-  //     create: (_) => Counter(),
-  //   ),
-  // ], child: const MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (_) => CameraUpload(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
