@@ -1,10 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:psr_application/Components/AppButton.dart';
-import 'package:psr_application/Components/AppColors.dart';
-import 'package:psr_application/Components/MyAppTextStyle.dart';
+import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/Counter.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 
 void main() {
-  runApp(const MyApp());
+  // FirebaseApp secondaryApp = Firebase.app('psrapplication');
+  // firebase_storage.FirebaseStorage storage =
+  // firebase_storage.FirebaseStorage.instanceFor(app: secondaryApp);
+  // firebase_storage.Reference ref =
+  // firebase_storage.FirebaseStorage.instance.ref('/hey.jpg');
+  // print(ref.fullPath);
+  // print(ref.getDownloadURL());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (_) => Counter(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -29,33 +42,39 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: context.watch<Counter>().currentScreenWidget,
+          ),
+          Container(
+            height: 60,
+            color: Colors.green,
+            child: Row(
+                children: [Icons.add, Icons.clear, Icons.cancel]
+                    .asMap()
+                    .entries
+                    .map((e) => Expanded(
+                            child: GestureDetector(
+                          onTap: () => context.read<Counter>().increment(e.key),
+                          child: Center(
+                            child: Icon(
+                              e.value,
+                              color: context.watch<Counter>().currentScreen ==
+                                      e.key
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(0.5),
+                            ),
+                          ),
+                        )))
+                    .toList()),
+          ),
+        ],
       ),
-      body: Center(
-        child:Column(
-          children: [
-            AppButton(buttonBgColor: AppColors.primaryColor,buttonText: "Hello",),
-            Text("This is app", style: MyAppTextStyle().textStyle(appfontSize: 24, appfontWeight: FontWeight.bold, textColor: Colors.red),)
-          ],
-        )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
