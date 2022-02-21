@@ -3,13 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/Counter.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FirebaseApp secondaryApp = Firebase.app('psrapplication');
   firebase_storage.FirebaseStorage storage =
-  firebase_storage.FirebaseStorage.instanceFor(app: secondaryApp);
+      firebase_storage.FirebaseStorage.instanceFor(app: secondaryApp);
   firebase_storage.Reference ref =
-  firebase_storage.FirebaseStorage.instance.ref('/hey.jpg');
+      firebase_storage.FirebaseStorage.instance.ref('/hey.jpg');
   print(ref.fullPath);
   print(ref.getDownloadURL());
   // runApp(MultiProvider(providers: [
