@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as mt;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
-class LogInScreen extends StatelessWidget {
-  const LogInScreen({Key? key}) : super(key: key);
+import 'package:psr_application/StateManagement/LogIn.dart';
 
+class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return mt.Scaffold(
+    return Scaffold(
       body: Form(
+        key: context.read<LogIn>().formKey,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -15,45 +17,68 @@ class LogInScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: 300,
-                  child:CupertinoTextField(
-                    decoration: BoxDecoration(),
-                  ),
+                    width: 300,
+                    child: TextFormField(
+                      controller: context.read<LogIn>().mobileTextController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: Colors.greenAccent)),
+                        prefixIcon: Icon(Icons.phone_android),
+                        labelText: "Mobile Number",
+                        errorText: context.watch<LogIn>().mobileErrorText,
+                      ),
+                    )),
+                SizedBox(
+                  height: 12,
                 ),
-                SizedBox(height: 12,),
                 SizedBox(
                   width: 300,
-                  child:mt. TextFormField(
+                  child: TextFormField(
+                    controller: context.read<LogIn>().passwordTextController,
                     obscureText: true,
-                    decoration: mt.InputDecoration(
-                        border: mt.OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: mt.Colors.greenAccent)),
-                        prefixIcon: Icon(mt.Icons.vpn_key_outlined),
-                        labelText: "Password"
-                    ),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(color: Colors.greenAccent)),
+                        prefixIcon: Icon(Icons.vpn_key_outlined),
+                        labelText: "Password",
+                        errorText: context.watch<LogIn>().passwordErrorText),
                   ),
                 ),
-
-                SizedBox(height: 12,),
-                CupertinoButton(onPressed: (){
-                  Navigator.push(context, mt.MaterialPageRoute(builder: (_){
-                    return BeatScreen();
-                  }));
-
-                },
-                child: Container(
-                  height: 50,
-                  width:  150,
+                SizedBox(
+                  height: 12,
+                ),
+                Container(
+                  clipBehavior: Clip.hardEdge,
+                  width: 150,
                   decoration: BoxDecoration(
+                    color: Colors.lightBlue,
                     borderRadius: BorderRadius.circular(12),
-                    color: mt.Colors.lightBlue
                   ),
-                  child: const Center(
-                    child: Text(
-                      "Login ", style: TextStyle(color: mt.Colors.white),
+                  child: MaterialButton(
+                    height: 50,
+                    onPressed: () {
+                      bool isValidated =
+                          context.read<LogIn>().validateMobileNumber();
+                      if (isValidated) {
+                        context.read<LogIn>().Loading();
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return BeatScreen();
+                        }));
+                      }
+                    },
+                    child: Center(
+                      child: !context.watch<LogIn>().isLoading
+                          ? const Text(
+                              "Login ",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          : CircularProgressIndicator(color: Colors.white),
                     ),
                   ),
-                ),)
-
+                )
               ],
             ),
           ),
