@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' as mt;
+
+import 'package:flutter/material.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
 class LogInScreen extends StatelessWidget {
   const LogInScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return mt.Scaffold(
+    return Scaffold(
       body: Form(
         child: Center(
           child: Padding(
@@ -16,26 +16,31 @@ class LogInScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   width: 300,
-                  child:CupertinoTextField(
-                    decoration: BoxDecoration(),
-                  ),
+                  child: TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.greenAccent)),
+                        prefixIcon: Icon(Icons.phone_android),
+                        labelText: "Mobile NUmber"
+                    ),
+                  )
                 ),
                 SizedBox(height: 12,),
                 SizedBox(
                   width: 300,
-                  child:mt. TextFormField(
+                  child: TextFormField(
                     obscureText: true,
-                    decoration: mt.InputDecoration(
-                        border: mt.OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: mt.Colors.greenAccent)),
-                        prefixIcon: Icon(mt.Icons.vpn_key_outlined),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.greenAccent)),
+                        prefixIcon: Icon(Icons.vpn_key_outlined),
                         labelText: "Password"
                     ),
                   ),
                 ),
 
                 SizedBox(height: 12,),
-                CupertinoButton(onPressed: (){
-                  Navigator.push(context, mt.MaterialPageRoute(builder: (_){
+                MaterialButton(onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (_){
                     return BeatScreen();
                   }));
 
@@ -45,11 +50,11 @@ class LogInScreen extends StatelessWidget {
                   width:  150,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: mt.Colors.lightBlue
+                    color: Colors.lightBlue
                   ),
                   child: const Center(
                     child: Text(
-                      "Login ", style: TextStyle(color: mt.Colors.white),
+                      "Login ", style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),)
