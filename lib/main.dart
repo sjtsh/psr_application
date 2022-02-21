@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'Screens/BeatScreen/BeatScreen.dart';
 import 'StateManagement/CameraUpload.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
@@ -28,8 +29,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: LogInScreen(),
+      debugShowCheckedModeBanner: false,
+      // home: LogInScreen(),
+      home: Column(
+        children: [
+          Container(
+            height: 60,
+            color: Colors.black,
+          ),
+          Expanded(child: BeatScreen()),
+        ],
+      ),
     );
   }
 }
