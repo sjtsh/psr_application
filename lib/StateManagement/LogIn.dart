@@ -1,5 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/BeatManagement.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Screens/BeatScreen/BeatScreen.dart';
+import '../apis/Entities/User.dart';
+import '../apis/Services/BeatService.dart';
+import '../apis/Services/UserService.dart';
+import '../database.dart';
 
 class LogIn with ChangeNotifier, DiagnosticableTreeMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -48,8 +58,31 @@ class LogIn with ChangeNotifier, DiagnosticableTreeMixin {
     return myPersonalValidation;
   }
 
-  Loading() {
-    _isLoading = !_isLoading;
+  Loading(BuildContext context) async {
+    _isLoading = true;
     notifyListeners();
+    try {
+      await UserService().Login("9818173521", "9818173521");
+      if (meUser != null) {
+        SharedPreferences.getInstance()
+            .then((value) => value.setString("session_id", meUser?.sessionID ?? ""));
+      }
+      context.read<BeatManagement>().allBeatsLocal =
+          await BeatService().getBeats();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return BeatScreen();
+          },
+        ),
+      );
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Unsuccessful")));
+    }
+    print("completed level 1");
+    _isLoading = false;
   }
 }

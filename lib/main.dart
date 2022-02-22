@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'package:psr_application/apis/Services/BeatService.dart';
 import 'package:psr_application/apis/Services/UserService.dart';
+import 'package:psr_application/StateManagement/MapManagement.dart';
 
+import 'Entities/outletsEntity.dart';
 import 'Screens/BeatScreen/BeatScreen.dart';
+import 'StateManagement/BeatManagement.dart';
 import 'StateManagement/CameraUpload.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
@@ -15,9 +19,6 @@ import 'StateManagement/LogIn.dart';
 import 'firebase_options.dart';
 
 void main() {
-  UserService().Login("9818173521", "9818173521").then((value) {
-    BeatService().getBeats();
-  });
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(providers: [
@@ -26,6 +27,12 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => LogIn(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => MapManagement(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => BeatManagement(),
       ),
     ], child: const MyApp()),
   );

@@ -25,7 +25,8 @@ class LogInScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.greenAccent)),
+                              borderSide:
+                                  BorderSide(color: Colors.greenAccent)),
                           prefixIcon: Icon(Icons.phone_android),
                           labelText: "Mobile Number",
                           errorText: context.watch<LogIn>().mobileErrorText,
@@ -42,7 +43,8 @@ class LogInScreen extends StatelessWidget {
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(color: Colors.greenAccent)),
+                              borderSide:
+                                  BorderSide(color: Colors.greenAccent)),
                           prefixIcon: Icon(Icons.vpn_key_outlined),
                           labelText: "Password",
                           errorText: context.watch<LogIn>().passwordErrorText),
@@ -60,14 +62,11 @@ class LogInScreen extends StatelessWidget {
                     ),
                     child: MaterialButton(
                       height: 50,
-                      onPressed: () {
+                      onPressed: () async {
                         bool isValidated =
                             context.read<LogIn>().validateMobileNumber();
                         if (isValidated) {
-                          context.read<LogIn>().Loading();
-                          Navigator.push(context, MaterialPageRoute(builder: (_) {
-                            return BeatScreen();
-                          }));
+                          await context.read<LogIn>().Loading(context);
                         }
                       },
                       child: Center(

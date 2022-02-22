@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/components/BeatHeader.dart';
+import 'package:psr_application/database.dart';
 
+import '../../StateManagement/BeatManagement.dart';
 import 'components/BeatStat.dart';
 import 'components/IndividualBeat.dart';
 
@@ -22,7 +25,7 @@ class BeatScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
                   child: Column(
                     children:
-                        ["", "", ""].map((e) => IndividualBeat()).toList(),
+                        context.watch<BeatManagement>().allBeatsLocal.map((e) => IndividualBeat(e)).toList(),
                   ),
                 ),
               ),

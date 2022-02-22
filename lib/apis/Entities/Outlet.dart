@@ -1,3 +1,5 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class Outlet{
   int id;
   String beatID;
@@ -8,6 +10,7 @@ class Outlet{
   String mobile;
   String pan;
   bool deactivated;
+  Marker ? marker;
   Outlet(this.id, this.beatID, this.name, this.img, this.lat, this.lng, this.mobile, this.pan, this.deactivated);
 
 }
