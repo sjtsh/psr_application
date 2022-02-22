@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/MapScreen/MapScreen.dart';
+import 'package:psr_application/StateManagement/MapManagement.dart';
 
+import 'Entities/outletsEntity.dart';
 import 'Screens/BeatScreen/BeatScreen.dart';
 import 'StateManagement/CameraUpload.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -20,7 +23,9 @@ void main() {
         create: (_) => CameraUpload(),),
       ChangeNotifierProvider(
         create: (_) => LogIn(),
-
+      ),
+      ChangeNotifierProvider(
+        create: (_) => MapManagement(),
       ),
     ], child: const MyApp()),
   );
@@ -33,7 +38,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LogInScreen(),
+      home: BeatScreen(),
     );
   }
 }
