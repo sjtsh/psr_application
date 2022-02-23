@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/MapScreen/MapScreen.dart';
 
 import 'package:psr_application/apis/Services/BeatService.dart';
 import 'package:psr_application/apis/Services/UserService.dart';
@@ -15,7 +17,7 @@ import 'StateManagement/CameraUpload.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
 import 'Screens/LoginScreen/loginScreen.dart';
-import 'StateManagement/LogIn.dart';
+import 'StateManagement/LogInManagement.dart';
 import 'firebase_options.dart';
 
 void main() {
@@ -26,7 +28,7 @@ void main() {
         create: (_) => CameraUpload(),
       ),
       ChangeNotifierProvider(
-        create: (_) => LogIn(),
+        create: (_) => LogInManagement(),
       ),
       ChangeNotifierProvider(
         create: (_) => MapManagement(),
@@ -41,11 +43,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LogInScreen(),
+      home: MapScreen(),
     );
   }
 }

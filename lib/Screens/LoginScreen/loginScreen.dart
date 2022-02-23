@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
-import 'package:psr_application/StateManagement/LogIn.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 
 class LogInScreen extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class LogInScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Form(
-          key: context.read<LogIn>().formKey,
+          key: context.read<LogInManagement>().formKey,
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
@@ -20,7 +20,7 @@ class LogInScreen extends StatelessWidget {
                   SizedBox(
                       width: 300,
                       child: TextFormField(
-                        controller: context.read<LogIn>().mobileTextController,
+                        controller: context.read<LogInManagement>().mobileTextController,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -29,7 +29,7 @@ class LogInScreen extends StatelessWidget {
                                   BorderSide(color: Colors.greenAccent)),
                           prefixIcon: Icon(Icons.phone_android),
                           labelText: "Mobile Number",
-                          errorText: context.watch<LogIn>().mobileErrorText,
+                          errorText: context.watch<LogInManagement>().mobileErrorText,
                         ),
                       )),
                   SizedBox(
@@ -38,7 +38,7 @@ class LogInScreen extends StatelessWidget {
                   SizedBox(
                     width: 300,
                     child: TextFormField(
-                      controller: context.read<LogIn>().passwordTextController,
+                      controller: context.read<LogInManagement>().passwordTextController,
                       obscureText: true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -47,7 +47,7 @@ class LogInScreen extends StatelessWidget {
                                   BorderSide(color: Colors.greenAccent)),
                           prefixIcon: Icon(Icons.vpn_key_outlined),
                           labelText: "Password",
-                          errorText: context.watch<LogIn>().passwordErrorText),
+                          errorText: context.watch<LogInManagement>().passwordErrorText),
                     ),
                   ),
                   SizedBox(
@@ -64,13 +64,13 @@ class LogInScreen extends StatelessWidget {
                       height: 50,
                       onPressed: () async {
                         bool isValidated =
-                            context.read<LogIn>().validateMobileNumber();
+                            context.read<LogInManagement>().validateMobileNumber();
                         if (isValidated) {
-                          await context.read<LogIn>().Loading(context);
+                          await context.read<LogInManagement>().Loading(context);
                         }
                       },
                       child: Center(
-                        child: !context.watch<LogIn>().isLoading
+                        child: !context.watch<LogInManagement>().isLoading
                             ? const Text(
                                 "Login ",
                                 style: TextStyle(color: Colors.white),

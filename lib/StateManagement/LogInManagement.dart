@@ -11,7 +11,7 @@ import '../apis/Services/BeatService.dart';
 import '../apis/Services/UserService.dart';
 import '../database.dart';
 
-class LogIn with ChangeNotifier, DiagnosticableTreeMixin {
+class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _mobileTextController = TextEditingController();
   TextEditingController _passwordTextController = TextEditingController();
@@ -81,6 +81,7 @@ class LogIn with ChangeNotifier, DiagnosticableTreeMixin {
       print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Unsuccessful")));
+      _isLoading =!_isLoading;
     }
     print("completed level 1");
     _isLoading = false;

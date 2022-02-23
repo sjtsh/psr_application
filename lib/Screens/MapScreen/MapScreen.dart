@@ -22,6 +22,11 @@ class _MapScreenState extends State<MapScreen> {
   final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(27.6539, 85.4617),
   );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,11 @@ class _MapScreenState extends State<MapScreen> {
                         .outletInfo[index]
                         .marker!).toSet(),
                 onMapCreated: (GoogleMapController controller) async {
-                  LocationPermission per = await Geolocator.checkPermission();
+                 // controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(zoom: 17, tilt: 0, target: LatLng(27.6539, 85.4617))));
+                 //  LocationPermission checkPermission = await Geolocator.checkPermission();
+                 //  if(checkPermission == LocationPermission.deniedForever){
+                 //    LocationPermission permission = await Geolocator.requestPermission();
+                 //  }
                   Geolocator.getPositionStream().listen((event) {
                     context.read<MapManagement>().initializeMarkers(
                         LatLng(event.latitude, event.longitude));
