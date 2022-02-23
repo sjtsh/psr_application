@@ -45,11 +45,11 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingAt = 30;
         _loadingText = "Loading the beats...";
         notifyListeners();
-        context.read<LogIn>().allBeatsLocal =
+        context.read<LogInManagement>().allBeatsLocal =
             await BeatService().getBeats();
         _loadingAt = 60;
         _loadingText = "Loading the outlets";
-        context.read<LogIn>().allOutletsLocal =
+        context.read<LogInManagement>().allOutletsLocal =
             await OutletService().getOutlets();
         print("done 3 ");
         Navigator.push(
@@ -87,11 +87,11 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingAt = 30;
         _loadingText = "Loading the beats...";
         notifyListeners();
-        context.read<LogIn>().allBeatsLocal =
+        context.read<LogInManagement>().allBeatsLocal =
         await BeatService().getBeats();
         _loadingAt = 50;
         _loadingText = "Loading the outlets";
-        context.read<LogIn>().allOutletsLocal =
+        context.read<LogInManagement>().allOutletsLocal =
         await OutletService().getOutlets();
         notifyListeners();
         Navigator.push(

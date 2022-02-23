@@ -38,12 +38,31 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ask() async {
+    LocationPermission checkPermission = await Geolocator.checkPermission();
+    if(checkPermission != LocationPermission.always){
+      Geolocator.requestPermission();
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ask();
+  }
 
   @override
   Widget build(BuildContext context) {
+    ask();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: CheckSessionScreen(),
