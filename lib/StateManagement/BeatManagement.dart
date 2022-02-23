@@ -11,7 +11,6 @@ import '../firebase_options.dart';
 
 class BeatManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Beat> _allBeatsLocal = [];
-  List<Outlet> _allOutletsLocal = [];
 
 
   set allBeatsLocal(List<Beat> value) {
@@ -19,11 +18,17 @@ class BeatManagement with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   set allOutletsLocal(List<Outlet> value) {
-    _allOutletsLocal = value;
+    for (Outlet element in value) {
+      for (Beat beat in _allBeatsLocal) {
+        if(beat.id == element.beatID){
+          beat.outlets.add(element);
+        }
+      }
+    }
   }
 
-  List<Outlet> get allOutletsLocal => _allOutletsLocal;
 
   List<Beat> get allBeatsLocal => _allBeatsLocal;
+
 
 }

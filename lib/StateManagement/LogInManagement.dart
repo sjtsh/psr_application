@@ -49,6 +49,7 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingText = "Loading the outlets";
         context.read<BeatManagement>().allOutletsLocal =
             await OutletService().getOutlets();
+
         print("done 3 ");
         Navigator.push(
           context,
@@ -91,6 +92,7 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingText = "Loading the outlets";
         context.read<BeatManagement>().allOutletsLocal =
         await OutletService().getOutlets();
+
         notifyListeners();
         Navigator.push(
           context,

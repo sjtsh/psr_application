@@ -5,33 +5,18 @@ import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/BeatManagement.dart';
+import 'package:psr_application/apis/Services/OutletService.dart';
 
 import '../Entities/outletsEntity.dart';
 import '../apis/Entities/Outlet.dart';
 
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Marker> _markerss = [];
-  final List<Outlet> _outletInfo = [
-    Outlet(1, "1", "AB store", "", 27.725643911262072, 85.34449226903803,
-        "9818173521", "012345678", false),
-    Outlet(2, "1", "helo", "", 27.726327916301226, 85.34333387273254,
-        "9818173521", "012345678", false),
-    Outlet(3, "1", "Daya", "", 27.725439096335705, 85.34330728622666,
-        "9818173521", "012345678", false),
-    Outlet(4, "1", "mini store", "", 27.72552067254513, 85.3419713106457,
-        "9818173521", "012345678", false),
-    Outlet(1, "1", "saya", "", 27.726631828527488, 85.3409735161877,
-        "9818173521", "012345678", false),
-    Outlet(2, "1", "maya", "", 27.726175975235538, 85.34234680710989,
-        "9818173521", "012345678", false),
-    Outlet(3, "1", "hori", "", 27.724865386402772, 85.34114517755299,
-        "9818173521", "012345678", false),
-    Outlet(4, "1", "dori", "", 27.724979351274555, 85.34166016164879,
-        "9818173521", "012345678", false),
-    Outlet(4, "1", "dori", "",  27.7257, 85.3433,
-        "9818173521", "012345678", false),
 
-  ];
+  List<Outlet> _outletInfo = [];
+  Map<String, List<Outlet>> _m = {};
+
   List<Outlet> a = [];
   ScrollController _scrollController = ScrollController();
 
@@ -48,7 +33,11 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   get distance => _dis;
 
 
+
+
+
   void initializeMarkers(LatLng userPosition) {
+
     this._userPosition = userPosition;
     int count = min(5, _outletInfo.length);
     List<Outlet> sortedOutlet = [];
