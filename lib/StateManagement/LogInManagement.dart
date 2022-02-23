@@ -18,6 +18,9 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
   String? _mobileErrorText;
   String? _passwordErrorText;
   bool _isLoading = false;
+  bool _isPasswordShown = false;
+
+  bool get isPasswordShown => _isPasswordShown;
 
   bool get isLoading => _isLoading;
 
@@ -77,12 +80,20 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
           },
         ),
       );
+      _isLoading = false;
+      notifyListeners();
     } catch (e) {
       print(e);
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Unsuccessful")));
-      _isLoading =!_isLoading;
+      _isLoading =false;
+      notifyListeners();
     }
     _isLoading = false;
+  }
+
+  showPassword(){
+    _isPasswordShown =!_isPasswordShown;
+    notifyListeners();
   }
 }

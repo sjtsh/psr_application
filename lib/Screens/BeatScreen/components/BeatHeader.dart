@@ -1,5 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 
 import './BeatStat.dart';
 
@@ -52,6 +54,7 @@ class BeatHeader extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   Navigator.pop(context);
+                  !context.watch()<LogInManagement>().isLoading;
                 },
                 icon: const Icon(Icons.arrow_back_ios_rounded),
               ),

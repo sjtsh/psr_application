@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -27,8 +28,14 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
         "9818173521", "012345678", false),
     Outlet(4, "1", "dori", "", 27.724979351274555, 85.34166016164879,
         "9818173521", "012345678", false),
+    Outlet(4, "1", "dori", "",  27.7257, 85.3433,
+        "9818173521", "012345678", false),
+
   ];
   List<Outlet> a = [];
+  ScrollController _scrollController = ScrollController();
+
+  ScrollController get scrollController => _scrollController;
 
   List<Marker> get markerss => _markerss;
   LatLng _userPosition = LatLng(0, 0);
@@ -39,6 +46,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List _dis = [];
 
   get distance => _dis;
+
 
   void initializeMarkers(LatLng userPosition) {
     this._userPosition = userPosition;
@@ -61,6 +69,9 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           sortedOutlet[index].pan,
           sortedOutlet[index].deactivated);
       outlet.marker = Marker(
+        onTap: (){
+          _scrollController.jumpTo(0 + index * 156);
+        },
         markerId: MarkerId(sortedOutlet[index].name),
         position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),

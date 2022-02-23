@@ -39,13 +39,19 @@ class LogInScreen extends StatelessWidget {
                     width: 300,
                     child: TextFormField(
                       controller: context.read<LogInManagement>().passwordTextController,
-                      obscureText: true,
+                      obscureText:context.watch<LogInManagement>().isPasswordShown ? false : true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide:
                                   BorderSide(color: Colors.greenAccent)),
                           prefixIcon: Icon(Icons.vpn_key_outlined),
+                          suffixIcon: IconButton(
+                            onPressed: (){
+                              context.read<LogInManagement>().showPassword();
+                            },
+                            icon: Icon(context.watch<LogInManagement>().isPasswordShown? Icons.visibility : Icons.visibility_off ),
+                          ),
                           labelText: "Password",
                           errorText: context.watch<LogInManagement>().passwordErrorText),
                     ),
