@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
+
 import 'package:psr_application/StateManagement/LogInManagement.dart';
+
+import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
+
 
 class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return  context.watch<LogInManagement>().loadingAt == 0
+        ? SafeArea(
       child: Scaffold(
         body: Form(
           key: context.read<LogInManagement>().formKey,
@@ -72,7 +77,7 @@ class LogInScreen extends StatelessWidget {
                         bool isValidated =
                             context.read<LogInManagement>().validateMobileNumber();
                         if (isValidated) {
-                          await context.read<LogInManagement>().Loading(context);
+                          await context.read<LogInManagement>().LoadingFromSignIn(context);
                         }
                       },
                       child: Center(
@@ -91,6 +96,6 @@ class LogInScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ): LoadingScreen();;
   }
 }
