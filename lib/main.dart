@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:psr_application/apis/Services/BeatService.dart';
+import 'package:psr_application/apis/Services/OutletService.dart';
 import 'package:psr_application/apis/Services/UserService.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 

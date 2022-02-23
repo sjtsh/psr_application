@@ -16,6 +16,7 @@ class UserService {
         'password': password,
       },
     );
+    print(res.body);
     if (res.statusCode == 200) {
       Map<String, dynamic> parsable = jsonDecode(res.body)[0];
       User user = User(

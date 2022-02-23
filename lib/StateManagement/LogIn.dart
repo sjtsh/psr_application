@@ -62,7 +62,7 @@ class LogIn with ChangeNotifier, DiagnosticableTreeMixin {
     _isLoading = true;
     notifyListeners();
     try {
-      await UserService().Login("9818173521", "9818173521");
+      await UserService().Login(_mobileTextController.text, _passwordTextController.text);
       if (meUser != null) {
         SharedPreferences.getInstance()
             .then((value) => value.setString("session_id", meUser?.sessionID ?? ""));
@@ -82,7 +82,6 @@ class LogIn with ChangeNotifier, DiagnosticableTreeMixin {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Unsuccessful")));
     }
-    print("completed level 1");
     _isLoading = false;
   }
 }

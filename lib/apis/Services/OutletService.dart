@@ -5,13 +5,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-import '../Entities/Beat.dart';
+import '../Entities/Outlet.dart';
 
-class BeatService {
-  Future<List<Beat>> getBeats() async {
+class OutletService {
+  Future<List<Outlet>> getOutlets() async {
     Response res = await http.get(
       Uri.parse(
-          "https://asia-south1-psr-application-342007.cloudfunctions.net/getBeats"),
+          "https://asia-south1-psr-application-342007.cloudfunctions.net/getOutlets"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'session_id': (meUser?.sessionID ?? ""),
@@ -19,10 +19,18 @@ class BeatService {
     );
     if (res.statusCode == 200) {
       List<dynamic> parsable = jsonDecode(res.body);
-      List<Beat> beats = parsable
+      List<Outlet> beats = parsable
           .map(
-            (e) => Beat(e["id"], e["name"], e["distributor_id"],
-                e["user_id"], e["deactivated"].toString() == "1"),
+            (e) => Outlet(
+                int.parse(e["id"]),
+                e["beat_id"],
+                e["name"],
+                e["img"],
+                double.parse(e["lat"]),
+                double.parse(e["lng"]),
+                e["mobile"],
+                e["pan"],
+                e["deactivated"].toString() == "1"),
           )
           .toList();
       return beats;
