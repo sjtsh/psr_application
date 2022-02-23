@@ -22,32 +22,7 @@ class BeatHeader extends StatelessWidget {
               spreadRadius: 3)
         ],
       ),
-      child: ExpandablePanel(
-        collapsed: Container(),
-        expanded: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Column(
-            children: [
-              Slider(
-              label: "10 days",
-                onChanged: (double value) {},
-                value: 10,
-                max: 30,
-                min: 0,
-                divisions: 3,
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              BeatStat(),
-              SizedBox(
-                height: 12,
-              ),
-              BeatStat(),
-            ],
-          ),
-        ),
-        header: SizedBox(
+      child: SizedBox(
           height: 60,
           child: Row(
             children: [
@@ -69,7 +44,6 @@ class BeatHeader extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }

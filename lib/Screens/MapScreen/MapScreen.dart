@@ -54,10 +54,6 @@ class _MapScreenState extends State<MapScreen> {
                         .outletInfo[index]
                         .marker!).toSet(),
                 onMapCreated: (GoogleMapController controller) async {
-                 //  LocationPermission checkPermission = await Geolocator.checkPermission();
-                 //  if(checkPermission == LocationPermission.deniedForever){
-                 //    LocationPermission permission = await Geolocator.requestPermission();
-                 //  }
                   bool cameraRotate = false;
                   Geolocator.getPositionStream().listen((event) {
                     if(cameraRotate==false){

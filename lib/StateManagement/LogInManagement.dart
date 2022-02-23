@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/BeatManagement.dart';
+import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/apis/Services/OutletService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Screens/BeatScreen/BeatScreen.dart';
+import '../apis/Entities/Beat.dart';
+import '../apis/Entities/Outlet.dart';
 import '../apis/Entities/User.dart';
 import '../apis/Services/BeatService.dart';
 import '../apis/Services/UserService.dart';
@@ -43,11 +45,11 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingAt = 30;
         _loadingText = "Loading the beats...";
         notifyListeners();
-        context.read<BeatManagement>().allBeatsLocal =
+        context.read<LogInManagement>().allBeatsLocal =
             await BeatService().getBeats();
         _loadingAt = 60;
         _loadingText = "Loading the outlets";
-        context.read<BeatManagement>().allOutletsLocal =
+        context.read<LogInManagement>().allOutletsLocal =
             await OutletService().getOutlets();
         print("done 3 ");
         Navigator.push(
@@ -85,11 +87,11 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingAt = 30;
         _loadingText = "Loading the beats...";
         notifyListeners();
-        context.read<BeatManagement>().allBeatsLocal =
+        context.read<LogInManagement>().allBeatsLocal =
         await BeatService().getBeats();
         _loadingAt = 50;
         _loadingText = "Loading the outlets";
-        context.read<BeatManagement>().allOutletsLocal =
+        context.read<LogInManagement>().allOutletsLocal =
         await OutletService().getOutlets();
         notifyListeners();
         Navigator.push(
@@ -150,4 +152,21 @@ class LogInVariables {
   TextEditingController get mobileTextController => _mobileTextController;
 
   TextEditingController get passwordTextController => _passwordTextController;
+
+  List<Beat> _allBeatsLocal = [];
+  List<Outlet> _allOutletsLocal = [];
+
+
+  set allBeatsLocal(List<Beat> value) {
+    _allBeatsLocal = value;
+  }
+
+  set allOutletsLocal(List<Outlet> value) {
+    _allOutletsLocal = value;
+  }
+
+  List<Outlet> get allOutletsLocal => _allOutletsLocal;
+
+  List<Beat> get allBeatsLocal => _allBeatsLocal;
+
 }

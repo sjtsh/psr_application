@@ -17,7 +17,6 @@ class CheckSessionScreen extends StatelessWidget {
       future: SharedPreferences.getInstance().then((prefs) async {
         String sessionID = prefs.getString("session_id") ?? "";
         if (sessionID != "") {
-          print(sessionID);
           await UserService().LoginWithSession(sessionID);
           return sessionID;
         }
@@ -25,7 +24,6 @@ class CheckSessionScreen extends StatelessWidget {
       }),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-        print("starting");
           String sessionID = snapshot.data;
           if (sessionID == "") {
             return LogInScreen();
