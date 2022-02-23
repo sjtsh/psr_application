@@ -12,7 +12,6 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'Entities/outletsEntity.dart';
 import 'Screens/BeatScreen/BeatScreen.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
-import 'StateManagement/BeatManagement.dart';
 import 'StateManagement/CameraUpload.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
@@ -32,9 +31,6 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => MapManagement(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => BeatManagement(),
       ),
     ], child: const MyApp()),
   );
