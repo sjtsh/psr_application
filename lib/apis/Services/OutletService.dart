@@ -22,14 +22,14 @@ class OutletService {
       List<Outlet> beats = parsable
           .map(
             (e) => Outlet(
-                int.parse(e["id"]),
-                e["beat_id"],
-                e["name"],
-                e["img"],
-                double.parse(e["lat"]),
-                double.parse(e["lng"]),
-                e["mobile"],
-                e["pan"],
+                e["id"],
+                e["beat_id"].toString(),
+                e["name"].toString(),
+                e["img"].toString(),
+                e["lat"],
+                e["lng"],
+                e["mobile"].toString(),
+                e["pan"].toString(),
                 e["deactivated"].toString() == "1"),
           )
           .toList();

@@ -11,6 +11,7 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 
 import 'Entities/outletsEntity.dart';
 import 'Screens/BeatScreen/BeatScreen.dart';
+import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/BeatManagement.dart';
 import 'StateManagement/CameraUpload.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LogInScreen(),
+      home: CheckSessionScreen(),
     );
   }
 }
