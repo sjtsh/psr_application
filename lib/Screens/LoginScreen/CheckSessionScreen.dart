@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
@@ -33,7 +34,7 @@ class CheckSessionScreen extends StatelessWidget {
         }
         return Scaffold(
             body: Center(
-          child: Icon(Icons.add),
+          child: SvgPicture.asset("assets/logo.svg"),
         ));
       },
     );
