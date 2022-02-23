@@ -13,8 +13,7 @@ import '../apis/Entities/User.dart';
 import '../apis/Services/BeatService.dart';
 import '../apis/Services/UserService.dart';
 import '../database.dart';
-
-class LogIn with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
+class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
   bool validateMobileNumber() {
     bool myPersonalValidation = true;
     if (mobileTextController.text == "" || mobileTextController.text.isEmpty) {
@@ -119,6 +118,11 @@ class LogIn with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
       }
     }
   }
+
+  showPassword(){
+    _isPasswordShown =!_isPasswordShown;
+    notifyListeners();
+  }
 }
 
 class LogInVariables {
@@ -130,8 +134,10 @@ class LogInVariables {
   String? _mobileErrorText;
   String? _passwordErrorText;
   bool _isLoading = false;
+  bool _isPasswordShown =false;
 
   bool get isLoading => _isLoading;
+  bool get isPasswordShown => _isPasswordShown;
 
   int get loadingAt => _loadingAt;
 

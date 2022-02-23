@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../StateManagement/LogIn.dart';
 import '../../apis/Services/UserService.dart';
 
 class CheckSessionScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class CheckSessionScreen extends StatelessWidget {
           if (sessionID == "") {
             return LogInScreen();
           } else {
-            context.read<LogIn>().LoadingFromSession(context);
+            context.read<LogInManagement>().LoadingFromSession(context);
             return LoadingScreen();
           }
         }
