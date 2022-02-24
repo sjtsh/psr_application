@@ -44,7 +44,6 @@ class _MapScreenState extends State<MapScreen> {
                 myLocationButtonEnabled: true,
                 myLocationEnabled: true,
                 mapType: MapType.normal,
-                zoomControlsEnabled: true,
                 zoomGesturesEnabled: true,
                 onCameraMove: (CameraPosition a) {},
                 markers: List.generate(
@@ -54,10 +53,6 @@ class _MapScreenState extends State<MapScreen> {
                         .outletInfo[index]
                         .marker!).toSet(),
                 onMapCreated: (GoogleMapController controller) async {
-                 //  LocationPermission checkPermission = await Geolocator.checkPermission();
-                 //  if(checkPermission == LocationPermission.deniedForever){
-                 //    LocationPermission permission = await Geolocator.requestPermission();
-                 //  }
                   bool cameraRotate = false;
                   Geolocator.getPositionStream().listen((event) {
                     if(cameraRotate==false){
@@ -81,7 +76,12 @@ class _MapScreenState extends State<MapScreen> {
               bottom: 20,
               height: 150,
               width: width,
-              child: OutletList(),):Container()
+              child: OutletList(),):Positioned(
+                bottom: 0,child: Container(
+              height: 30,
+              color: Colors.white,
+              width: width,child: Center(child: Text("No outlets found")),
+            ))
           ]);
         }),
       ),

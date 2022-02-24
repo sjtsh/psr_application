@@ -96,6 +96,6 @@ class LogInScreen extends StatelessWidget {
           ),
         ),
       ),
-    ): LoadingScreen();;
+    ): LoadingScreen();
   }
 }

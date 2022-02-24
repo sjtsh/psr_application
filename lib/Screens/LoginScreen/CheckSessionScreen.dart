@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
@@ -16,7 +17,6 @@ class CheckSessionScreen extends StatelessWidget {
       future: SharedPreferences.getInstance().then((prefs) async {
         String sessionID = prefs.getString("session_id") ?? "";
         if (sessionID != "") {
-          print(sessionID);
           await UserService().LoginWithSession(sessionID);
           return sessionID;
         }
@@ -24,7 +24,6 @@ class CheckSessionScreen extends StatelessWidget {
       }),
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-        print("starting");
           String sessionID = snapshot.data;
           if (sessionID == "") {
             return LogInScreen();
@@ -35,7 +34,7 @@ class CheckSessionScreen extends StatelessWidget {
         }
         return Scaffold(
             body: Center(
-          child: Icon(Icons.add),
+          child: SvgPicture.asset("assets/logo.svg"),
         ));
       },
     );
