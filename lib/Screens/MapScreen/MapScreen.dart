@@ -64,7 +64,7 @@ class MapScreen extends StatelessWidget {
             context.watch<MapManagement>().allOutlets.length != 0
                 ? Positioned(
                     bottom: 10,
-                    height: 150,
+                    height: 164,
                     width: width,
                     child: OutletList(),
                   )
@@ -75,7 +75,7 @@ class MapScreen extends StatelessWidget {
                       color: Colors.white,
                       width: width,
                       child: Center(child: Text("No outlets found")),
-                    ))
+                    )),
           ]);
         }),
       ),

@@ -11,8 +11,24 @@ import 'components/BeatStat.dart';
 import 'components/IndividualBeat.dart';
 import 'components/TodayProgress.dart';
 
-class BeatScreen extends StatelessWidget {
-  const BeatScreen({Key? key}) : super(key: key);
+class BeatScreen extends StatefulWidget {
+  @override
+  State<BeatScreen> createState() => _BeatScreenState();
+}
+
+class _BeatScreenState extends State<BeatScreen> {
+  int index = 0;
+
+  Future<bool> _onBackPressed() async {
+    if (index == 1) {
+      Navigator.pop(context);
+    }
+    index = 1;
+    Future.delayed(Duration(seconds: 1), () {
+      index = 0;
+    });
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
