@@ -7,27 +7,18 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
 import 'package:psr_application/Screens/MapScreen/OutletList.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Entities/Outlet.dart';
 
 import '../../Entities/outletsEntity.dart';
 
-class MapScreen extends StatefulWidget {
-  @override
-  State<MapScreen> createState() => _MapScreenState();
-}
-
-class _MapScreenState extends State<MapScreen> {
+class MapScreen extends StatelessWidget {
   GoogleMapController? _controller;
 
   final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(27.6539, 85.4617),
   );
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,19 +35,18 @@ class _MapScreenState extends State<MapScreen> {
                 myLocationButtonEnabled: true,
                 myLocationEnabled: true,
                 mapType: MapType.normal,
-                zoomControlsEnabled: true,
                 zoomGesturesEnabled: true,
                 onCameraMove: (CameraPosition a) {},
                 markers: List.generate(
-                    context.watch<MapManagement>().outletInfo.length,
+                    context.watch<MapManagement>().sortedOutlets.length,
                     (index) => context
                         .watch<MapManagement>()
-                        .outletInfo[index]
+                        .sortedOutlets[index]
                         .marker!).toSet(),
                 onMapCreated: (GoogleMapController controller) async {
                   bool cameraRotate = false;
                   Geolocator.getPositionStream().listen((event) {
-                    if(cameraRotate==false){
+                    if (cameraRotate == false) {
                       controller.animateCamera(CameraUpdate.newCameraPosition(
                           CameraPosition(
                               zoom: 17,
@@ -71,13 +61,21 @@ class _MapScreenState extends State<MapScreen> {
                 },
               ),
             ),
-            context
-                .watch<MapManagement>()
-                .outletInfo.length!= 0 ? Positioned(
-              bottom: 20,
-              height: 150,
-              width: width,
-              child: OutletList(),):Container()
+            context.watch<MapManagement>().allOutlets.length != 0
+                ? Positioned(
+                    bottom: 10,
+                    height: 150,
+                    width: width,
+                    child: OutletList(),
+                  )
+                : Positioned(
+                    bottom: 0,
+                    child: Container(
+                      height: 30,
+                      color: Colors.white,
+                      width: width,
+                      child: Center(child: Text("No outlets found")),
+                    ))
           ]);
         }),
       ),

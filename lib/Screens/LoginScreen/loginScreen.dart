@@ -11,8 +11,7 @@ import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 class LogInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  context.watch<LogInManagement>().loadingAt == 0
-        ? SafeArea(
+    return   SafeArea(
       child: Scaffold(
         body: Form(
           key: context.read<LogInManagement>().formKey,
@@ -79,6 +78,9 @@ class LogInScreen extends StatelessWidget {
                         if (isValidated) {
                           await context.read<LogInManagement>().LoadingFromSignIn(context);
                         }
+                        Navigator.push(context, MaterialPageRoute(builder: (_){
+                          return LoadingScreen();
+                        }));
                       },
                       child: Center(
                         child: !context.watch<LogInManagement>().isLoading
@@ -96,6 +98,6 @@ class LogInScreen extends StatelessWidget {
           ),
         ),
       ),
-    ): LoadingScreen();
+    );
   }
 }

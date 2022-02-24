@@ -19,6 +19,7 @@ class CheckSessionScreen extends StatelessWidget {
         String sessionID = prefs.getString("session_id") ?? "";
         if (sessionID != "") {
           await UserService().LoginWithSession(sessionID);
+          context.read<LogInManagement>().LoadingFromSession(context);
           return sessionID;
         }
         return "";
@@ -29,7 +30,6 @@ class CheckSessionScreen extends StatelessWidget {
           if (sessionID == "") {
             return LogInScreen();
           } else {
-            context.read<LogInManagement>().LoadingFromSession(context);
             return LoadingScreen();
           }
         }

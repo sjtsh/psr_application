@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
+import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OutletService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,9 +50,9 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
             await BeatService().getBeats();
         _loadingAt = 60;
         _loadingText = "Loading the outlets";
-        context.read<LogInManagement>().allOutletsLocal =
+        notifyListeners();
+        context.read<MapManagement>().allOutlets =
             await OutletService().getOutlets();
-        print("done 3 ");
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -93,6 +94,7 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin, LogInVariabl
         _loadingText = "Loading the outlets";
         context.read<LogInManagement>().allOutletsLocal =
         await OutletService().getOutlets();
+
         notifyListeners();
         Navigator.push(
           context,

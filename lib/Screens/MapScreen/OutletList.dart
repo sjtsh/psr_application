@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 
 import '../../StateManagement/MapManagement.dart';
 
@@ -24,21 +25,21 @@ class OutletList extends StatelessWidget {
               width: 150,
               child: Builder(builder: (context) {
                 double dis = Geolocator.distanceBetween(
-                  context.watch<MapManagement>().outletInfo[index].lat,
-                  context.watch<MapManagement>().outletInfo[index].lng,
+                  context.watch<MapManagement>().sortedOutlets[index].lat,
+                  context.watch<MapManagement>().sortedOutlets[index].lng,
                   context.watch<MapManagement>().userPosition.latitude,
                   context.watch<MapManagement>().userPosition.longitude,
                 );
 
                 return Column(
                   children: [
-                    Text(context.watch<MapManagement>().outletInfo[index].name),
+                    Text(context.watch<MapManagement>().sortedOutlets[index].name),
                     Text(dis < 1000
                         ? dis.toStringAsFixed(2) + " m"
                         : (dis / 1000).toStringAsFixed(2) + " km"),
                     Text(context
                         .watch<MapManagement>()
-                        .outletInfo[index]
+                        .sortedOutlets[index]
                         .id
                         .toString()),
                     Container(
