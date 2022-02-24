@@ -46,23 +46,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ask() async {
-    LocationPermission checkPermission = await Geolocator.checkPermission();
-    if(checkPermission != LocationPermission.always){
-      Geolocator.requestPermission();
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    ask();
-  }
+  // ask() async {
+  //   LocationPermission checkPermission = await Geolocator.checkPermission();
+  //   if(checkPermission != LocationPermission.always){
+  //     Geolocator.requestPermission();
+  //   }
+  // }
+  //
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   ask();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    ask();
+    // ask();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: CheckSessionScreen(),

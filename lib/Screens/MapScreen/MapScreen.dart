@@ -23,6 +23,7 @@ class _MapScreenState extends State<MapScreen> {
   final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(27.6539, 85.4617),
   );
+
   @override
   void initState() {
     // TODO: implement initState
@@ -56,7 +57,7 @@ class _MapScreenState extends State<MapScreen> {
                 onMapCreated: (GoogleMapController controller) async {
                   bool cameraRotate = false;
                   Geolocator.getPositionStream().listen((event) {
-                    if(cameraRotate==false){
+                    if (cameraRotate == false) {
                       controller.animateCamera(CameraUpdate.newCameraPosition(
                           CameraPosition(
                               zoom: 17,
@@ -71,13 +72,14 @@ class _MapScreenState extends State<MapScreen> {
                 },
               ),
             ),
-            context
-                .watch<MapManagement>()
-                .outletInfo.length!= 0 ? Positioned(
-              bottom: 20,
-              height: 150,
-              width: width,
-              child: OutletList(),):Container()
+            context.watch<MapManagement>().outletInfo.length != 0
+                ? Positioned(
+                    bottom: 20,
+                    height: 164,
+                    width: width,
+                    child: OutletList(),
+                  )
+                : Container()
           ]);
         }),
       ),
