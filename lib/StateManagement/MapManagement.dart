@@ -14,6 +14,14 @@ import '../apis/Entities/Outlet.dart';
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> _allOutlets = [];
 
+  GoogleMapController? _controller;
+
+  GoogleMapController? get controller => _controller;
+
+  set controller(GoogleMapController? value) {
+    _controller = value;
+  }
+
   List<Outlet> get allOutlets => _allOutlets;
 
   set allOutlets(List<Outlet> value) {
@@ -27,12 +35,14 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   ScrollController get scrollController => _scrollController;
 
   LatLng _userPosition = LatLng(0, 0);
-
-
   LatLng get userPosition => this._userPosition;
   List _dis = [];
 
   get distance => _dis;
+
+ changeSelectedMarkerOutlet(int index){
+   _controller?.showMarkerInfoWindow(_sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
+ }
 
   void initializeMarkers(LatLng userPosition) {
     this._userPosition = userPosition;
@@ -43,7 +53,6 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             userPosition.latitude, userPosition.longitude, a.lat, a.lng)
         .compareTo(Geolocator.distanceBetween(
             userPosition.latitude, userPosition.longitude, b.lat, b.lng)));
-    print(sortedOutlet.length);
     _sortedOutlets = List.generate(count, (index) {
       Outlet outlet = Outlet(
           sortedOutlet[index].id,
@@ -57,7 +66,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           sortedOutlet[index].deactivated);
       outlet.marker = Marker(
         onTap: () {
-          _scrollController.jumpTo(0 + index * 156);
+          _scrollController.jumpTo(0 + index * 300);
         },
         markerId: MarkerId(sortedOutlet[index].name),
         position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
@@ -70,7 +79,9 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             }),
       );
       return outlet;
-    });
+    },
+    );
     notifyListeners();
   }
+
 }
