@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/OrderScreen/ShopClosedScreen.dart';
 
 import '../../../StateManagement/MapManagement.dart';
 import '../../../StateManagement/TodayProgress.dart';
@@ -146,9 +147,8 @@ class TodayProgress extends StatelessWidget {
                         children: [
                           Countup(
                             begin: 0,
-                            end: context
-                                .watch<TodayProgressState>()
-                                .uniqueSKU + 0.0,
+                            end: context.watch<TodayProgressState>().uniqueSKU +
+                                0.0,
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           Text(
@@ -208,6 +208,30 @@ class TodayProgress extends StatelessWidget {
               child: Center(
                 child: Text(
                   "Finish",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          GestureDetector(
+            onTap: () {
+              // context.read<TodayProgressState>().inProgressBeat = null;
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return ShopClosedScreen();
+              }));
+            },
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Text(
+                  "Open Camera Module",
                   style: TextStyle(color: Colors.white),
                 ),
               ),

@@ -4,15 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/BeatManagement.dart';
-import 'package:psr_application/apis/Services/OutletService.dart';
-
-import '../Entities/outletsEntity.dart';
 import '../apis/Entities/Outlet.dart';
 
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> _allOutlets = [];
+
+  GoogleMapController? _controller;
+
+  GoogleMapController? get controller => _controller;
+
+  set controller(GoogleMapController? value) {
+    _controller = value;
+  }
 
   List<Outlet> get allOutlets => _allOutlets;
 
@@ -27,12 +30,14 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   ScrollController get scrollController => _scrollController;
 
   LatLng _userPosition = LatLng(0, 0);
-
-
   LatLng get userPosition => this._userPosition;
   List _dis = [];
 
   get distance => _dis;
+
+ changeSelectedMarkerOutlet(int index){
+   _controller?.showMarkerInfoWindow(_sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
+ }
 
   void initializeMarkers(LatLng userPosition) {
     this._userPosition = userPosition;
@@ -56,7 +61,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           sortedOutlet[index].deactivated);
       outlet.marker = Marker(
         onTap: () {
-          _scrollController.jumpTo(0 + index * 156);
+          _scrollController.jumpTo(0 + index * 300);
         },
         markerId: MarkerId(sortedOutlet[index].name),
         position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
@@ -69,7 +74,9 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             }),
       );
       return outlet;
-    });
+    },
+    );
     notifyListeners();
   }
+
 }
