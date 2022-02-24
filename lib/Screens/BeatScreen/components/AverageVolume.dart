@@ -39,10 +39,6 @@ class AverageVolume extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
             child: Container(
               height: 30,
-              decoration: BoxDecoration(
-                color: Color(0xffEFEFF0),
-                borderRadius: BorderRadius.circular(8),
-              ),
               child: Row(
                 children: [
                   Container(
@@ -51,7 +47,9 @@ class AverageVolume extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.green, shape: BoxShape.circle),
                   ),
-                  Text("data"),
+                  Text("AVG SALES VOLUME"),
+                  Expanded(child: Container()),
+                  Text("18-24 Sep 2022"),
                 ],
               ),
             ),

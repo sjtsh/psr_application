@@ -39,7 +39,7 @@ class UserService {
   }
 
   Future<User> LoginWithSession(String sessionID) async {
-  print("coming in");
+    print(sessionID);
       Response res = await http.get(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/loginSession"),
