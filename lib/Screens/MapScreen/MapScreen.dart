@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
 import 'package:psr_application/Screens/MapScreen/OutletList.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Entities/Outlet.dart';
 
@@ -45,14 +46,13 @@ class _MapScreenState extends State<MapScreen> {
                 myLocationButtonEnabled: true,
                 myLocationEnabled: true,
                 mapType: MapType.normal,
-                zoomControlsEnabled: true,
                 zoomGesturesEnabled: true,
                 onCameraMove: (CameraPosition a) {},
                 markers: List.generate(
-                    context.watch<MapManagement>().outletInfo.length,
+                    context.watch<MapManagement>().sortedOutlets.length,
                     (index) => context
                         .watch<MapManagement>()
-                        .outletInfo[index]
+                        .sortedOutlets[index]
                         .marker!).toSet(),
                 onMapCreated: (GoogleMapController controller) async {
                   bool cameraRotate = false;
@@ -72,14 +72,21 @@ class _MapScreenState extends State<MapScreen> {
                 },
               ),
             ),
-            context.watch<MapManagement>().outletInfo.length != 0
+            context.watch<MapManagement>().allOutlets.length != 0
                 ? Positioned(
-                    bottom: 20,
+                    bottom: 10,
                     height: 164,
                     width: width,
                     child: OutletList(),
                   )
-                : Container()
+                : Positioned(
+                    bottom: 0,
+                    child: Container(
+                      height: 30,
+                      color: Colors.white,
+                      width: width,
+                      child: Center(child: Text("No outlets found")),
+                    )),
           ]);
         }),
       ),

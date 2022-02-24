@@ -4,7 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/MapScreen/MapScreen.dart';
+import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 
 import 'package:psr_application/apis/Services/BeatService.dart';
 import 'package:psr_application/apis/Services/OutletService.dart';
@@ -46,23 +48,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // ask() async {
-  //   LocationPermission checkPermission = await Geolocator.checkPermission();
-  //   if(checkPermission != LocationPermission.always){
-  //     Geolocator.requestPermission();
-  //   }
-  // }
-  //
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   ask();
-  // }
+  ask() async {
+    LocationPermission checkPermission = await Geolocator.checkPermission();
+    if(checkPermission == LocationPermission.denied){
+      Geolocator.requestPermission();
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ask();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // ask();
+    ask();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: CheckSessionScreen(),

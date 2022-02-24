@@ -25,6 +25,9 @@ class IndividualBeat extends StatelessWidget {
                 .read<MapManagement>()
                 .initializeMarkers(LatLng(event.latitude, event.longitude));
           });
+          print("printing outlets");
+          print(context
+              .read<MapManagement>().allOutlets);
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => MapScreen()));
         },

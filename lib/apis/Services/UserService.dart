@@ -17,7 +17,6 @@ class UserService {
         'password': password,
       },
     );
-    print(res.body);
     if (res.statusCode == 200) {
       Map<String, dynamic> parsable = jsonDecode(res.body)[0];
       try {
@@ -39,7 +38,6 @@ class UserService {
   }
 
   Future<User> LoginWithSession(String sessionID) async {
-  print("coming in");
       Response res = await http.get(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/loginSession"),
@@ -48,7 +46,6 @@ class UserService {
           'session_id': sessionID,
         },
       );
-      print(res.body);
       if (res.statusCode == 200) {
         Map<String, dynamic> parsable = jsonDecode(res.body)[0];
         try {

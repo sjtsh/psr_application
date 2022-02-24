@@ -23,7 +23,7 @@ class OutletService {
           .map(
             (e) => Outlet(
                 e["id"],
-                e["beat_id"].toString(),
+                e["beat_id"],
                 e["name"].toString(),
                 e["img"].toString(),
                 e["lat"],

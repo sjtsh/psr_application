@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
+import 'package:psr_application/StateManagement/LogInManagement.dart';
 
 import '../../StateManagement/MapManagement.dart';
 
@@ -34,12 +35,11 @@ class OutletList extends StatelessWidget {
               ),
               child: Builder(builder: (context) {
                 double dis = Geolocator.distanceBetween(
-                  context.watch<MapManagement>().outletInfo[index].lat,
-                  context.watch<MapManagement>().outletInfo[index].lng,
+                  context.watch<MapManagement>().sortedOutlets[index].lat,
+                  context.watch<MapManagement>().sortedOutlets[index].lng,
                   context.watch<MapManagement>().userPosition.latitude,
                   context.watch<MapManagement>().userPosition.longitude,
                 );
-
                 return Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Column(
@@ -47,10 +47,7 @@ class OutletList extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            context
-                                .watch<MapManagement>()
-                                .outletInfo[index]
-                                .name,
+                context.watch<MapManagement>().sortedOutlets[index].name,
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -65,9 +62,9 @@ class OutletList extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            dis < 1000
-                                ? dis.toStringAsFixed(2) + " m"
-                                : (dis / 1000).toStringAsFixed(2) + " km",
+                dis < 1000
+                ? dis.toStringAsFixed(2) + " m"
+                    : (dis / 1000).toStringAsFixed(2) + " km",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
@@ -82,11 +79,11 @@ class OutletList extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            context
-                                .watch<MapManagement>()
-                                .outletInfo[index]
-                                .id
-                                .toString(),
+                context
+                    .watch<MapManagement>()
+                    .sortedOutlets[index]
+                    .id
+                    .toString(),
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
@@ -152,9 +149,7 @@ class OutletList extends StatelessWidget {
                           ),
                           Text(
                             context
-                                .watch<MapManagement>()
-                                .outletInfo[index]
-                                .mobile,
+                                .watch<MapManagement>().sortedOutlets[index].mobile,
                             style: TextStyle(
                               color: Colors.grey,
                             ),
