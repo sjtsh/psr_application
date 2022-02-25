@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
+import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/AverageVolume.dart';
 import 'StateManagement/LogInManagement.dart';
@@ -23,7 +24,10 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => TodayProgressState(),
-      )
+      ),
+      ChangeNotifierProvider(
+        create: (_) => ShopClosedController(),
+      ),
     ], child: const MyApp()),
   );
 }

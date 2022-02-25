@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../StateManagement/ShopClosedController.dart';
 import '../../apis/Services/UserService.dart';
 import '../../database.dart';
 
@@ -17,6 +19,12 @@ class CheckSessionScreen extends StatelessWidget {
     return FutureBuilder(
       future: SharedPreferences.getInstance().then((prefs) async {
         String sessionID = prefs.getString("session_id") ?? "";
+        print("starting checking the cameras");
+        availableCameras().then((value){
+          context.read<ShopClosedController>().cameras = value;
+
+          print("done checking the cameras");
+        });
         if (sessionID != "") {
           await UserService().LoginWithSession(sessionID);
           context.read<LogInManagement>().LoadingFromSession(context);

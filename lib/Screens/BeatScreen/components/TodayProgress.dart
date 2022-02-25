@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ShopClosedScreen.dart';
+import 'package:psr_application/StateManagement/ShopClosedController.dart';
 
 import '../../../StateManagement/MapManagement.dart';
 import '../../../StateManagement/TodayProgress.dart';
@@ -152,7 +153,7 @@ class TodayProgress extends StatelessWidget {
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           Text(
-                            "Unique SKU",
+                            "Average SKU",
                             style: TextStyle(
                                 color: Colors.black.withOpacity(0.5),
                                 fontSize: 12),
@@ -218,7 +219,7 @@ class TodayProgress extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              // context.read<TodayProgressState>().inProgressBeat = null;
+              context.read<ShopClosedController>().initialize();
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return ShopClosedScreen();
               }));

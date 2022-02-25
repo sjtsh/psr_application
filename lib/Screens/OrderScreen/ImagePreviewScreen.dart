@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/database.dart';
 
@@ -69,6 +70,8 @@ class ImagePreviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                   onTap: () {
+                    context.read<ShopClosedController>().imageSent();
+
                     OutletClosedService()
                         .insertOutletClosed(
                             File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", "remarks", 1)
@@ -84,10 +87,10 @@ class ImagePreviewScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
-                      child: const Text(
+                      child: !context.watch<ShopClosedController>().isloading?Text(
                         "Done",
                         style: TextStyle(color: Colors.white),
-                      ),
+                      ):CircularProgressIndicator(),
                     ),
                   ),
                 ),

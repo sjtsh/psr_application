@@ -112,7 +112,7 @@ class OutletList extends StatelessWidget {
                                 height: 25,
                                 child: Center(
                                   child: Text(
-                                    "Kirana Shop",
+                                    context.watch<MapManagement>().sortedOutlets[index].category,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -132,7 +132,7 @@ class OutletList extends StatelessWidget {
                                 height: 25,
                                 child: Center(
                                   child: Text(
-                                    "A+ Segmentation",
+                                    context.watch<MapManagement>().sortedOutlets[index].segmentation,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -187,7 +187,7 @@ class OutletList extends StatelessWidget {
                                   },
                                   child: Text(
                                     "TAKE ORDER",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(fontSize : 12,color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -208,7 +208,7 @@ class OutletList extends StatelessWidget {
                                   onPressed: () {},
                                   child: Text(
                                     "VIEW HISTORY",
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(fontSize: 12,color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -237,7 +237,7 @@ class OutletList extends StatelessWidget {
                                   },
                                   child: Text(
                                     "SHOP CLOSED",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(fontSize: 12, color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -258,7 +258,7 @@ class OutletList extends StatelessWidget {
                                   onPressed: () {},
                                   child: Text(
                                     "NO ORDER",
-                                    style: TextStyle(color:dis > 20 ?Colors.grey: Colors.white),
+                                    style: TextStyle(fontSize: 12, color:dis > 20 ?Colors.grey: Colors.white),
                                   ),
                                 ),
                               ),

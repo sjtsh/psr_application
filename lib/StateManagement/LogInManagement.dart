@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
+import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OutletService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ import '../apis/Entities/User.dart';
 import '../apis/Services/BeatService.dart';
 import '../apis/Services/UserService.dart';
 import '../database.dart';
+import 'ShopClosedController.dart';
 
 class LogInManagement
     with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
@@ -57,7 +59,6 @@ class LogInManagement
       context.read<MapManagement>().allOutlets =
       await OutletService().getOutlets();
       notifyListeners();
-      _cameras = await availableCameras();
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -66,7 +67,17 @@ class LogInManagement
           },
         ),
       );
-    } else {}
+    } else {
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return LogInScreen();
+          },
+        ),
+      );
+    }
   }
 
   catchException(Object e, context) {
@@ -78,6 +89,15 @@ class LogInManagement
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Unsuccessful")));
     }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) {
+          return LogInScreen();
+        },
+      ),
+    );
   }
 
   bool validateMobileNumber() {
@@ -126,11 +146,6 @@ class LogInVariables {
 
   bool get isPasswordShown => _isPasswordShown;
 
-  List<CameraDescription> get cameras => _cameras;
-
-  set cameras(List<CameraDescription> value) {
-    _cameras = value;
-  }
 
   int get loadingAt => _loadingAt;
 
@@ -156,7 +171,6 @@ class LogInVariables {
   set allOutletsLocal(List<Outlet> value) {
     _allOutletsLocal = value;
   }
-  List<CameraDescription> _cameras = [];
   List<Outlet> get allOutletsLocal => _allOutletsLocal;
 
   List<Beat> get allBeatsLocal => _allBeatsLocal;

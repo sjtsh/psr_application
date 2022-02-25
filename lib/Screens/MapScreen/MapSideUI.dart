@@ -27,7 +27,9 @@ class MapSideUI extends StatelessWidget {
         child: Column(
           children: [
             Expanded(child: Container()),
-            IconButton(onPressed: () {  },
+            IconButton(onPressed: () {
+             context.read<MapManagement>().openMap();
+            },
               icon:  Icon(Icons.info_outline,  size: 32,), color: Colors.blue,),
             Expanded(child: Container()),
             Divider(height: 1, thickness: 1,),

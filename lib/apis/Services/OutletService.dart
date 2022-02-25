@@ -30,6 +30,9 @@ class OutletService {
                 e["lng"],
                 e["mobile"].toString(),
                 e["pan"].toString(),
+                e["owner_name"],
+                e["category"],
+                e["segmentation"],
                 e["deactivated"].toString() == "1"),
           )
           .toList();
