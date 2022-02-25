@@ -7,6 +7,7 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
 import 'package:psr_application/Screens/MapScreen/MapHearder.dart';
+import 'package:psr_application/Screens/MapScreen/MapSideUI.dart';
 import 'package:psr_application/Screens/MapScreen/OutletList.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
@@ -67,34 +68,9 @@ class MapScreen extends StatelessWidget {
               width: width-24,
               child: MapHeader(),
             ),
-            Positioned(
-              top: 72,
-              right: 12,
-              child: Container(
-                height: 100,
-                width: 50,
-               decoration:  BoxDecoration(
-                   color: Colors.white,
-                   borderRadius: BorderRadius.circular(12),
-                   boxShadow: [BoxShadow(
-                       offset: Offset(0,2),
-                       blurRadius: 2,
-                       color: Colors.black.withOpacity(0.1)
-                   )]
-               ),
-                child: Column(
-                  children: [
-                    Expanded(child: Container()),
-                    Icon(Icons.info_outline, color: Colors.blue, size: 32,),
-                    Expanded(child: Container()),
-                    Divider(height: 1, thickness: 1,),
-                    Expanded(child: Container()),
-                    Icon(Icons.home_filled, color: Colors.blue, size: 32,),
-                    Expanded(child: Container()),
-                  ],
-                ),
-              ),
-            ),
+           // Map side UI
+           MapSideUI(),
+            //List of outlets UI
             context.watch<MapManagement>().allOutlets.length != 0
                 ? Positioned(
                     bottom: 10,
@@ -108,7 +84,7 @@ class MapScreen extends StatelessWidget {
                       height: 30,
                       color: Colors.white,
                       width: width,
-                      child: Center(child: Text("No outlets found")),
+                      child: const Center(child: Text("No outlets found")),
                     )),
           ]);
         }),
@@ -116,3 +92,5 @@ class MapScreen extends StatelessWidget {
     );
   }
 }
+
+

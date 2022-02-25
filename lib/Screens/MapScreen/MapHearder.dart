@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 
 class MapHeader extends StatelessWidget {
-  const MapHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +15,13 @@ class MapHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                   blurRadius: 2,
                   color: Colors.black.withOpacity(0.1))
             ]),
         child: Row(
           children: [
-            SizedBox(
+           const SizedBox(
               width: 12,
             ),
             IconButton(
@@ -46,7 +45,7 @@ class MapHeader extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            SizedBox(
+           const SizedBox(
               width: 12,
             ),
           ],

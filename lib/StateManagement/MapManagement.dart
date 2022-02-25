@@ -37,7 +37,15 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
  changeSelectedMarkerOutlet(int index){
    _controller?.showMarkerInfoWindow(_sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
+   _controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+       zoom: 17,target: LatLng(_sortedOutlets[index].lat,_sortedOutlets[index].lng,))));
  }
+  getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition();
+    _controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 17,target: LatLng(position.latitude,position.longitude,))));
+
+  }
 
   void initializeMarkers(LatLng userPosition) {
     this._userPosition = userPosition;
