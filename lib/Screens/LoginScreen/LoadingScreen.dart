@@ -15,7 +15,7 @@ class LoadingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SvgPicture.asset("assets/logo.svg"),
-              SizedBox(
+             const SizedBox(
                 width: 12,
               ),
               Stack(
@@ -33,7 +33,7 @@ class LoadingScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+             const SizedBox(
                 width: 12,
               ),
               Text(context.watch<LogInManagement>().loadingText),

@@ -22,6 +22,23 @@ class ImagePreviewScreen extends StatelessWidget {
             File(path),
           ),
         ),
+
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: TextFormField(
+          decoration: InputDecoration(
+              prefixIcon: Icon(Icons.book_outlined),
+              hintText: "Remark",
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.green)) ,
+              enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(16),borderSide: BorderSide(color: Colors.black))),
+          onFieldSubmitted: (text){
+
+          },
+          style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
         Row(
           children: [
             Expanded(

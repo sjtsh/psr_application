@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
@@ -54,7 +55,10 @@ class _MyAppState extends State<MyApp> {
     ask();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CheckSessionScreen(),
-    );
+        theme:ThemeData(
+        textTheme: GoogleFonts.robotoTextTheme(
+        Theme.of(context).textTheme,),
+    ),
+        home: CheckSessionScreen());
   }
 }

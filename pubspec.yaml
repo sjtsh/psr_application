@@ -43,6 +43,7 @@ dependencies:
   flutter_svg: ^0.22.0
   countup:
   camera: ^0.9.4+14
+  google_fonts: 
 
 
   # The following adds the Cupertino Icons font to your application.
