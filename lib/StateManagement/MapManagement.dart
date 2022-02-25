@@ -40,6 +40,12 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
    _controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
        zoom: 17,target: LatLng(_sortedOutlets[index].lat,_sortedOutlets[index].lng,))));
  }
+  getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition();
+    _controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 17,target: LatLng(position.latitude,position.longitude,))));
+
+  }
 
   void initializeMarkers(LatLng userPosition) {
     this._userPosition = userPosition;
