@@ -4,11 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/BeatManagement.dart';
-import 'package:psr_application/apis/Services/OutletService.dart';
-
-import '../Entities/outletsEntity.dart';
 import '../apis/Entities/Outlet.dart';
 
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {

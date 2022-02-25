@@ -12,25 +12,12 @@ import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Entities/Outlet.dart';
 
-import '../../Entities/outletsEntity.dart';
-
-class MapScreen extends StatefulWidget {
-  @override
-  State<MapScreen> createState() => _MapScreenState();
-}
-
-class _MapScreenState extends State<MapScreen> {
-  // GoogleMapController? _controller;
+class MapScreen extends StatelessWidget {
+  GoogleMapController? _controller;
 
   final CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(27.6539, 85.4617),
   );
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

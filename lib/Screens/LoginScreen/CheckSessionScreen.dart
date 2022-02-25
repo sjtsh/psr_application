@@ -7,6 +7,7 @@ import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../apis/Services/UserService.dart';
+import '../../database.dart';
 
 class CheckSessionScreen extends StatelessWidget {
   const CheckSessionScreen({Key? key}) : super(key: key);
