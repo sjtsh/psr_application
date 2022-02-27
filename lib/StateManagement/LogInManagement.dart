@@ -38,8 +38,8 @@ class LogInManagement
       SharedPreferences.getInstance().then(
           (value) => value.setString("session_id", meUser?.sessionID ?? ""));
       await loadAll(context);
-      _isLoading = false;
-      notifyListeners();
+      // _isLoading = false;
+      // notifyListeners();
     } catch (e) {
       _isLoading = false;
       notifyListeners();
@@ -68,7 +68,6 @@ class LogInManagement
         ),
       );
     } else {
-
       Navigator.push(
         context,
         MaterialPageRoute(

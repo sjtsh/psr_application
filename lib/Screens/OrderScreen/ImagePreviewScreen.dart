@@ -52,9 +52,14 @@ class ImagePreviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                   onTap: () {
+                    print(path);
                     OutletClosedService()
                         .insertOutletClosed(
-                            File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", "remarks", 1)
+                            File(path),
+                            "trying${path.split("\\").last}",
+                            meUser?.id ?? "0",
+                            "remarks",
+                            1)
                         .then((value) {
                       Navigator.pop(context);
                       Navigator.pop(context);
