@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/BeatManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/AverageVolume.dart';
 import 'StateManagement/LogInManagement.dart';
 import 'StateManagement/TodayProgress.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +29,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => ShopClosedController(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => BeatManagement(),
       ),
     ], child: const MyApp()),
   );
@@ -58,7 +64,10 @@ class _MyAppState extends State<MyApp> {
     ask();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CheckSessionScreen(),
-    );
+        theme:ThemeData(
+        textTheme: GoogleFonts.robotoTextTheme(
+        Theme.of(context).textTheme,),
+    ),
+        home: CheckSessionScreen());
   }
 }

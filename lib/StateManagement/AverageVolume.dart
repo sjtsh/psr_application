@@ -9,11 +9,22 @@ import '../firebase_options.dart';
 class AverageVolumeState with ChangeNotifier, DiagnosticableTreeMixin {
   bool _isWeekly = true;
   String _dateRange = "18-24 Sep 2022";
-  double _saleVolume = 6000;
-  int _skuVariance = 25;
   double _monthlySaleVolume = 8000;
-  int _monthlySKUVariance = 60;
+  double _monthlySKUVariance = 60;
+  double _weeklySaleVolume = 8000;
+  double _weeklySKUVariance = 60;
 
+  double get weeklySaleVolume => _weeklySaleVolume;
+
+  set weeklySaleVolume(double value) {
+    _weeklySaleVolume = value;
+  }
+
+  double get weeklySKUVariance => _weeklySKUVariance;
+
+  set weeklySKUVariance(double value) {
+    _weeklySKUVariance = value;
+  }
 
   double get monthlySaleVolume => _monthlySaleVolume;
 
@@ -21,22 +32,10 @@ class AverageVolumeState with ChangeNotifier, DiagnosticableTreeMixin {
     _monthlySaleVolume = value;
   }
 
-  double get saleVolume => _saleVolume;
+  double get monthlySKUVariance => _monthlySKUVariance;
 
-  int get monthlySKUVariance => _monthlySKUVariance;
-
-  set monthlySKUVariance(int value) {
+  set monthlySKUVariance(double value) {
     _monthlySKUVariance = value;
-  }
-
-  set saleVolume(double value) {
-    _saleVolume = value;
-  }
-
-  int get skuVariance => _skuVariance;
-
-  set skuVariance(int value) {
-    _skuVariance = value;
   }
 
   String get dateRange => _dateRange;

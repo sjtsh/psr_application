@@ -93,7 +93,7 @@ class _AverageVolumeState extends State<AverageVolume> {
                           Countup(
                             begin: 0,
                             end: context.read<AverageVolumeState>().isWeekly
-                                ? context.watch<AverageVolumeState>().saleVolume
+                                ? context.watch<AverageVolumeState>().weeklySaleVolume
                                 : context
                                     .watch<AverageVolumeState>()
                                     .monthlySaleVolume,
@@ -134,7 +134,7 @@ class _AverageVolumeState extends State<AverageVolume> {
                             end: context.read<AverageVolumeState>().isWeekly
                                 ? context
                                         .watch<AverageVolumeState>()
-                                        .skuVariance +
+                                        .weeklySKUVariance +
                                     0.0
                                 : context
                                         .watch<AverageVolumeState>()

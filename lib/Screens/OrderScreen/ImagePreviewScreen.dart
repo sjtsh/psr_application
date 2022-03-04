@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/database.dart';
 
@@ -20,6 +21,23 @@ class ImagePreviewScreen extends StatelessWidget {
         Expanded(
           child: Image.file(
             File(path),
+          ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: TextFormField(
+          decoration: InputDecoration(
+              prefixIcon: Icon(Icons.book_outlined),
+              hintText: "Remark",
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide: BorderSide(color: Colors.green)) ,
+              enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(16),borderSide: BorderSide(color: Colors.black))),
+          onFieldSubmitted: (text){
+
+          },
+          style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         Row(
@@ -52,7 +70,7 @@ class ImagePreviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                   onTap: () {
-                    print(path);
+                    context.read<ShopClosedController>().imageSent();
                     OutletClosedService()
                         .insertOutletClosed(
                             File(path),
@@ -61,6 +79,7 @@ class ImagePreviewScreen extends StatelessWidget {
                             "remarks",
                             1)
                         .then((value) {
+                      context.read<ShopClosedController>().imageSent();
                       Navigator.pop(context);
                       Navigator.pop(context);
                     });
@@ -72,10 +91,10 @@ class ImagePreviewScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
-                      child: const Text(
+                      child: !context.watch<ShopClosedController>().isloading?Text(
                         "Done",
                         style: TextStyle(color: Colors.white),
-                      ),
+                      ):CircularProgressIndicator(),
                     ),
                   ),
                 ),

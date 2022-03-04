@@ -19,15 +19,11 @@ class CheckSessionScreen extends StatelessWidget {
     return FutureBuilder(
       future: SharedPreferences.getInstance().then((prefs) async {
         String sessionID = prefs.getString("session_id") ?? "";
-        print("starting checking the cameras");
         availableCameras().then((value){
           context.read<ShopClosedController>().cameras = value;
-
-          print("done checking the cameras");
         });
         if (sessionID != "") {
-          await UserService().LoginWithSession(sessionID);
-          context.read<LogInManagement>().LoadingFromSession(context);
+          context.read<LogInManagement>().LoadingFromSession(context, sessionID);
           return sessionID;
         }
         return "";

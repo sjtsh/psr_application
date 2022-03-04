@@ -8,8 +8,9 @@ class MapSideUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return    Positioned(
-      top: 72,
+      top: height * 0.14,
       right: 12,
       child: Container(
         height: 100,
@@ -26,14 +27,15 @@ class MapSideUI extends StatelessWidget {
         child: Column(
           children: [
             Expanded(child: Container()),
-            IconButton(onPressed: () {  },
+            IconButton(onPressed: () {
+             context.read<MapManagement>().openMap();
+            },
               icon:  Icon(Icons.info_outline,  size: 32,), color: Colors.blue,),
             Expanded(child: Container()),
             Divider(height: 1, thickness: 1,),
             Expanded(child: Container()),
             IconButton(onPressed: () {
               context.read<MapManagement>().getCurrentLocation();
-              print("hello my location");
             },
               icon:  Icon(Icons.home_filled,  size: 32,), color: Colors.blue,),
             Expanded(child: Container()),

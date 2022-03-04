@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
+import 'package:psr_application/StateManagement/BeatManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OutletService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,50 +15,68 @@ import '../apis/Entities/Beat.dart';
 import '../apis/Entities/Outlet.dart';
 import '../apis/Entities/User.dart';
 import '../apis/Services/BeatService.dart';
+import '../apis/Services/TourPlan.dart';
 import '../apis/Services/UserService.dart';
 import '../database.dart';
 import 'ShopClosedController.dart';
+import 'package:http/http.dart' as http;
+
+import 'TodayProgress.dart';
 
 class LogInManagement
     with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
-
-  LoadingFromSession(BuildContext context) async {
-    try {
-      await loadAll(context);
-    } catch (e) {
-      catchException(e, context);
-    }
+  LoadingFromSession(BuildContext context, String sessionID) async {
+    // try {
+    await UserService().LoginWithSession(sessionID);
+    await loadAll(context);
+    // } catch (e) {
+    //   catchException(e, context);
+    // }
   }
 
   LoadingFromSignIn(BuildContext context) async {
-    try {
-      _isLoading = true;
-      notifyListeners();
-      await UserService()
-          .Login(_mobileTextController.text, _passwordTextController.text);
-      SharedPreferences.getInstance().then(
-          (value) => value.setString("session_id", meUser?.sessionID ?? ""));
-      await loadAll(context);
-      // _isLoading = false;
-      // notifyListeners();
-    } catch (e) {
-      _isLoading = false;
-      notifyListeners();
-      catchException(e, context);
-    }
+    // try {
+    _isLoading = true;
+    notifyListeners();
+    await UserService()
+        .Login(_mobileTextController.text, _passwordTextController.text);
+    SharedPreferences.getInstance().then(
+        (value) => value.setString("session_id", meUser?.sessionID ?? ""));
+    await loadAll(context);
+    _isLoading = false;
+    notifyListeners();
+    // } catch (e) {
+    //   _isLoading = false;
+    //   notifyListeners();
+    //   catchException(e, context);
+    // }
   }
 
   loadAll(BuildContext context) async {
     if (meUser != null) {
-      _loadingAt = 30;
+      _loadingAt = 20;
       _loadingText = "Loading the beats...";
       notifyListeners();
-      context.read<LogInManagement>().allBeatsLocal =
-      await BeatService().getBeats();
-      _loadingAt = 60;
-      _loadingText = "Loading the outlets";
-      context.read<MapManagement>().allOutlets =
-      await OutletService().getOutlets();
+      // context.read<LogInManagement>().allBeatsLocal =
+      // await BeatService().getBeats();
+      // _loadingAt = 50;
+      // _loadingText = "Loading the outlets";
+      context.read<MapManagement>().allOutlets = context
+          .read<LogInManagement>()
+          .allOutletsLocal = await OutletService().getOutlets();
+      notifyListeners();
+      _loadingAt = 70;
+      _loadingText = "Loading your tourplan";
+      List tourplan = await TourPlanService().getTourPlan(context);
+      context.read<BeatManagement>().beats = tourplan[0];
+      context.read<BeatManagement>().outletOrders = tourplan[1];
+      context.read<TodayProgressState>().scheduleVisit =
+          context.read<LogInManagement>().allOutletsLocal.length;
+      context.read<TodayProgressState>().visitText = context
+          .read<LogInManagement>()
+          .allOutletsLocal
+          .where((element) => element.isDone)
+          .length;
       notifyListeners();
       Navigator.push(
         context,
@@ -145,7 +164,6 @@ class LogInVariables {
 
   bool get isPasswordShown => _isPasswordShown;
 
-
   int get loadingAt => _loadingAt;
 
   String get loadingText => _loadingText;
@@ -160,17 +178,11 @@ class LogInVariables {
 
   TextEditingController get passwordTextController => _passwordTextController;
 
-  List<Beat> _allBeatsLocal = [];
   List<Outlet> _allOutletsLocal = [];
-
-  set allBeatsLocal(List<Beat> value) {
-    _allBeatsLocal = value;
-  }
 
   set allOutletsLocal(List<Outlet> value) {
     _allOutletsLocal = value;
   }
-  List<Outlet> get allOutletsLocal => _allOutletsLocal;
 
-  List<Beat> get allBeatsLocal => _allBeatsLocal;
+  List<Outlet> get allOutletsLocal => _allOutletsLocal;
 }

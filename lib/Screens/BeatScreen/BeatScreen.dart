@@ -47,9 +47,8 @@ class _BeatScreenState extends State<BeatScreen> {
               children: [
                 BeatHeader(),
                 AverageVolume(),
-                context.watch<TodayProgressState>().inProgressBeat == null
-                    ? SelectBeat()
-                    : TodayProgress(),
+                TodayProgress(),
+                SelectBeat(),
               ],
             )),
       ),

@@ -14,7 +14,7 @@ class TodayProgressState with ChangeNotifier, DiagnosticableTreeMixin {
 
   double _netValueSales = 14000;
   int _stdQuantitySales = 200;
-  int _uniqueSKU = 5;
+  double _uniqueSKU = 5;
   Beat? _inProgressBeat;
 
   Beat? get inProgressBeat => _inProgressBeat;
@@ -37,9 +37,9 @@ class TodayProgressState with ChangeNotifier, DiagnosticableTreeMixin {
     _scheduleVisit = value;
   }
 
-  int get uniqueSKU => _uniqueSKU;
+  double get uniqueSKU => _uniqueSKU;
 
-  set uniqueSKU(int value) {
+  set uniqueSKU(double value) {
     _uniqueSKU = value;
   }
 

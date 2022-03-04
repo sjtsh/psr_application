@@ -5,6 +5,7 @@ import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 
 import '../../StateManagement/MapManagement.dart';
+import '../OrderScreen/ShopClosedScreen.dart';
 
 class OutletList extends StatelessWidget {
   const OutletList({Key? key}) : super(key: key);
@@ -111,7 +112,7 @@ class OutletList extends StatelessWidget {
                                 height: 25,
                                 child: Center(
                                   child: Text(
-                                    "Kirana Shop",
+                                    context.watch<MapManagement>().sortedOutlets[index].category,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -131,7 +132,7 @@ class OutletList extends StatelessWidget {
                                 height: 25,
                                 child: Center(
                                   child: Text(
-                                    "A+ Segmentation",
+                                    context.watch<MapManagement>().sortedOutlets[index].segmentation,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -186,7 +187,7 @@ class OutletList extends StatelessWidget {
                                   },
                                   child: Text(
                                     "TAKE ORDER",
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(fontSize : 12,color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -207,7 +208,57 @@ class OutletList extends StatelessWidget {
                                   onPressed: () {},
                                   child: Text(
                                     "VIEW HISTORY",
-                                    style: TextStyle(color: Colors.grey),
+                                    style: TextStyle(fontSize: 12,color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                height: 30,
+                                child: MaterialButton(
+                                  color:dis > 20 ? Colors.grey : Colors.redAccent,
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                                      return ShopClosedScreen();
+                                    }));
+                                  },
+                                  child: Text(
+                                    "SHOP CLOSED",
+                                    style: TextStyle(fontSize: 12, color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Container(
+                                clipBehavior: Clip.hardEdge,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                height: 30,
+                                child: MaterialButton(
+                                  color: dis > 20 ?Color(0xffE8E8E9) : Colors.orangeAccent,
+                                  onPressed: () {},
+                                  child: Text(
+                                    "NO ORDER",
+                                    style: TextStyle(fontSize: 12, color:dis > 20 ?Colors.grey: Colors.white),
                                   ),
                                 ),
                               ),

@@ -153,7 +153,7 @@ class TodayProgress extends StatelessWidget {
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           Text(
-                            "Unique SKU",
+                            "Average SKU",
                             style: TextStyle(
                                 color: Colors.black.withOpacity(0.5),
                                 fontSize: 12),

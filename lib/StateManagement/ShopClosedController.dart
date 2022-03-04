@@ -16,20 +16,30 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   Timer? _timer;
 
   Timer? get timer => _timer;
+  bool _isloading = false;
+  get isloading => _isloading;
+  List<CameraDescription> _cameras = [];
+
+  List<CameraDescription> get cameras => _cameras;
+
+
+  CameraController? get controller => _controller;
+
+  imageSent(){
+    _isloading = !_isloading;
+    notifyListeners();
+  }
+
 
   set timer(Timer? value) {
     _timer = value;
   }
 
-  List<CameraDescription> _cameras = [];
 
-  List<CameraDescription> get cameras => _cameras;
 
   set cameras(List<CameraDescription> value) {
     _cameras = value;
   }
-
-  CameraController? get controller => _controller;
 
   set controller(CameraController? value) {
     _controller = value;

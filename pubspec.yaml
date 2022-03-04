@@ -43,7 +43,9 @@ dependencies:
   flutter_svg: ^0.22.0
   countup:
   camera: ^0.9.4+14
+  google_fonts:
   native_device_orientation: ^1.0.0
+  url_launcher: ^6.0.20
 
 
   # The following adds the Cupertino Icons font to your application.
