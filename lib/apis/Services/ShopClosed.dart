@@ -26,7 +26,7 @@ class OutletClosedService {
       body: jsonEncode({
           'img': downloadUrl,
           'remarks': remarks,
-          'outlet_id': outletID.toString(),
+          'outlet_plan_id': outletID.toString(),
         })
     );
     print(res.body);

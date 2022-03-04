@@ -9,7 +9,7 @@ import 'package:psr_application/StateManagement/TodayProgress.dart';
 import '../../../apis/Entities/Beat.dart';
 
 class IndividualBeat extends StatelessWidget {
-  final Beat beat;
+  final HollowBeat beat;
 
   IndividualBeat(this.beat);
 
@@ -19,39 +19,44 @@ class IndividualBeat extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: 6.0,
       ),
-      child: GestureDetector(
-        onTap: () {
-          context
-              .read<TodayProgressState>().inProgressBeat = beat;
-
-        },
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  offset: Offset(0, -2),
-                  blurRadius: 3,
-                  spreadRadius: 3)
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                offset: Offset(0, -2),
+                blurRadius: 3,
+                spreadRadius: 3)
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              Icon(Icons.add),
+              SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(beat.beatName),
+                    Text(
+                      beat.distributorName,
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(0.5),
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              beat.isDone ? Icon(Icons.done, color: Colors.green,) : Container(),
             ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Icon(Icons.add),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: Text(beat.name),
-                ),
-                Icon(Icons.arrow_forward_ios_rounded)
-              ],
-            ),
           ),
         ),
       ),

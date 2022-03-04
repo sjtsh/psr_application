@@ -75,12 +75,12 @@ class LogInScreen extends StatelessWidget {
                       onPressed: () async {
                         bool isValidated =
                             context.read<LogInManagement>().validateMobileNumber();
-                        if (isValidated) {
-                          await context.read<LogInManagement>().LoadingFromSignIn(context);
-                        }
                         Navigator.push(context, MaterialPageRoute(builder: (_){
                           return LoadingScreen();
                         }));
+                        if (isValidated) {
+                          await context.read<LogInManagement>().LoadingFromSignIn(context);
+                        }
                       },
                       child: Center(
                         child: !context.watch<LogInManagement>().isLoading

@@ -28,6 +28,7 @@ class UserService {
             parsable["deactivated"].toString() == "1");
         user.sessionID = parsable["session_id"];
         meUser = user;
+        print("got user");
         return user;
       } catch (e) {
         throw "Password incorrect";
@@ -57,6 +58,7 @@ class UserService {
               parsable["deactivated"].toString() == "1");
           user.sessionID = parsable["session_id"];
           meUser = user;
+          print("got user");
           return user;
         } catch (e) {
           throw "Password incorrect";

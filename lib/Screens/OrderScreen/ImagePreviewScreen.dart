@@ -73,11 +73,12 @@ class ImagePreviewScreen extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     context.read<ShopClosedController>().imageSent();
-
                     OutletClosedService()
                         .insertOutletClosed(
                             File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", context.read<ShopClosedController>().remarkTextEditingController.text, context.read<MapManagement>().selectedOutlet!.id)
+
                         .then((value) {
+                      context.read<ShopClosedController>().imageSent();
                       Navigator.pop(context);
                       Navigator.pop(context);
                     });

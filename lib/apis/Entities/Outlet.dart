@@ -1,6 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class Outlet{
+class Outlet {
   int id;
   int beatID;
   String name;
@@ -13,7 +13,21 @@ class Outlet{
   String category;
   String segmentation;
   bool deactivated;
-  Marker ? marker;
-  Outlet(this.id, this.beatID, this.name, this.img, this.lat, this.lng, this.mobile, this.pan,this.ownerName,this.category, this.segmentation, this.deactivated);
+  bool isDone;
+  Marker? marker;
 
+  Outlet(
+      this.id,
+      this.beatID,
+      this.name,
+      this.img,
+      this.lat,
+      this.lng,
+      this.mobile,
+      this.pan,
+      this.ownerName,
+      this.category,
+      this.segmentation,
+      this.deactivated,
+      this.isDone);
 }

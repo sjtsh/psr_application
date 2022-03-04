@@ -99,7 +99,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             sortedOutlet[index].ownerName,
             sortedOutlet[index].category,
             sortedOutlet[index].segmentation,
-            sortedOutlet[index].deactivated);
+            sortedOutlet[index].deactivated,
+            sortedOutlet[index].isDone);
         outlet.marker = Marker(
           onTap: () {
             _selectedOutlet = _sortedOutlets[index];

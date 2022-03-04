@@ -10,8 +10,7 @@ import '../Entities/Beat.dart';
 class BeatService {
   Future<List<Beat>> getBeats() async {
     Response res = await http.get(
-      Uri.parse(
-          "https://asia-south1-psr-application-342007.cloudfunctions.net/getBeats"),
+      Uri.parse("https://asia-south1-psr-application-342007.cloudfunctions.net/getBeats"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'session_id': (meUser?.sessionID ?? ""),
