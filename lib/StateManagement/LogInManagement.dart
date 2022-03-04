@@ -25,31 +25,33 @@ import 'TodayProgress.dart';
 
 class LogInManagement
     with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
+
   LoadingFromSession(BuildContext context, String sessionID) async {
-    // try {
-    await UserService().LoginWithSession(sessionID);
-    await loadAll(context);
-    // } catch (e) {
-    //   catchException(e, context);
-    // }
+    try {
+      await UserService().LoginWithSession(sessionID);
+      await loadAll(context);
+    } catch (e) {
+      catchException(e, context);
+    }
   }
 
   LoadingFromSignIn(BuildContext context) async {
-    // try {
-    _isLoading = true;
-    notifyListeners();
-    await UserService()
-        .Login(_mobileTextController.text, _passwordTextController.text);
-    SharedPreferences.getInstance().then(
-        (value) => value.setString("session_id", meUser?.sessionID ?? ""));
-    await loadAll(context);
-    _isLoading = false;
-    notifyListeners();
-    // } catch (e) {
-    //   _isLoading = false;
-    //   notifyListeners();
-    //   catchException(e, context);
-    // }
+    try {
+      _isLoading = true;
+      notifyListeners();
+      await UserService()
+          .Login(_mobileTextController.text, _passwordTextController.text);
+      SharedPreferences.getInstance().then(
+        (value) => value.setString("session_id", meUser?.sessionID ?? ""),
+      );
+      await loadAll(context);
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      catchException(e, context);
+    }
   }
 
   loadAll(BuildContext context) async {

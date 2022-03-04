@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/MapScreen/OrderHistory.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 
@@ -21,9 +22,9 @@ class OutletList extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(6.0),
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 context.read<MapManagement>().changeSelectedMarkerOutlet(index);
-            },
+              },
               child: Container(
                 alignment: Alignment.bottomCenter,
                 width: 300,
@@ -52,7 +53,10 @@ class OutletList extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                  context.watch<MapManagement>().sortedOutlets[index].name,
+                              context
+                                  .watch<MapManagement>()
+                                  .sortedOutlets[index]
+                                  .name,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -67,9 +71,9 @@ class OutletList extends StatelessWidget {
                               ),
                             ),
                             Text(
-                  dis < 1000
-                  ? dis.toStringAsFixed(2) + " m"
-                      : (dis / 1000).toStringAsFixed(2) + " km",
+                              dis < 1000
+                                  ? dis.toStringAsFixed(2) + " m"
+                                  : (dis / 1000).toStringAsFixed(2) + " km",
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
@@ -84,11 +88,11 @@ class OutletList extends StatelessWidget {
                               ),
                             ),
                             Text(
-                  context
-                      .watch<MapManagement>()
-                      .sortedOutlets[index]
-                      .id
-                      .toString(),
+                              context
+                                  .watch<MapManagement>()
+                                  .sortedOutlets[index]
+                                  .id
+                                  .toString(),
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
@@ -112,7 +116,10 @@ class OutletList extends StatelessWidget {
                                 height: 25,
                                 child: Center(
                                   child: Text(
-                                    context.watch<MapManagement>().sortedOutlets[index].category,
+                                    context
+                                        .watch<MapManagement>()
+                                        .sortedOutlets[index]
+                                        .category,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -132,7 +139,10 @@ class OutletList extends StatelessWidget {
                                 height: 25,
                                 child: Center(
                                   child: Text(
-                                    context.watch<MapManagement>().sortedOutlets[index].segmentation,
+                                    context
+                                        .watch<MapManagement>()
+                                        .sortedOutlets[index]
+                                        .segmentation,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
@@ -154,7 +164,9 @@ class OutletList extends StatelessWidget {
                             ),
                             Text(
                               context
-                                  .watch<MapManagement>().sortedOutlets[index].mobile,
+                                  .watch<MapManagement>()
+                                  .sortedOutlets[index]
+                                  .mobile,
                               style: TextStyle(
                                 color: Colors.grey,
                               ),
@@ -175,8 +187,9 @@ class OutletList extends StatelessWidget {
                                 ),
                                 height: 30,
                                 child: MaterialButton(
-                                  color:
-                                      dis > 20 ? Colors.grey : Color(0xff34C759),
+                                  color: dis > 20
+                                      ? Colors.grey
+                                      : Color(0xff34C759),
                                   onPressed: () {
                                     if (dis < 20) {
                                       Navigator.of(context)
@@ -187,7 +200,8 @@ class OutletList extends StatelessWidget {
                                   },
                                   child: Text(
                                     "TAKE ORDER",
-                                    style: TextStyle(fontSize : 12,color: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -205,10 +219,20 @@ class OutletList extends StatelessWidget {
                                 height: 30,
                                 child: MaterialButton(
                                   color: Color(0xffE8E8E9),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          return OrderHistory(context.read<MapManagement>().sortedOutlets[index]);
+                                        },
+                                      ),
+                                    );
+                                  },
                                   child: Text(
                                     "VIEW HISTORY",
-                                    style: TextStyle(fontSize: 12,color: Colors.grey),
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -229,15 +253,18 @@ class OutletList extends StatelessWidget {
                                 ),
                                 height: 30,
                                 child: MaterialButton(
-                                  color:dis > 20 ? Colors.grey : Colors.redAccent,
+                                  color:
+                                      dis > 20 ? Colors.grey : Colors.redAccent,
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
                                       return ShopClosedScreen();
                                     }));
                                   },
                                   child: Text(
                                     "SHOP CLOSED",
-                                    style: TextStyle(fontSize: 12, color: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -254,11 +281,17 @@ class OutletList extends StatelessWidget {
                                 ),
                                 height: 30,
                                 child: MaterialButton(
-                                  color: dis > 20 ?Color(0xffE8E8E9) : Colors.orangeAccent,
+                                  color: dis > 20
+                                      ? Color(0xffE8E8E9)
+                                      : Colors.orangeAccent,
                                   onPressed: () {},
                                   child: Text(
                                     "NO ORDER",
-                                    style: TextStyle(fontSize: 12, color:dis > 20 ?Colors.grey: Colors.white),
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: dis > 20
+                                            ? Colors.grey
+                                            : Colors.white),
                                   ),
                                 ),
                               ),

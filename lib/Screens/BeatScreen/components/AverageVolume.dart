@@ -67,6 +67,7 @@ class _AverageVolumeState extends State<AverageVolume> {
                     decoration: BoxDecoration(
                         color: Colors.green, shape: BoxShape.circle),
                   ),
+                  SizedBox(width: 12,),
                   Text("AVG SALES VOLUME"),
                   Expanded(child: Container()),
                   Text(context.watch<AverageVolumeState>().dateRange),

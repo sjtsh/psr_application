@@ -6,6 +6,9 @@ class OutletOrder {
   final DateTime timeCreated;
   final String remarks;
   final bool deactivated;
+  final String beatName;
+  final String outletName;
+  final int outletID;
   final List<OutletOrderItem> items;
 
   OutletOrder(
@@ -13,6 +16,9 @@ class OutletOrder {
     this.outletPlanID,
     this.timeCreated,
     this.remarks,
+    this.beatName,
+    this.outletName,
+      this.outletID,
     this.items, {
     this.deactivated = false,
   });

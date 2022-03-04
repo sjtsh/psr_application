@@ -23,7 +23,6 @@ class TourPlanService {
         'session_id': (meUser?.sessionID ?? ""),
       },
     );
-    // "id", "sku_id", "primary_count", "outlet_order_id", "user_id", "outlet_id", "time_created", "remarks", "name", "mrp", "ptr", "img", "primary_unit", "secondary_unit", "cf"
     if (response.statusCode == 200) {
       Map<String, dynamic> aMap = jsonDecode(response.body);
       Map<String, dynamic> beatPlanMap = aMap["beat_plans"];
@@ -35,6 +34,9 @@ class TourPlanService {
           ordersMap[e]["outlet_plan_id"],
           DateTime.parse(ordersMap[e]["time_created"]),
           ordersMap[e]["remarks"],
+          ordersMap[e]["beat_name"],
+          ordersMap[e]["outlet_name"],
+          int.parse(ordersMap[e]["outlet_id"].toString()),
           items.keys
               .map((f) => OutletOrderItem(
                   int.parse(f.toString()),

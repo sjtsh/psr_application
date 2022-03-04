@@ -7,6 +7,7 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/AverageVolume.dart';
+import 'StateManagement/DateRangeManagement.dart';
 import 'StateManagement/LogInManagement.dart';
 import 'StateManagement/TodayProgress.dart';
 import 'package:http/http.dart' as http;
@@ -32,6 +33,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => BeatManagement(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => DateRangeManagement(),
       ),
     ], child: const MyApp()),
   );

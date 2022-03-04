@@ -1,9 +1,13 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/DateRangeManagement.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/database.dart';
 
+import '../../../StateManagement/BeatManagement.dart';
+import '../../OrderDateRangeScreen.dart';
 import './BeatStat.dart';
 
 class BeatHeader extends StatelessWidget {
@@ -57,9 +61,24 @@ class BeatHeader extends StatelessWidget {
               ],
             ),
             Expanded(child: Container()),
-            Icon(
-              Icons.calendar_today,
-              color: Colors.blue,
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) {
+                      NepaliDateTime date = NepaliDateTime.now();
+                      context.read<DateRangeManagement>().startDate = date;
+                      context.read<DateRangeManagement>().endDate = date;
+                      return OrderDateRangeScreen();
+                    },
+                  ),
+                );
+              },
+              icon: Icon(
+                Icons.calendar_today,
+                color: Colors.blue,
+              ),
             ),
             SizedBox(
               width: 12,
