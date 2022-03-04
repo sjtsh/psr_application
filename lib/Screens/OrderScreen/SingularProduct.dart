@@ -39,7 +39,7 @@ class _SingularProductState extends State<SingularProduct> {
                  controller: context.read<OrderScreenManagement>().controller,
                   shrinkWrap: true,
                   itemCount: context.read<OrderScreenManagement>().data[widget.index].length ,itemBuilder: (_, index)=>
-                    SingularProductVariation(),
+                    SingularProductVariation(index),
                 )
 
               ]

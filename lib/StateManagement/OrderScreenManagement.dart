@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 
 class Item {
   final ExpandableController expandableController;
@@ -10,14 +11,90 @@ class Item {
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Item> _items = [];
+
   List<Item> get items => _items;
+  Map<String, int> _singularOrder = {};
+
+  Map<String, int> get singularOrder => _singularOrder;
+
+  set singularOrder(Map<String, int> value) {
+    _singularOrder = value;
+  }
+
   int? currentlyExpanded;
   ScrollController _controller = ScrollController();
+
   get controller => _controller;
 
-  List _data = [{"2":"hello", "3": "1", "5":"2"}, ["hello", 1, 2,3], [5, 1, 2],["hello", 1, 2, 4 ,5]];
-  List  get data => _data;
+  List<List> _data = <List>[
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+    ["hello", "1", "2"],
+    ["hello", 1, 2, 3],
+    [5, 1, 2],
+    ["hello", 1, 2, 4, 5],
+  ];
 
+  List<List> get data => _data;
 
   set expandableController(List<Item> value) {
     _items = value;

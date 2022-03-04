@@ -1,7 +1,11 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/components/IndividualBeat.dart';
+import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmOrderScreen.dart';
+import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 
+import '../../StateManagement/MapManagement.dart';
 import 'ProductList.dart';
 import 'SearchBar.dart';
 import 'SingularProduct.dart';
@@ -12,8 +16,6 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ExpandableController _expandableController = ExpandableController();
-
     return Scaffold(
       body: Column(children: [
         Expanded(
@@ -29,7 +31,7 @@ class OrderScreen extends StatelessWidget {
               SearchBarState(),
               Column(
                 children: List.generate(
-                  4,
+                  context.read<OrderScreenManagement>().data.length,
                   (index) => SingularProduct(index),
                 ),
               ),
@@ -43,7 +45,13 @@ class OrderScreen extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.green, borderRadius: BorderRadius.circular(16)),
             child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  print(
+                      "${context.read<MapManagement>().selectedOutlet!.id} outlet id");
+                  print(
+                      "${context.read<OrderScreenManagement>().singularOrder} map");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => ConfirmOrderScreen()));
+                },
                 child: Text(
                   "NEXT",
                   style: TextStyle(color: Colors.white),

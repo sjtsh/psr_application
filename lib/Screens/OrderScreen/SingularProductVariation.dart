@@ -1,8 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../StateManagement/OrderScreenManagement.dart';
 
-class SingularProductVariation extends StatelessWidget {
+class SingularProductVariation extends StatefulWidget {
+  int index;
+
+  SingularProductVariation(this.index);
+
+  @override
+  State<SingularProductVariation> createState() =>
+      _SingularProductVariationState();
+}
+
+class _SingularProductVariationState extends State<SingularProductVariation> {
+  TextEditingController _textEditingController1 = TextEditingController();
+
+  TextEditingController _textEditingController2 = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // SKUStock mySKUStock;
@@ -46,7 +68,7 @@ class SingularProductVariation extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: TextField(
-                  //  controller: widget._textEditingControllerPrimary,
+                    controller: _textEditingController1,
                     cursorWidth: 1,
                     keyboardType: TextInputType.number,
                     cursorColor: Colors.blue,
@@ -54,6 +76,19 @@ class SingularProductVariation extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 14,
                     ),
+                    onChanged: (input) {
+                      //first text editing controller (primary count)
+                        context
+                            .read<OrderScreenManagement>()
+                            .singularOrder[widget.index.toString()] =
+                            (int.tryParse(_textEditingController1.text) ?? 0) +
+                                (int.tryParse(_textEditingController2.text) ??
+                                    0) *
+                                    2;
+                      print(context
+                          .read<OrderScreenManagement>()
+                          .singularOrder[widget.index.toString()]);
+                    },
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       hintText: "all uni",
@@ -62,7 +97,7 @@ class SingularProductVariation extends StatelessWidget {
                       //         element.unitID == sku.primaryUnitID)
                       //     .unitName,
                       hintStyle:
-                          TextStyle(color: Colors.black.withOpacity(0.3)),
+                      TextStyle(color: Colors.black.withOpacity(0.3)),
                       border: InputBorder.none,
                     ),
                   ),
@@ -84,10 +119,22 @@ class SingularProductVariation extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: TextField(
-                  //  controller: widget._textEditingControllerSecondary,
+                    controller: _textEditingController2,
                     cursorWidth: 1,
                     keyboardType: TextInputType.number,
                     cursorColor: Colors.blue,
+                    onChanged: (text) {
+                      context
+                          .read<OrderScreenManagement>()
+                          .singularOrder[widget.index.toString()] =
+                          (int.tryParse(_textEditingController1.text) ?? 0) +
+                              (int.tryParse(_textEditingController2.text) ??
+                                  0) *
+                                  2;
+                      print(context
+                          .read<OrderScreenManagement>()
+                          .singularOrder[widget.index.toString()]);
+                    },
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 14,
@@ -101,7 +148,7 @@ class SingularProductVariation extends StatelessWidget {
                       //     .unitName,
                       border: InputBorder.none,
                       hintStyle:
-                          TextStyle(color: Colors.black.withOpacity(0.3)),
+                      TextStyle(color: Colors.black.withOpacity(0.3)),
                     ),
                   ),
                 ),
