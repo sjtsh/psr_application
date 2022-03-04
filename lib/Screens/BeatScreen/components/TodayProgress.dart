@@ -196,48 +196,6 @@ class TodayProgress extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          GestureDetector(
-            onTap: () {
-              context.read<TodayProgressState>().inProgressBeat = null;
-            },
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text(
-                  "Finish",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 12,
-          ),
-          GestureDetector(
-            onTap: () {
-              context.read<ShopClosedController>().initialize();
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return ShopClosedScreen();
-              }));
-            },
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text(
-                  "Open Camera Module",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

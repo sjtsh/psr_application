@@ -15,6 +15,7 @@ import '../apis/Entities/Beat.dart';
 import '../apis/Entities/Outlet.dart';
 import '../apis/Entities/User.dart';
 import '../apis/Services/BeatService.dart';
+import '../apis/Services/SKUService.dart';
 import '../apis/Services/TourPlan.dart';
 import '../apis/Services/UserService.dart';
 import '../database.dart';
@@ -59,13 +60,13 @@ class LogInManagement
       _loadingAt = 20;
       _loadingText = "Loading the beats...";
       notifyListeners();
-      // context.read<LogInManagement>().allBeatsLocal =
-      // await BeatService().getBeats();
-      // _loadingAt = 50;
-      // _loadingText = "Loading the outlets";
       context.read<MapManagement>().allOutlets = context
           .read<LogInManagement>()
           .allOutletsLocal = await OutletService().getOutlets();
+      notifyListeners();
+      _loadingAt = 50;
+      _loadingText = "Loading your tourplan";
+      await SKUService().getSKUs(context);
       notifyListeners();
       _loadingAt = 70;
       _loadingText = "Loading your tourplan";

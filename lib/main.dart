@@ -9,6 +9,7 @@ import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/AverageVolume.dart';
 import 'StateManagement/DateRangeManagement.dart';
 import 'StateManagement/LogInManagement.dart';
+import 'StateManagement/OrderScreenManagement.dart';
 import 'StateManagement/TodayProgress.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,6 +37,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => DateRangeManagement(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => OrderScreenManagement(),
       ),
     ], child: const MyApp()),
   );
@@ -67,11 +71,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     ask();
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-        theme:ThemeData(
-        textTheme: GoogleFonts.robotoTextTheme(
-        Theme.of(context).textTheme,),
-    ),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          textTheme: GoogleFonts.robotoTextTheme(
+            Theme.of(context).textTheme,
+          ),
+        ),
         home: CheckSessionScreen());
   }
 }

@@ -17,7 +17,7 @@ import 'package:psr_application/apis/Entities/Outlet.dart';
 class MapScreen extends StatelessWidget {
   GoogleMapController? _controller;
 
-  final CameraPosition _kGooglePlex = CameraPosition(
+  final CameraPosition _kGooglePlex = const CameraPosition(
     target: LatLng(27.6539, 85.4617),
   );
 
@@ -25,7 +25,7 @@ class MapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle(
+        value: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
         ),
    child: Scaffold(
@@ -73,14 +73,14 @@ class MapScreen extends StatelessWidget {
             child: MapHeader(),
           ),
          // Map side UI
-         MapSideUI(),
+         const MapSideUI(),
           //List of outlets UI
-          context.watch<MapManagement>().allOutlets.length != 0
+          context.watch<MapManagement>().allOutlets.isNotEmpty
               ? Positioned(
                   bottom: 10,
                   height: 210,
                   width: width,
-                  child: OutletList(),
+                  child: const OutletList(),
                 )
               : Positioned(
                   bottom: 0,

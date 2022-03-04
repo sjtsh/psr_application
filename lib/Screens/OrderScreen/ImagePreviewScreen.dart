@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/database.dart';
@@ -27,17 +28,18 @@ class ImagePreviewScreen extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(12),
           child: TextFormField(
+            controller: context.read<ShopClosedController>().remarkTextEditingController,
           decoration: InputDecoration(
-              prefixIcon: Icon(Icons.book_outlined),
+              prefixIcon: const Icon(Icons.book_outlined),
               hintText: "Remark",
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide(color: Colors.green)) ,
+                  borderSide: const BorderSide(color: Colors.green)) ,
               enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(16),borderSide: BorderSide(color: Colors.black))),
           onFieldSubmitted: (text){
 
           },
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         Row(
@@ -73,11 +75,8 @@ class ImagePreviewScreen extends StatelessWidget {
                     context.read<ShopClosedController>().imageSent();
                     OutletClosedService()
                         .insertOutletClosed(
-                            File(path),
-                            "trying${path.split("\\").last}",
-                            meUser?.id ?? "0",
-                            "remarks",
-                            1)
+                            File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", context.read<ShopClosedController>().remarkTextEditingController.text, context.read<MapManagement>().selectedOutlet!.id)
+
                         .then((value) {
                       context.read<ShopClosedController>().imageSent();
                       Navigator.pop(context);
@@ -94,7 +93,7 @@ class ImagePreviewScreen extends StatelessWidget {
                       child: !context.watch<ShopClosedController>().isloading?Text(
                         "Done",
                         style: TextStyle(color: Colors.white),
-                      ):CircularProgressIndicator(),
+                      ):CircularProgressIndicator(color: Colors.white,),
                     ),
                   ),
                 ),

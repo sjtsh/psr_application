@@ -32,7 +32,6 @@ class TodayProgressState with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   int get scheduleVisit => _scheduleVisit;
-
   set scheduleVisit(int value) {
     _scheduleVisit = value;
   }

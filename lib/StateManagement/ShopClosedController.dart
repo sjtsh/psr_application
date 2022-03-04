@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
@@ -14,6 +15,9 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   NativeDeviceOrientation? _orientation;
   CameraController? _controller;
   Timer? _timer;
+
+  TextEditingController _remarkTextEditingController = TextEditingController();
+  get  remarkTextEditingController => _remarkTextEditingController;
 
   Timer? get timer => _timer;
   bool _isloading = false;
@@ -36,7 +40,6 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
 
-
   set cameras(List<CameraDescription> value) {
     _cameras = value;
   }
@@ -52,7 +55,6 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void dispose(){
-
     timer?.cancel();
     print("cancelled");
     controller?.dispose();
