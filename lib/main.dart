@@ -7,6 +7,7 @@ import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/AverageVolume.dart';
 import 'StateManagement/LogInManagement.dart';
+import 'StateManagement/OrderScreenManagement.dart';
 import 'StateManagement/TodayProgress.dart';
 
 void main() {
@@ -27,6 +28,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (_) => ShopClosedController(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => OrderScreenManagement(),
       ),
     ], child: const MyApp()),
   );

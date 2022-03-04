@@ -1,8 +1,11 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
+import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../StateManagement/MapManagement.dart';
 import '../OrderScreen/ShopClosedScreen.dart';
@@ -145,9 +148,13 @@ class OutletList extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Icon(
-                              Icons.phone,
-                              color: Colors.grey,
+                            GestureDetector(
+                              onTap: ()=> launch("tel://${context
+                                  .read<MapManagement>().sortedOutlets[index].mobile}"),
+                              child: Icon(
+                                Icons.phone,
+                                color: Colors.grey,
+                              ),
                             ),
                             SizedBox(
                               width: 10,
@@ -179,6 +186,8 @@ class OutletList extends StatelessWidget {
                                       dis > 20 ? Colors.grey : Color(0xff34C759),
                                   onPressed: () {
                                     if (dis < 20) {
+                                      context.read<OrderScreenManagement>().expandableController = List.generate(
+                                          4, (index) => Item(ExpandableController()));
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(builder: (_) {
                                         return OrderScreen();
@@ -204,11 +213,11 @@ class OutletList extends StatelessWidget {
                                 ),
                                 height: 30,
                                 child: MaterialButton(
-                                  color: Color(0xffE8E8E9),
+                                  color: Colors.lightBlue,
                                   onPressed: () {},
                                   child: Text(
                                     "VIEW HISTORY",
-                                    style: TextStyle(fontSize: 12,color: Colors.grey),
+                                    style: TextStyle(fontSize: 12,color: Colors.white),
                                   ),
                                 ),
                               ),
@@ -231,10 +240,14 @@ class OutletList extends StatelessWidget {
                                 child: MaterialButton(
                                   color:dis > 20 ? Colors.grey : Colors.redAccent,
                                   onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                                      return ShopClosedScreen();
-                                    }));
-                                  },
+                  context.read<MapManagement>().changeSelectedMarkerOutlet(index);
+                  if (dis < 20) {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return ShopClosedScreen();
+                  }));
+                  print(context.read<MapManagement>().selectedOutlet!.id);
+                  }
+                  },
                                   child: Text(
                                     "SHOP CLOSED",
                                     style: TextStyle(fontSize: 12, color: Colors.white),

@@ -10,6 +10,8 @@ import '../apis/Entities/Outlet.dart';
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> _allOutlets = [];
   Outlet? _selectedOutlet;
+
+  Outlet? get selectedOutlet => _selectedOutlet;
   GoogleMapController? _controller;
 
   GoogleMapController? get controller => _controller;
