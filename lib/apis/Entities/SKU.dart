@@ -18,8 +18,8 @@ class SKU {
       double.parse(json["mrp"]),
       double.parse(json["ptr"]),
       json["img"],
-      json["primaryUnit"],
-      json["secondaryUnit"],
+      json["primary_unit"],
+      json["secondary_unit"],
       json["cf"],
     );
   }

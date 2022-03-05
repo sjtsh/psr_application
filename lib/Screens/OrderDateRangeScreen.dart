@@ -3,6 +3,7 @@ import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/apis/Services/OrderService.dart';
 
+import '../Skeletons/OrdersSkeleton.dart';
 import '../StateManagement/BeatManagement.dart';
 import '../StateManagement/DateRangeManagement.dart';
 import '../database.dart';
@@ -204,7 +205,13 @@ class OrderDateRangeScreen extends StatelessWidget {
                                   child: context
                                           .watch<DateRangeManagement>()
                                           .isRequestDisabled
-                                      ? SizedBox(height:40, width: 40,child: Center(child: CircularProgressIndicator(color: Colors.white,)))
+                                      ? SizedBox(
+                                          height: 40,
+                                          width: 40,
+                                          child: Center(
+                                              child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          )))
                                       : Text(
                                           "Request",
                                           style: TextStyle(color: Colors.white),
@@ -220,23 +227,25 @@ class OrderDateRangeScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: context.watch<DateRangeManagement>().requestedOrders !=
-                        null
-                    ? (context.watch<DateRangeManagement>().requestedOrders ??
-                                [])
-                            .isEmpty
-                        ? Center(child: Text("No Orders Found"))
-                        : ListView(
-                            children: (context
+                child: context.watch<DateRangeManagement>().isRequestDisabled
+                    ? OrdersSkeleton()
+                    : context.watch<DateRangeManagement>().requestedOrders !=
+                            null
+                        ? (context
                                         .watch<DateRangeManagement>()
                                         .requestedOrders ??
                                     [])
-                                .map(
-                                  (e) => SingularOrder(e),
-                                )
-                                .toList())
-                    : context.watch<DateRangeManagement>().isRequestDisabled
-                        ? Center(child: CircularProgressIndicator())
+                                .isEmpty
+                            ? Center(child: Text("No Orders Found"))
+                            : ListView(
+                                children: (context
+                                            .watch<DateRangeManagement>()
+                                            .requestedOrders ??
+                                        [])
+                                    .map(
+                                      (e) => SingularOrder(e),
+                                    )
+                                    .toList())
                         : ListView(
                             children: context
                                 .watch<BeatManagement>()

@@ -2,12 +2,15 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/DateRangeManagement.dart';
 import 'package:psr_application/apis/Entities/OutletOrder.dart';
 
 import '../../database.dart';
 import '../Entities/OutletOrderItem.dart';
+import '../Entities/SKU.dart';
+import '../Entities/SubGroup.dart';
 
 class OrderService {
   Future<void> getOrdersDateRange(
@@ -56,7 +59,21 @@ class OrderService {
     }
   }
 
-  Future<bool> insertOrder(Map<String, String> aMap) async {
+  Future<bool> insertOrder(
+      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int outletPlanID) async {
+    Map<String, dynamic> bodyMap = {};
+    for (var element1 in aMap.values) {
+      for (var element in element1.entries) {
+        if (!bodyMap.containsKey("items")) {
+          bodyMap["items"] = {};
+        }
+        bodyMap["items"][element.key.id.toString()] = element.value.toString();
+      }
+    }
+    bodyMap["outlet_plan_id"] = outletPlanID.toString();
+    bodyMap["remarks"] = remarks;
+    bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
+
     Response res = await http.post(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/createOutletOrder"),
@@ -64,7 +81,7 @@ class OrderService {
           'Content-Type': 'application/json; charset=UTF-8',
           'session_id': (meUser?.sessionID ?? ""),
         },
-        body: jsonEncode(aMap));
+        body: jsonEncode(bodyMap));
     if (res.statusCode == 200) {
       return true;
     } else {

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -9,6 +11,7 @@ import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../StateManagement/MapManagement.dart';
+import '../OrderScreen/NoOrder/NoOrderScreen.dart';
 import '../OrderScreen/ShopClosedScreen.dart';
 
 class OutletList extends StatelessWidget {
@@ -20,7 +23,9 @@ class OutletList extends StatelessWidget {
       controller: context.read<MapManagement>().scrollController,
       scrollDirection: Axis.horizontal,
       children: List.generate(
-        5,
+        context
+            .watch<MapManagement>()
+            .sortedOutlets.length,
         (index) {
           return Padding(
             padding: const EdgeInsets.all(6.0),
@@ -77,25 +82,6 @@ class OutletList extends StatelessWidget {
                               dis < 1000
                                   ? dis.toStringAsFixed(2) + " m"
                                   : (dis / 1000).toStringAsFixed(2) + " km",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            Text(
-                              " • ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            Text(
-                              context
-                                  .watch<MapManagement>()
-                                  .sortedOutlets[index]
-                                  .id
-                                  .toString(),
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
@@ -178,6 +164,21 @@ class OutletList extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                             ),
+                            Text(
+                              " • ",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            Text(
+                              "#OU${context.watch<MapManagement>().sortedOutlets[index].id.toString().padLeft(4, "0")}",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -198,23 +199,27 @@ class OutletList extends StatelessWidget {
                                       ? Colors.grey
                                       : Color(0xff34C759),
                                   onPressed: () {
-                                  //commented for development purposes ~sajat
+                                    //commented for development purposes ~sajat
                                     // if (dis < 20) {
-                                      context.read<MapManagement>().changeSelectedMarkerOutlet(index);
-                                      context
-                                              .read<OrderScreenManagement>()
-                                              .expandableController =
-                                          List.generate(
-                                              context
-                                                  .read<OrderScreenManagement>()
-                                                  .data
-                                                  .length,
-                                              (index) =>
-                                                  Item(ExpandableController()));
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(builder: (_) {
-                                        return OrderScreen();
-                                      }));
+                                    context
+                                        .read<MapManagement>()
+                                        .changeSelectedMarkerOutlet(index);
+                                    context
+                                            .read<OrderScreenManagement>()
+                                            .expandableController =
+                                        List.generate(
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .data
+                                                .length,
+                                            (index) => ExpandableController());
+                                    context
+                                        .read<OrderScreenManagement>()
+                                        .singularOrder = {};
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) {
+                                      return OrderScreen();
+                                    }));
                                     // }
                                   },
                                   child: Text(
@@ -243,7 +248,9 @@ class OutletList extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (_) {
-                                          return OrderHistory(context.read<MapManagement>().sortedOutlets[index]);
+                                          return OrderHistory(context
+                                              .read<MapManagement>()
+                                              .sortedOutlets[index]);
                                         },
                                       ),
                                     );
@@ -312,7 +319,18 @@ class OutletList extends StatelessWidget {
                                   color: dis > 20
                                       ? Color(0xffE8E8E9)
                                       : Colors.orangeAccent,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context
+                                        .read<MapManagement>()
+                                        .changeSelectedMarkerOutlet(index);context
+                                        .read<OrderScreenManagement>()
+                                        .selectedNoOrderReasonGroup =
+                                        null;
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return NoOrderScreen();
+                                    }));
+                                  },
                                   child: Text(
                                     "NO ORDER",
                                     style: TextStyle(

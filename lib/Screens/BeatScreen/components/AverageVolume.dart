@@ -14,7 +14,11 @@ class _AverageVolumeState extends State<AverageVolume> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+          color: Colors.white,
+
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
+      ),
       child: Column(
         children: [
           Padding(

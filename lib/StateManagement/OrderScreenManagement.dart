@@ -2,54 +2,69 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/apis/Entities/NoOrderReasonGroup.dart';
+import 'package:psr_application/apis/Entities/SKU.dart';
+import 'package:psr_application/apis/Entities/SKU.dart';
+import 'package:psr_application/apis/Entities/SKU.dart';
 
 import '../apis/Entities/SubGroup.dart';
 
-class Item {
-  final ExpandableController expandableController;
-
-  Item(this.expandableController);
-}
-
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
-  List<Item> _items = [];
 
-  List<Item> get items => _items;
-  Map<String, int> _singularOrder = {};
-
-  Map<String, int> get singularOrder => _singularOrder;
-
-  set singularOrder(Map<String, int> value) {
-    _singularOrder = value;
-  }
-
+  List<ExpandableController> items = [];
+  Map<SubGroup, Map<SKU, int>>  singularOrder = {};
+  bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
-  ScrollController _controller = ScrollController();
+  ScrollController controller = ScrollController();
+  List<SubGroup> data = [];
+  List<NoOrderReasonGroup> noOrderReasons  = [];
+  NoOrderReasonGroup? _selectedNoOrderReasonGroup;
+  bool _noOrderButtonDisabled = false;
 
-  get controller => _controller;
+  bool get noOrderButtonDisabled => _noOrderButtonDisabled;
 
-  List<SubGroup> _data = [];
-
-  List<SubGroup> get data => _data;
-
-  set data(List<SubGroup> value) {
-    _data = value;
+  set noOrderButtonDisabled(bool value) {
+    _noOrderButtonDisabled = value;
+    notifyListeners();
   }
 
-  set expandableController(List<Item> value) {
-    _items = value;
+  NoOrderReasonGroup? get selectedNoOrderReasonGroup =>
+      _selectedNoOrderReasonGroup;
+
+  set selectedNoOrderReasonGroup(NoOrderReasonGroup? value) {
+    _selectedNoOrderReasonGroup = value;
+    notifyListeners();
+  }
+
+  bool get confirmButtonDisabled => _confirmButtonDisabled;
+
+  set confirmButtonDisabled(bool value) {
+    _confirmButtonDisabled = value;
+    notifyListeners();
+  }
+
+  set expandableController(List<ExpandableController> value) {
+    items = value;
   }
 
   makeExpansion(int index) {
-    if (!_items[index].expandableController.value) {
+    if (!items[index].value) {
       if (currentlyExpanded != null) {
-        _items[currentlyExpanded!].expandableController.value = false;
+        items[currentlyExpanded!].value = false;
       }
-      _items[index].expandableController.value = true;
+      items[index].value = true;
       currentlyExpanded = index;
     } else {
-      _items[index].expandableController.value = false;
+      items[index].value = false;
       currentlyExpanded = null;
     }
+  }
+
+  removeSKU(SubGroup subGroup, SKU sku){
+    singularOrder[subGroup]?.remove(sku);
+    if(singularOrder[subGroup]?.keys.isEmpty ?? false){
+      singularOrder.remove(subGroup);
+    }
+    notifyListeners();
   }
 }

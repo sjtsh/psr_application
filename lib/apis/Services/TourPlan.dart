@@ -10,11 +10,12 @@ import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/apis/Entities/Beat.dart';
 import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 
+import '../../StateManagement/BeatManagement.dart';
 import '../../database.dart';
 import '../Entities/OutletOrder.dart';
 
 class TourPlanService {
-  Future<List> getTourPlan(BuildContext context) async {
+  Future<bool> getTourPlan(BuildContext context) async {
     Response response = await http.get(
       Uri.parse(
           "https://asia-south1-psr-application-342007.cloudfunctions.net/getTourPlan"),
@@ -83,7 +84,16 @@ class TourPlanService {
       }
       context.read<TodayProgressState>().stdQuantitySales = stdQuantity;
       context.read<TodayProgressState>().successVisitText = orders.length;
-      return [beats, orders];
+      context.read<BeatManagement>().beats =beats;
+      context.read<BeatManagement>().outletOrders = orders;
+      context.read<TodayProgressState>().scheduleVisit =
+          context.read<LogInManagement>().allOutletsLocal.length;
+      context.read<TodayProgressState>().visitText = context
+          .read<LogInManagement>()
+          .allOutletsLocal
+          .where((element) => element.isDone)
+          .length;
+      return true;
     }
     throw "couldnt complete";
   }

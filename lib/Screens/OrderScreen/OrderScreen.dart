@@ -16,49 +16,51 @@ class OrderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
-        Expanded(
-          child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Order",
-                  style: TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(children: [
+          Expanded(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    "Order",
+                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
+                  ),
                 ),
-              ),
-              SearchBarState(),
-              Column(
-                children: List.generate(
-                  context.read<OrderScreenManagement>().data.length,
-                  (index) => SingularProduct(index),
+                SearchBarState(),
+                Column(
+                  children: List.generate(
+                    context.read<OrderScreenManagement>().data.length,
+                    (index) => SingularProduct(index),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.green, borderRadius: BorderRadius.circular(16)),
-            child: MaterialButton(
-                onPressed: () {
-                  print(
-                      "${context.read<MapManagement>().selectedOutlet!.id} outlet id");
-                  print(
-                      "${context.read<OrderScreenManagement>().singularOrder} map");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => ConfirmOrderScreen()));
-                },
-                child: Text(
-                  "NEXT",
-                  style: TextStyle(color: Colors.white),
-                )),
-          ),
-        )
-      ]),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.green, borderRadius: BorderRadius.circular(16)),
+              child: MaterialButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ConfirmOrderScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "NEXT",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ),
+          )
+        ]),
+      ),
     );
   }
 }

@@ -27,7 +27,7 @@ class IndividualBeat extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(0.1),
-                offset: Offset(0, -2),
+                offset: Offset(0, 2),
                 blurRadius: 3,
                 spreadRadius: 3)
           ],

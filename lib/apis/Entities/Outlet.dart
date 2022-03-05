@@ -1,6 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Outlet {
+  int outletPlanId;
   int id;
   int beatID;
   String name;
@@ -17,6 +18,7 @@ class Outlet {
   Marker? marker;
 
   Outlet(
+      this.outletPlanId,
       this.id,
       this.beatID,
       this.name,

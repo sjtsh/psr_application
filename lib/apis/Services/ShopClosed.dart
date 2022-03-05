@@ -5,17 +5,18 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 import '../../database.dart';
 import '../../firebase_options.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class OutletClosedService {
+
   Future<bool> insertOutletClosed(
-      File file, String name, String userID, String remarks, int outletID) async {
+      File file, String name, String userID, String remarks, int outletPlanID) async {
     String downloadUrl =
         await uploadFile(file: file, name: name, userID: userID);
-        print(downloadUrl);
     Response res = await http.post(
       Uri.parse(
           "https://asia-south1-psr-application-342007.cloudfunctions.net/insertOutletClosed"),
@@ -26,10 +27,10 @@ class OutletClosedService {
       body: jsonEncode({
           'img': downloadUrl,
           'remarks': remarks,
-          'outlet_plan_id': outletID.toString(),
+          'outlet_plan_id': outletPlanID.toString(),
+          "time_created": NepaliDateTime.now().toString().substring(0,19),
         })
     );
-    print(res.body);
     if (res.statusCode == 200) {
       return true;
     } else {

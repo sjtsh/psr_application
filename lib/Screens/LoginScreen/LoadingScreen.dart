@@ -29,7 +29,7 @@ class LoadingScreen extends StatelessWidget {
                     width: 150 *
                         (context.watch<LogInManagement>().loadingAt / 100),
                     height: 5,
-                    color: Colors.orange,
+                    color: Colors.red,
                     duration: const Duration(milliseconds: 200),
                   ),
                 ],

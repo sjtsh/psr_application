@@ -16,6 +16,7 @@ class SingularOrder extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -28,8 +29,8 @@ class SingularOrder extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      height: 20,
-                      width: 20,
+                      height: 40,
+                      width: 40,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xffEA47B2),
@@ -40,7 +41,7 @@ class SingularOrder extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 8),
+                              fontSize: 16),
                         ),
                       ),
                     ),

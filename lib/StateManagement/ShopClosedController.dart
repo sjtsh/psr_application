@@ -12,47 +12,19 @@ import '../firebase_options.dart';
 import 'LogInManagement.dart';
 
 class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
-  NativeDeviceOrientation? _orientation;
-  CameraController? _controller;
-  Timer? _timer;
+  NativeDeviceOrientation? orientation;
+  CameraController? controller;
+  Timer? timer;
+  TextEditingController remarkTextEditingController = TextEditingController();
+  bool isloading = false;
+  List<CameraDescription> cameras = [];
 
-  TextEditingController _remarkTextEditingController = TextEditingController();
-  get  remarkTextEditingController => _remarkTextEditingController;
-
-  Timer? get timer => _timer;
-  bool _isloading = false;
-  get isloading => _isloading;
-  List<CameraDescription> _cameras = [];
-
-  List<CameraDescription> get cameras => _cameras;
-
-
-  CameraController? get controller => _controller;
 
   imageSent(){
-    _isloading = !_isloading;
+    isloading = !isloading;
     notifyListeners();
   }
 
-
-  set timer(Timer? value) {
-    _timer = value;
-  }
-
-
-  set cameras(List<CameraDescription> value) {
-    _cameras = value;
-  }
-
-  set controller(CameraController? value) {
-    _controller = value;
-  }
-
-  NativeDeviceOrientation? get orientation => _orientation;
-
-  set orientation(NativeDeviceOrientation? value) {
-    _orientation = value;
-  }
 
   void dispose(){
     timer?.cancel();
@@ -66,20 +38,20 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
     NativeDeviceOrientationCommunicator()
         .orientation(useSensor: true)
         .then((value) {
-      _orientation = value;
+      orientation = value;
       notifyListeners();
-      print("orientation found $_orientation");
+      print("orientation found $orientation");
     });
     controller = CameraController(cameras[0], ResolutionPreset.high,);
     controller?.initialize();
     notifyListeners();
     print("initialized");
 
-    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+    timer = Timer.periodic(Duration(seconds: 2), (timer) {
       NativeDeviceOrientationCommunicator()
           .orientation(useSensor: true)
           .then((value) {
-        _orientation = value;
+        orientation = value;
         notifyListeners();
       });
     });

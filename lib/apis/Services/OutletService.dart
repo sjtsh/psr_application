@@ -12,7 +12,6 @@ import '../../StateManagement/TodayProgress.dart';
 import '../Entities/Outlet.dart';
 
 class OutletService {
-
   Future<List<Outlet>> getOutlets() async {
     Response res = await http.get(
       Uri.parse(
@@ -27,6 +26,7 @@ class OutletService {
       List<Outlet> beats = parsable
           .map(
             (e) => Outlet(
+              e["outlet_plan_id"],
               e["id"],
               e["beat_id"],
               e["name"].toString(),
@@ -48,5 +48,4 @@ class OutletService {
       throw "Status code is ${res.statusCode}";
     }
   }
-
 }

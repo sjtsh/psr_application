@@ -7,6 +7,7 @@ import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
 import 'package:psr_application/StateManagement/BeatManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
+import 'package:psr_application/apis/Services/NoOrderReasonGroupService.dart';
 import 'package:psr_application/apis/Services/OutletService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +26,18 @@ import 'package:http/http.dart' as http;
 import 'TodayProgress.dart';
 
 class LogInManagement
-    with ChangeNotifier, DiagnosticableTreeMixin, LogInVariables {
+    with ChangeNotifier, DiagnosticableTreeMixin {
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController mobileTextController = TextEditingController();
+  TextEditingController passwordTextController = TextEditingController();
+  int loadingAt = 0;
+  String loadingText = "";
+  String? mobileErrorText;
+  String? passwordErrorText;
+  bool isLoading = false;
+  bool isPasswordShown = false;
+  List<Outlet> allOutletsLocal = [];
 
   LoadingFromSession(BuildContext context, String sessionID) async {
     try {
@@ -38,18 +50,18 @@ class LogInManagement
 
   LoadingFromSignIn(BuildContext context) async {
     try {
-      _isLoading = true;
+      isLoading = true;
       notifyListeners();
       await UserService()
-          .Login(_mobileTextController.text, _passwordTextController.text);
+          .Login(mobileTextController.text, passwordTextController.text);
       SharedPreferences.getInstance().then(
         (value) => value.setString("session_id", meUser?.sessionID ?? ""),
       );
       await loadAll(context);
-      _isLoading = false;
+      isLoading = false;
       notifyListeners();
     } catch (e) {
-      _isLoading = false;
+      isLoading = false;
       notifyListeners();
       catchException(e, context);
     }
@@ -57,29 +69,24 @@ class LogInManagement
 
   loadAll(BuildContext context) async {
     if (meUser != null) {
-      _loadingAt = 20;
-      _loadingText = "Loading the beats...";
+      loadingAt = 20;
+      loadingText = "Loading the beats...";
       notifyListeners();
       context.read<MapManagement>().allOutlets = context
           .read<LogInManagement>()
           .allOutletsLocal = await OutletService().getOutlets();
       notifyListeners();
-      _loadingAt = 50;
-      _loadingText = "Loading your tourplan";
+      loadingAt = 40;
+      loadingText = "Loading your SKUs";
       await SKUService().getSKUs(context);
       notifyListeners();
-      _loadingAt = 70;
-      _loadingText = "Loading your tourplan";
-      List tourplan = await TourPlanService().getTourPlan(context);
-      context.read<BeatManagement>().beats = tourplan[0];
-      context.read<BeatManagement>().outletOrders = tourplan[1];
-      context.read<TodayProgressState>().scheduleVisit =
-          context.read<LogInManagement>().allOutletsLocal.length;
-      context.read<TodayProgressState>().visitText = context
-          .read<LogInManagement>()
-          .allOutletsLocal
-          .where((element) => element.isDone)
-          .length;
+      loadingAt = 60;
+      loadingText = "Loading your OrderReasons";
+      await NoOrderReasonGroupService().getNoOrderReasonGroups(context);
+      notifyListeners();
+      loadingAt = 70;
+      loadingText = "Loading your tourplan";
+      await TourPlanService().getTourPlan(context);
       notifyListeners();
       Navigator.push(
         context,
@@ -124,68 +131,30 @@ class LogInManagement
   bool validateMobileNumber() {
     bool myPersonalValidation = true;
     if (mobileTextController.text == "" || mobileTextController.text.isEmpty) {
-      _mobileErrorText = "Please enter mobile number";
+      mobileErrorText = "Please enter mobile number";
       myPersonalValidation = false;
     } else if (mobileTextController.text.length != 10) {
-      _mobileErrorText = "Number must be 10 digits";
+      mobileErrorText = "Number must be 10 digits";
       notifyListeners();
       myPersonalValidation = false;
     } else {
-      _mobileErrorText = null;
+      mobileErrorText = null;
       notifyListeners();
     }
     if (passwordTextController.text == "" ||
         passwordTextController.text.isEmpty) {
-      _passwordErrorText = "Please enter password";
+      passwordErrorText = "Please enter password";
       myPersonalValidation = false;
       notifyListeners();
     } else {
-      _passwordErrorText = null;
+      passwordErrorText = null;
       notifyListeners();
     }
     return myPersonalValidation;
   }
 
   showPassword() {
-    _isPasswordShown = !_isPasswordShown;
+    isPasswordShown = !isPasswordShown;
     notifyListeners();
   }
-}
-
-class LogInVariables {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _mobileTextController = TextEditingController();
-  TextEditingController _passwordTextController = TextEditingController();
-  int _loadingAt = 0;
-  String _loadingText = "";
-  String? _mobileErrorText;
-  String? _passwordErrorText;
-  bool _isLoading = false;
-  bool _isPasswordShown = false;
-
-  bool get isLoading => _isLoading;
-
-  bool get isPasswordShown => _isPasswordShown;
-
-  int get loadingAt => _loadingAt;
-
-  String get loadingText => _loadingText;
-
-  get formKey => _formKey;
-
-  get mobileErrorText => _mobileErrorText;
-
-  get passwordErrorText => _passwordErrorText;
-
-  TextEditingController get mobileTextController => _mobileTextController;
-
-  TextEditingController get passwordTextController => _passwordTextController;
-
-  List<Outlet> _allOutletsLocal = [];
-
-  set allOutletsLocal(List<Outlet> value) {
-    _allOutletsLocal = value;
-  }
-
-  List<Outlet> get allOutletsLocal => _allOutletsLocal;
 }

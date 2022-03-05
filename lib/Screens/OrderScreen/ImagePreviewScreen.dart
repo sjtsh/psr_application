@@ -75,7 +75,7 @@ class ImagePreviewScreen extends StatelessWidget {
                     context.read<ShopClosedController>().imageSent();
                     OutletClosedService()
                         .insertOutletClosed(
-                            File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", context.read<ShopClosedController>().remarkTextEditingController.text, context.read<MapManagement>().selectedOutlet!.id)
+                            File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", context.read<ShopClosedController>().remarkTextEditingController.text, context.read<MapManagement>().selectedOutlet!.outletPlanId)
 
                         .then((value) {
                       context.read<ShopClosedController>().imageSent();

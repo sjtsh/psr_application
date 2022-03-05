@@ -48,6 +48,7 @@ dependencies:
   url_launcher: ^6.0.20
   nepali_date_picker:
   nepali_utils: ^3.0.3
+  shimmer:
 
 
   # The following adds the Cupertino Icons font to your application.

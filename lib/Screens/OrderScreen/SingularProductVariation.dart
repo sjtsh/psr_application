@@ -1,59 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/apis/Entities/SubGroup.dart';
 
 import '../../StateManagement/OrderScreenManagement.dart';
+import '../../apis/Entities/SKU.dart';
 
-class SingularProductVariation extends StatefulWidget {
-  int index;
+class SingularProductVariation extends StatelessWidget {
+  TextEditingController primary = TextEditingController();
+  TextEditingController alternative = TextEditingController();
 
-  SingularProductVariation(this.index);
+  SKU sku;
+  SubGroup subGroup;
 
-  @override
-  State<SingularProductVariation> createState() =>
-      _SingularProductVariationState();
-}
-
-class _SingularProductVariationState extends State<SingularProductVariation> {
-  TextEditingController _textEditingController1 = TextEditingController();
-
-  TextEditingController _textEditingController2 = TextEditingController();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  SingularProductVariation(this.sku, this.subGroup);
 
   @override
   Widget build(BuildContext context) {
-    // SKUStock mySKUStock;
-    // SKU sku =
-    //     allSKULocal.firstWhere((element) => element.SKUID == widget.item.SKUID);
-    // try {
-    //   mySKUStock = allSKUStocksLocal.firstWhere((element) =>
-    //       element.distributorID == widget.currentDistributor.distributorID &&
-    //       element.SKUID == widget.item.SKUID);
-    // } catch (e) {
-    //   mySKUStock = SKUStock(0, widget.item.SKUID,
-    //       widget.currentDistributor.distributorID, meSOID!, false);
-    // }
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withOpacity(0.2),
           ),
         ),
-        color: Color(0xffE8F5E9),
+        color: Colors.black.withOpacity(0.05),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Row(
           children: [
             Text(
-              "  widget.item.SKUName",
+              sku.name,
             ),
             Expanded(child: Container()),
             Container(
@@ -68,7 +47,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: TextField(
-                    controller: _textEditingController1,
+                    controller: primary,
                     cursorWidth: 1,
                     keyboardType: TextInputType.number,
                     cursorColor: Colors.blue,
@@ -77,27 +56,44 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                       fontSize: 14,
                     ),
                     onChanged: (input) {
-                      //first text editing controller (primary count)
+                      int a = (int.tryParse(primary.text) ?? 0) +
+                          (int.tryParse(alternative.text) ?? 0) * sku.cf;
+                      if (a != 0) {
+                        if (context
+                            .read<OrderScreenManagement>()
+                            .singularOrder
+                            .containsKey(subGroup)) {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[subGroup]![sku] = a;
+                        } else {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[subGroup] = {sku: a};
+                        }
+                      } else {
                         context
                             .read<OrderScreenManagement>()
-                            .singularOrder[widget.index.toString()] =
-                            (int.tryParse(_textEditingController1.text) ?? 0) +
-                                (int.tryParse(_textEditingController2.text) ??
-                                    0) *
-                                    2;
-                      print(context
-                          .read<OrderScreenManagement>()
-                          .singularOrder[widget.index.toString()]);
+                            .singularOrder[subGroup]
+                            ?.remove(sku);
+                        if (context
+                                .read<OrderScreenManagement>()
+                                .singularOrder[subGroup]
+                                ?.keys
+                                .isEmpty ??
+                            false) {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder
+                              .remove(subGroup);
+                        }
+                      }
                     },
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      hintText: "all uni",
-                      // allUnitsLocal
-                      //     .firstWhere((element) =>
-                      //         element.unitID == sku.primaryUnitID)
-                      //     .unitName,
+                      hintText: sku.primaryUnit,
                       hintStyle:
-                      TextStyle(color: Colors.black.withOpacity(0.3)),
+                          TextStyle(color: Colors.black.withOpacity(0.3)),
                       border: InputBorder.none,
                     ),
                   ),
@@ -119,21 +115,43 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: TextField(
-                    controller: _textEditingController2,
+                    controller: alternative,
                     cursorWidth: 1,
                     keyboardType: TextInputType.number,
                     cursorColor: Colors.blue,
                     onChanged: (text) {
-                      context
-                          .read<OrderScreenManagement>()
-                          .singularOrder[widget.index.toString()] =
-                          (int.tryParse(_textEditingController1.text) ?? 0) +
-                              (int.tryParse(_textEditingController2.text) ??
-                                  0) *
-                                  2;
-                      print(context
-                          .read<OrderScreenManagement>()
-                          .singularOrder[widget.index.toString()]);
+                      int a = (int.tryParse(primary.text) ?? 0) +
+                          (int.tryParse(alternative.text) ?? 0) * sku.cf;
+                      if (a != 0) {
+                        if (context
+                            .read<OrderScreenManagement>()
+                            .singularOrder
+                            .containsKey(subGroup)) {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[subGroup]![sku] = a;
+                        } else {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[subGroup] = {sku: a};
+                        }
+                      } else {
+                        context
+                            .read<OrderScreenManagement>()
+                            .singularOrder[subGroup]
+                            ?.remove(sku);
+                        if (context
+                            .read<OrderScreenManagement>()
+                            .singularOrder[subGroup]
+                            ?.keys
+                            .isEmpty ??
+                            false) {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder
+                              .remove(subGroup);
+                        }
+                      }
                     },
                     style: TextStyle(
                       color: Colors.black,
@@ -141,14 +159,10 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                     ),
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      hintText: "unit",
-                      // allUnitsLocal
-                      //     .firstWhere((element) =>
-                      //         element.unitID == sku.alternativeUnitID)
-                      //     .unitName,
+                      hintText: sku.secondaryUnit,
                       border: InputBorder.none,
                       hintStyle:
-                      TextStyle(color: Colors.black.withOpacity(0.3)),
+                          TextStyle(color: Colors.black.withOpacity(0.3)),
                     ),
                   ),
                 ),
