@@ -16,6 +16,7 @@ class Outlet {
   bool deactivated;
   bool isDone;
   Marker? marker;
+  double ? dis;
 
   Outlet(
       this.outletPlanId,

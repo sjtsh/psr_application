@@ -26,7 +26,7 @@ class OutletList extends StatelessWidget {
         context.watch<MapManagement>().sortedOutlets.length,
         (index) {
           return Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.only(right: 12, left: 12,bottom: 6),
             child: GestureDetector(
               onTap: () {
                 context.read<MapManagement>().changeSelectedMarkerOutlet(index);
@@ -46,7 +46,9 @@ class OutletList extends StatelessWidget {
                   ],
                 ),
                 child: Builder(builder: (context) {
-                  double? dis = context.read<MapManagement>().distance;
+                  double? dis = context.read<MapManagement>().sortedOutlets[index].dis;
+                  print("this is distance");
+                  print(context.read<MapManagement>().sortedOutlets[index].dis);
 
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -73,8 +75,8 @@ class OutletList extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              dis! < 1000
-                                  ? dis.toStringAsFixed(2) + " m"
+                            dis! < 1000
+                                  ? context.read<MapManagement>().sortedOutlets[index].dis!.toStringAsFixed(2) + " m"
                                   : (dis / 1000).toStringAsFixed(2) + " km",
                               style: TextStyle(
                                 fontSize: 16,

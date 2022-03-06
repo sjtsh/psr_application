@@ -14,9 +14,6 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> sortedOutlets = [];
   ScrollController scrollController = ScrollController();
   LatLng userPosition = LatLng(0, 0);
-  double ? _distance;
-
-  double ? get distance => _distance;
 
   changeSelectedMarkerOutlet(int index) {
     controller?.showMarkerInfoWindow(
@@ -59,8 +56,6 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
     List<Outlet> sortedOutlet = [];
     sortedOutlet.addAll(allOutlets);
     sortedOutlet.sort((a, b) {
-       _distance = Geolocator.distanceBetween(
-          userPosition.latitude, userPosition.longitude, a.lat, a.lng);
       return Geolocator
           .distanceBetween(
           userPosition.latitude, userPosition.longitude, a.lat, a.lng)
@@ -85,6 +80,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             sortedOutlet[index].segmentation,
             sortedOutlet[index].deactivated,
             sortedOutlet[index].isDone);
+        outlet.dis = Geolocator.distanceBetween(
+            userPosition.latitude, userPosition.longitude, sortedOutlet[index].lat, sortedOutlet[index].lng);
         outlet.marker = Marker(
           onTap: () {
             selectedOutlet = sortedOutlets[index];
