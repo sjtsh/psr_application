@@ -34,9 +34,9 @@ class SKU {
       json["primary_unit"],
       json["secondary_unit"],
       json["cf"],
-      json["isTrending"],
-      json["isPromoted"],
-      json["isNew"],
+      json["isTrending"].toString() == "1",
+      json["isPromoted"].toString() == "1",
+      json["isNew"].toString() == "1",
     );
   }
 }
