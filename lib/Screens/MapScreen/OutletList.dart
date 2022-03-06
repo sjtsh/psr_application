@@ -23,12 +23,10 @@ class OutletList extends StatelessWidget {
       controller: context.read<MapManagement>().scrollController,
       scrollDirection: Axis.horizontal,
       children: List.generate(
-        context
-            .watch<MapManagement>()
-            .sortedOutlets.length,
+        context.watch<MapManagement>().sortedOutlets.length,
         (index) {
           return Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.only(right: 12, left: 12,bottom: 6),
             child: GestureDetector(
               onTap: () {
                 context.read<MapManagement>().changeSelectedMarkerOutlet(index);
@@ -48,12 +46,10 @@ class OutletList extends StatelessWidget {
                   ],
                 ),
                 child: Builder(builder: (context) {
-                  double dis = Geolocator.distanceBetween(
-                    context.watch<MapManagement>().sortedOutlets[index].lat,
-                    context.watch<MapManagement>().sortedOutlets[index].lng,
-                    context.watch<MapManagement>().userPosition.latitude,
-                    context.watch<MapManagement>().userPosition.longitude,
-                  );
+                  double? dis = context.read<MapManagement>().sortedOutlets[index].dis;
+                  print("this is distance");
+                  print(context.read<MapManagement>().sortedOutlets[index].dis);
+
                   return Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
@@ -79,8 +75,8 @@ class OutletList extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              dis < 1000
-                                  ? dis.toStringAsFixed(2) + " m"
+                            dis! < 1000
+                                  ? context.read<MapManagement>().sortedOutlets[index].dis!.toStringAsFixed(2) + " m"
                                   : (dis / 1000).toStringAsFixed(2) + " km",
                               style: TextStyle(
                                 fontSize: 16,
@@ -207,6 +203,7 @@ class OutletList extends StatelessWidget {
                                     context
                                         .read<OrderScreenManagement>()
                                         .singularOrder = {};
+                                    context.read<OrderScreenManagement>().dataToDisplay = null;
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(builder: (_) {
                                       return OrderScreen();
@@ -276,16 +273,11 @@ class OutletList extends StatelessWidget {
                                     context
                                         .read<MapManagement>()
                                         .changeSelectedMarkerOutlet(index);
-                                    if (dis < 20) {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (_) {
-                                        return ShopClosedScreen();
-                                      }));
-                                      print(context
-                                          .read<MapManagement>()
-                                          .selectedOutlet!
-                                          .id);
-                                    }
+                                    // if (dis < 20) {}
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (_) {
+                                      return ShopClosedScreen();
+                                    }));
                                   },
                                   child: Text(
                                     "SHOP CLOSED",
@@ -313,10 +305,10 @@ class OutletList extends StatelessWidget {
                                   onPressed: () {
                                     context
                                         .read<MapManagement>()
-                                        .changeSelectedMarkerOutlet(index);context
+                                        .changeSelectedMarkerOutlet(index);
+                                    context
                                         .read<OrderScreenManagement>()
-                                        .selectedNoOrderReasonGroup =
-                                        null;
+                                        .selectedNoOrderReasonGroup = null;
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (_) {
                                       return NoOrderScreen();

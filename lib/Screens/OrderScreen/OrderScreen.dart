@@ -36,8 +36,17 @@ class OrderScreen extends StatelessWidget {
                 SearchBarState(),
                 Column(
                   children: List.generate(
-                    context.read<OrderScreenManagement>().data.length,
-                    (index) => SingularProduct(index),
+                    context
+                            .watch<OrderScreenManagement>()
+                            .dataToDisplay
+                            ?.length ??
+                        context.read<OrderScreenManagement>().data.length,
+                    (index) => SingularProduct(
+                        index,
+                        context
+                                .watch<OrderScreenManagement>()
+                                .dataToDisplay?[index] ??
+                            context.watch<OrderScreenManagement>().data[index]),
                   ),
                 ),
               ],

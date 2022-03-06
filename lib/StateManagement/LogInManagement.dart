@@ -28,7 +28,6 @@ import 'TodayProgress.dart';
 class LogInManagement
     with ChangeNotifier, DiagnosticableTreeMixin {
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController mobileTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
   int loadingAt = 0;

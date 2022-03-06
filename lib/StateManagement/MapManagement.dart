@@ -40,7 +40,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   Future<void> openMap() async {
     if (selectedOutlet != null) {
       String googleUrl =
-          'https://www.google.com/maps/search/?api=1&query=${selectedOutlet!.lat},${selectedOutlet!.lng}';
+          'https://www.google.com/maps/search/?api=1&query=${selectedOutlet!
+          .lat},${selectedOutlet!.lng}';
       if (await canLaunch(googleUrl) != null) {
         await launch(googleUrl);
       } else {
@@ -54,13 +55,16 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
     int count = min(5, allOutlets.length);
     List<Outlet> sortedOutlet = [];
     sortedOutlet.addAll(allOutlets);
-    sortedOutlet.sort((a, b) => Geolocator.distanceBetween(
-            userPosition.latitude, userPosition.longitude, a.lat, a.lng)
-        .compareTo(Geolocator.distanceBetween(
-            userPosition.latitude, userPosition.longitude, b.lat, b.lng)));
+    sortedOutlet.sort((a, b) {
+      return Geolocator
+          .distanceBetween(
+          userPosition.latitude, userPosition.longitude, a.lat, a.lng)
+          .compareTo(Geolocator.distanceBetween(
+          userPosition.latitude, userPosition.longitude, b.lat, b.lng));
+      });
     sortedOutlets = List.generate(
       count,
-      (index) {
+          (index) {
         Outlet outlet = Outlet(
             sortedOutlet[index].outletPlanId,
             sortedOutlet[index].id,
@@ -76,6 +80,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             sortedOutlet[index].segmentation,
             sortedOutlet[index].deactivated,
             sortedOutlet[index].isDone);
+        outlet.dis = Geolocator.distanceBetween(
+            userPosition.latitude, userPosition.longitude, sortedOutlet[index].lat, sortedOutlet[index].lng);
         outlet.marker = Marker(
           onTap: () {
             selectedOutlet = sortedOutlets[index];
@@ -94,6 +100,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
         return outlet;
       },
     );
-    notifyListeners();
+    notifyListeners
+      (
+    );
   }
 }

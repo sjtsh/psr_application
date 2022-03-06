@@ -1,14 +1,16 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../StateManagement/OrderScreenManagement.dart';
 import 'SingularProductHeader.dart';
 import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
-  int index;
+  final int index;
+  final SubGroup subGroup;
 
-  SingularProduct(this.index);
+  SingularProduct(this.index, this.subGroup);
 
   @override
   Widget build(BuildContext context) {
