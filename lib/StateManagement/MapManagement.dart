@@ -14,6 +14,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> sortedOutlets = [];
   ScrollController scrollController = ScrollController();
   LatLng userPosition = LatLng(0, 0);
+  double ? _distanceBetween;
+  double ? get distanceBetween => _distanceBetween;
 
   changeSelectedMarkerOutlet(int index) {
     controller?.showMarkerInfoWindow(
@@ -50,7 +52,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void initializeMarkers(LatLng userPosition) {
-    userPosition = userPosition;
+    this.userPosition = userPosition;
     int count = min(5, allOutlets.length);
     List<Outlet> sortedOutlet = [];
     sortedOutlet.addAll(allOutlets);
