@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,17 +20,38 @@ class BeatScreen extends StatefulWidget {
 }
 
 class _BeatScreenState extends State<BeatScreen> {
+  bool animated = true;
   int index = 0;
+  StreamSubscription<ConnectivityResult>? subscription;
+  String text = "connected";
 
-  Future<bool> _onBackPressed() async {
-    if (index == 1) {
-      Navigator.pop(context);
-    }
-    index = 1;
-    Future.delayed(Duration(seconds: 1), () {
-      index = 0;
+  initState() {
+    super.initState();
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.mobile ||
+          result == ConnectivityResult.wifi) {
+        setState(() {
+          text = "connected";
+        });
+        Future.delayed(Duration(milliseconds: 1000))
+            .then((value) => setState(() => animated = true));
+      } else {
+        print("not connected");
+        setState(() {
+          text = "Trying to connect";
+          animated = false;
+        });
+      }
     });
-    return false;
+  }
+
+// Be sure to cancel subscription after you are done
+  @override
+  dispose() {
+    super.dispose();
+    subscription?.cancel();
   }
 
   @override
@@ -41,16 +65,33 @@ class _BeatScreenState extends State<BeatScreen> {
         systemNavigationBarColor: Colors.black,
       ),
       child: SafeArea(
-        child: Scaffold(
-            backgroundColor: Color(0xffF1F2F6),
-            body: ListView(
-              children: [
-                BeatHeader(),
-                AverageVolume(),
-                TodayProgress(),
-                SelectBeat(),
-              ],
-            )),
+        child: WillPopScope(
+          onWillPop: () {
+            return Future.value(false);
+          },
+          child: Scaffold(
+              backgroundColor: Color(0xffF1F2F6),
+              body: ListView(
+                children: [
+                  AnimatedContainer(
+                    height: animated ? 0 : 20,
+                    color:
+                        text == "Trying to connect" ? Colors.red : Colors.green,
+                    duration: const Duration(milliseconds: 200),
+                    child: Center(
+                      child: Text(
+                        text,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                  BeatHeader(),
+                  AverageVolume(),
+                  TodayProgress(),
+                  SelectBeat(),
+                ],
+              )),
+        ),
       ),
     );
   }
