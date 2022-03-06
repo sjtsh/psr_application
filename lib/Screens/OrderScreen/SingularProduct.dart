@@ -17,8 +17,6 @@ class SingularProduct extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          context.watch<OrderScreenManagement>().currentlyExpanded ==
-              index ? Container(height: 5, color: Colors.green):Container(),
           SingularProductHeader(index,
               context.watch<OrderScreenManagement>().data[index]),
           Builder(
@@ -48,8 +46,6 @@ class SingularProduct extends StatelessWidget {
               }
             },
           ),
-          context.watch<OrderScreenManagement>().currentlyExpanded ==
-              index ?Container(height: 5, color: Colors.green) : Container(),
         ],
       )
     );

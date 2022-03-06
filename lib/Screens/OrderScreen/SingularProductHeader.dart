@@ -19,6 +19,8 @@ class SingularProductHeader extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
+            color: context.watch<OrderScreenManagement>().currentlyExpanded ==
+                index ? Color(0xffC8E6C9):Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: Colors.black.withOpacity(0.1),

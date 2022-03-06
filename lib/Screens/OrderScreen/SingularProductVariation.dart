@@ -51,7 +51,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
             color: Colors.black.withOpacity(0.2),
           ),
         ),
-        color: Colors.black.withOpacity(0.05),
+        color: Color(0xffE8F5E9),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
