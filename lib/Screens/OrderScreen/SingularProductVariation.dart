@@ -6,14 +6,40 @@ import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../StateManagement/OrderScreenManagement.dart';
 import '../../apis/Entities/SKU.dart';
 
-class SingularProductVariation extends StatelessWidget {
-  TextEditingController primary = TextEditingController();
-  TextEditingController alternative = TextEditingController();
-
+class SingularProductVariation extends StatefulWidget {
   SKU sku;
   SubGroup subGroup;
 
   SingularProductVariation(this.sku, this.subGroup);
+
+  @override
+  State<SingularProductVariation> createState() =>
+      _SingularProductVariationState();
+}
+
+class _SingularProductVariationState extends State<SingularProductVariation> {
+  TextEditingController primary = TextEditingController();
+  TextEditingController alternative = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    primary.text = (context
+                .read<OrderScreenManagement>()
+                .singularOrder[widget.subGroup]?[widget.sku] == null ?
+            "": context
+                .read<OrderScreenManagement>()
+                .singularOrder[widget.subGroup]![widget.sku]! ~/ widget.sku.cf)
+        .toString();
+    alternative.text = (context
+                .read<OrderScreenManagement>()
+                .singularOrder[widget.subGroup]?[widget.sku] == null ?
+            "": context
+                .read<OrderScreenManagement>()
+                .singularOrder[widget.subGroup]![widget.sku]! % widget.sku.cf)
+        .toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +58,77 @@ class SingularProductVariation extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              sku.name,
+              widget.sku.name,
             ),
             Expanded(child: Container()),
+            Container(
+              height: 30,
+              width: 70,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black.withOpacity(0.1)),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: TextField(
+                    controller: alternative,
+                    cursorWidth: 1,
+                    keyboardType: TextInputType.number,
+                    cursorColor: Colors.blue,
+                    onChanged: (text) {
+                      int a = (int.tryParse(primary.text) ?? 0)  * widget.sku.cf +
+                          (int.tryParse(alternative.text) ?? 0);
+                      if (a != 0) {
+                        if (context
+                            .read<OrderScreenManagement>()
+                            .singularOrder
+                            .containsKey(widget.subGroup)) {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[widget.subGroup]![widget.sku] = a;
+                        } else {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[widget.subGroup] = {widget.sku: a};
+                        }
+                      } else {
+                        context
+                            .read<OrderScreenManagement>()
+                            .singularOrder[widget.subGroup]
+                            ?.remove(widget.sku);
+                        if (context
+                            .read<OrderScreenManagement>()
+                            .singularOrder[widget.subGroup]
+                            ?.keys
+                            .isEmpty ??
+                            false) {
+                          context
+                              .read<OrderScreenManagement>()
+                              .singularOrder
+                              .remove(widget.subGroup);
+                        }
+                      }
+                    },
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.left,
+                    decoration: InputDecoration(
+                      hintText: widget.sku.secondaryUnit,
+                      border: InputBorder.none,
+                      hintStyle:
+                      TextStyle(color: Colors.black.withOpacity(0.3)),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 6,
+            ),
             Container(
               height: 30,
               width: 70,
@@ -56,113 +150,45 @@ class SingularProductVariation extends StatelessWidget {
                       fontSize: 14,
                     ),
                     onChanged: (input) {
-                      int a = (int.tryParse(primary.text) ?? 0) +
-                          (int.tryParse(alternative.text) ?? 0) * sku.cf;
+                      int a = (int.tryParse(primary.text) ?? 0)  * widget.sku.cf +
+                          (int.tryParse(alternative.text) ?? 0);
                       if (a != 0) {
                         if (context
                             .read<OrderScreenManagement>()
                             .singularOrder
-                            .containsKey(subGroup)) {
+                            .containsKey(widget.subGroup)) {
                           context
                               .read<OrderScreenManagement>()
-                              .singularOrder[subGroup]![sku] = a;
+                              .singularOrder[widget.subGroup]![widget.sku] = a;
                         } else {
                           context
                               .read<OrderScreenManagement>()
-                              .singularOrder[subGroup] = {sku: a};
+                              .singularOrder[widget.subGroup] = {widget.sku: a};
                         }
                       } else {
                         context
                             .read<OrderScreenManagement>()
-                            .singularOrder[subGroup]
-                            ?.remove(sku);
+                            .singularOrder[widget.subGroup]
+                            ?.remove(widget.sku);
                         if (context
                                 .read<OrderScreenManagement>()
-                                .singularOrder[subGroup]
+                                .singularOrder[widget.subGroup]
                                 ?.keys
                                 .isEmpty ??
                             false) {
                           context
                               .read<OrderScreenManagement>()
                               .singularOrder
-                              .remove(subGroup);
+                              .remove(widget.subGroup);
                         }
                       }
                     },
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      hintText: sku.primaryUnit,
+                      hintText: widget.sku.primaryUnit,
                       hintStyle:
                           TextStyle(color: Colors.black.withOpacity(0.3)),
                       border: InputBorder.none,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 6,
-            ),
-            Container(
-              height: 30,
-              width: 70,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black.withOpacity(0.1)),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  child: TextField(
-                    controller: alternative,
-                    cursorWidth: 1,
-                    keyboardType: TextInputType.number,
-                    cursorColor: Colors.blue,
-                    onChanged: (text) {
-                      int a = (int.tryParse(primary.text) ?? 0) +
-                          (int.tryParse(alternative.text) ?? 0) * sku.cf;
-                      if (a != 0) {
-                        if (context
-                            .read<OrderScreenManagement>()
-                            .singularOrder
-                            .containsKey(subGroup)) {
-                          context
-                              .read<OrderScreenManagement>()
-                              .singularOrder[subGroup]![sku] = a;
-                        } else {
-                          context
-                              .read<OrderScreenManagement>()
-                              .singularOrder[subGroup] = {sku: a};
-                        }
-                      } else {
-                        context
-                            .read<OrderScreenManagement>()
-                            .singularOrder[subGroup]
-                            ?.remove(sku);
-                        if (context
-                            .read<OrderScreenManagement>()
-                            .singularOrder[subGroup]
-                            ?.keys
-                            .isEmpty ??
-                            false) {
-                          context
-                              .read<OrderScreenManagement>()
-                              .singularOrder
-                              .remove(subGroup);
-                        }
-                      }
-                    },
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                    ),
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      hintText: sku.secondaryUnit,
-                      border: InputBorder.none,
-                      hintStyle:
-                          TextStyle(color: Colors.black.withOpacity(0.3)),
                     ),
                   ),
                 ),

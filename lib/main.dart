@@ -11,7 +11,6 @@ import 'StateManagement/DateRangeManagement.dart';
 import 'StateManagement/LogInManagement.dart';
 import 'StateManagement/OrderScreenManagement.dart';
 import 'StateManagement/TodayProgress.dart';
-import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -88,4 +88,33 @@ class OrderService {
       throw "Status code is ${res.statusCode}";
     }
   }
+
+  Future<bool> updateOrder(
+      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int outletID) async {
+    Map<String, dynamic> bodyMap = {};
+    for (var element1 in aMap.values) {
+      for (var element in element1.entries) {
+        if (!bodyMap.containsKey("items")) {
+          bodyMap["items"] = {};
+        }
+        bodyMap["items"][element.key.id.toString()] = element.value.toString();
+      }
+    }
+    bodyMap["outlet_id"] = outletID.toString();
+    bodyMap["remarks"] = remarks;
+
+    Response res = await http.put(
+        Uri.parse(
+            "https://asia-south1-psr-application-342007.cloudfunctions.net/updateOutletOrder"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'session_id': (meUser?.sessionID ?? ""),
+        },
+        body: jsonEncode(bodyMap));
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw "Status code is ${res.statusCode}";
+    }
+  }
 }

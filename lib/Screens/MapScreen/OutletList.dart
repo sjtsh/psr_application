@@ -205,15 +205,6 @@ class OutletList extends StatelessWidget {
                                         .read<MapManagement>()
                                         .changeSelectedMarkerOutlet(index);
                                     context
-                                            .read<OrderScreenManagement>()
-                                            .expandableController =
-                                        List.generate(
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .data
-                                                .length,
-                                            (index) => ExpandableController());
-                                    context
                                         .read<OrderScreenManagement>()
                                         .singularOrder = {};
                                     Navigator.of(context)

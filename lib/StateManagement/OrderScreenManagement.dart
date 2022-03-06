@@ -11,7 +11,7 @@ import '../apis/Entities/SubGroup.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
-  List<ExpandableController> items = [];
+  List<bool> items = [];
   Map<SubGroup, Map<SKU, int>>  singularOrder = {};
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
@@ -43,21 +43,22 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  set expandableController(List<ExpandableController> value) {
+  set expandableController(List<bool> value) {
     items = value;
   }
 
   makeExpansion(int index) {
-    if (!items[index].value) {
+    if (!items[index]) {
       if (currentlyExpanded != null) {
-        items[currentlyExpanded!].value = false;
+        items[currentlyExpanded!] = false;
       }
-      items[index].value = true;
+      items[index] = true;
       currentlyExpanded = index;
     } else {
-      items[index].value = false;
+      items[index] = false;
       currentlyExpanded = null;
     }
+    notifyListeners();
   }
 
   removeSKU(SubGroup subGroup, SKU sku){

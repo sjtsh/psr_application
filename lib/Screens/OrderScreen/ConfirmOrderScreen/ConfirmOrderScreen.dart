@@ -5,8 +5,13 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OrderService.dart';
 
 import '../../../StateManagement/OrderScreenManagement.dart';
+import '../../../apis/Entities/OutletOrder.dart';
 
 class ConfirmOrderScreen extends StatelessWidget {
+  final OutletOrder? order;
+
+  ConfirmOrderScreen({this.order});
+
   @override
   Widget build(BuildContext context) {
     int a = 0;
@@ -169,16 +174,21 @@ class ConfirmOrderScreen extends StatelessWidget {
                                     context
                                         .read<OrderScreenManagement>()
                                         .confirmButtonDisabled = true;
-                                    bool success = await OrderService()
-                                        .insertOrder(
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .singularOrder,
-                                            "remarks",
-                                            context
-                                                .read<MapManagement>()
-                                                .selectedOutlet!
-                                                .outletPlanId);
+                                    bool success;
+                                    if (order == null) {
+                                      success = await OrderService()
+                                          .insertOrder(
+                                              context
+                                                  .read<OrderScreenManagement>()
+                                                  .singularOrder,
+                                              "remarks",
+                                              context
+                                                  .read<MapManagement>()
+                                                  .selectedOutlet!
+                                                  .outletPlanId);
+                                    } else {
+                                      success = false;
+                                    }
                                     if (success) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(

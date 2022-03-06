@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/components/IndividualBeat.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmOrderScreen.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
+import 'package:psr_application/apis/Entities/OutletOrder.dart';
 
 import '../../StateManagement/MapManagement.dart';
 import 'ProductList.dart';
@@ -12,7 +13,9 @@ import 'SingularProduct.dart';
 import 'SingularProductHeader.dart';
 
 class OrderScreen extends StatelessWidget {
-  const OrderScreen({Key? key}) : super(key: key);
+  final OutletOrder? order;
+
+  OrderScreen({this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,8 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "Order",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
+                    style:
+                        TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
                   ),
                 ),
                 SearchBarState(),
@@ -49,7 +53,7 @@ class OrderScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => ConfirmOrderScreen(),
+                        builder: (_) => ConfirmOrderScreen(order: order),
                       ),
                     );
                   },

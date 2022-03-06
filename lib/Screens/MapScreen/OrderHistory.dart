@@ -56,7 +56,7 @@ class OrderHistory extends StatelessWidget {
                               .read<BeatManagement>()
                               .outletOrders
                               .where((element) => element.outletID == outlet.id)
-                              .map((e) => SingularOrder(e))
+                              .map((e) => SingularOrder(e, editable: true))
                               .toList(),
                         ),
                       )),

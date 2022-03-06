@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +40,13 @@ class SKUService {
         },
       ).toList();
       context.read<OrderScreenManagement>().data = subgroups;
+      context
+          .read<OrderScreenManagement>()
+          .expandableController =
+          List.generate(
+              subgroups
+                  .length,
+                  (index) => false);
     } else {
       throw "Status code is ${res.statusCode}";
     }
