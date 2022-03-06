@@ -1,32 +1,27 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../StateManagement/OrderScreenManagement.dart';
 import 'SingularProductHeader.dart';
 import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
-  int index;
+  final int index;
+  final SubGroup subGroup;
 
-  SingularProduct(this.index);
+  SingularProduct(this.index, this.subGroup);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ExpandablePanel(
-        controller: context
-            .read<OrderScreenManagement>()
-            .items[index],
-        collapsed: SingularProductHeader(
-            index, context.watch<OrderScreenManagement>().data[index], false),
+        controller: context.read<OrderScreenManagement>().items[index],
+        collapsed: SingularProductHeader(index, subGroup, false),
         expanded: Column(
           children: [
-            Container(
-              height: 5,
-              color: Colors.green
-            ),
-            SingularProductHeader(index,
-                context.watch<OrderScreenManagement>().data[index], true),
+            Container(height: 5, color: Colors.green),
+            SingularProductHeader(index, subGroup, true),
             Builder(
               builder: (context) {
                 return Column(children: [
@@ -34,25 +29,16 @@ class SingularProduct extends StatelessWidget {
                     controller:
                         context.read<OrderScreenManagement>().controller,
                     shrinkWrap: true,
-                    itemCount: context
-                        .watch<OrderScreenManagement>()
-                        .data[index]
-                        .skus
-                        .length,
-                    itemBuilder: (_, a) => SingularProductVariation(context
-                        .watch<OrderScreenManagement>()
-                        .data[index]
-                        .skus[a], context
-                        .watch<OrderScreenManagement>()
-                        .data[index]),
+                    itemCount: subGroup.skus.length,
+                    itemBuilder: (_, a) => SingularProductVariation(
+                      subGroup.skus[a],
+                      subGroup,
+                    ),
                   )
                 ]);
               },
             ),
-            Container(
-              height: 5,
-                color: Colors.green
-            ),
+            Container(height: 5, color: Colors.green),
           ],
         ),
       ),

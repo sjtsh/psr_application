@@ -14,8 +14,9 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> sortedOutlets = [];
   ScrollController scrollController = ScrollController();
   LatLng userPosition = LatLng(0, 0);
-  double ? _distanceBetween;
-  double ? get distanceBetween => _distanceBetween;
+  double ? _distance;
+
+  double ? get distance => _distance;
 
   changeSelectedMarkerOutlet(int index) {
     controller?.showMarkerInfoWindow(
@@ -42,7 +43,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   Future<void> openMap() async {
     if (selectedOutlet != null) {
       String googleUrl =
-          'https://www.google.com/maps/search/?api=1&query=${selectedOutlet!.lat},${selectedOutlet!.lng}';
+          'https://www.google.com/maps/search/?api=1&query=${selectedOutlet!
+          .lat},${selectedOutlet!.lng}';
       if (await canLaunch(googleUrl) != null) {
         await launch(googleUrl);
       } else {
@@ -56,13 +58,18 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
     int count = min(5, allOutlets.length);
     List<Outlet> sortedOutlet = [];
     sortedOutlet.addAll(allOutlets);
-    sortedOutlet.sort((a, b) => Geolocator.distanceBetween(
-            userPosition.latitude, userPosition.longitude, a.lat, a.lng)
-        .compareTo(Geolocator.distanceBetween(
-            userPosition.latitude, userPosition.longitude, b.lat, b.lng)));
+    sortedOutlet.sort((a, b) {
+       _distance = Geolocator.distanceBetween(
+          userPosition.latitude, userPosition.longitude, a.lat, a.lng);
+      return Geolocator
+          .distanceBetween(
+          userPosition.latitude, userPosition.longitude, a.lat, a.lng)
+          .compareTo(Geolocator.distanceBetween(
+          userPosition.latitude, userPosition.longitude, b.lat, b.lng));
+      });
     sortedOutlets = List.generate(
       count,
-      (index) {
+          (index) {
         Outlet outlet = Outlet(
             sortedOutlet[index].outletPlanId,
             sortedOutlet[index].id,
@@ -96,6 +103,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
         return outlet;
       },
     );
-    notifyListeners();
+    notifyListeners
+      (
+    );
   }
 }

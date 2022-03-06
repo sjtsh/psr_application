@@ -10,14 +10,22 @@ import 'package:psr_application/apis/Entities/SKU.dart';
 import '../apis/Entities/SubGroup.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
-
   List<ExpandableController> items = [];
-  Map<SubGroup, Map<SKU, int>>  singularOrder = {};
+  Map<SubGroup, Map<SKU, int>> singularOrder = {};
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
   ScrollController controller = ScrollController();
   List<SubGroup> data = [];
-  List<NoOrderReasonGroup> noOrderReasons  = [];
+  List<SubGroup>? _dataToDisplay;
+
+  List<SubGroup>? get dataToDisplay => _dataToDisplay;
+
+  set dataToDisplay(List<SubGroup>? value) {
+    _dataToDisplay = value;
+    notifyListeners();
+  }
+
+  List<NoOrderReasonGroup> noOrderReasons = [];
   NoOrderReasonGroup? _selectedNoOrderReasonGroup;
   bool _noOrderButtonDisabled = false;
 
@@ -60,11 +68,25 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  removeSKU(SubGroup subGroup, SKU sku){
+  removeSKU(SubGroup subGroup, SKU sku) {
     singularOrder[subGroup]?.remove(sku);
-    if(singularOrder[subGroup]?.keys.isEmpty ?? false){
+    if (singularOrder[subGroup]?.keys.isEmpty ?? false) {
       singularOrder.remove(subGroup);
     }
+    notifyListeners();
+  }
+
+  searchProducts(String searchText) {
+    _dataToDisplay = data.where((SubGroup subgroup) {
+      return subgroup.name
+              .toString()
+              .toLowerCase()
+              .contains(searchText.toLowerCase()) ||
+          subgroup.productName
+              .toString()
+              .toLowerCase()
+              .contains(searchText.toLowerCase());
+    }).toList();
     notifyListeners();
   }
 }

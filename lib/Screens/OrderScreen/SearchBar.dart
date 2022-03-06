@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 
 
 
@@ -53,12 +55,12 @@ class SearchBarState extends StatelessWidget {
                             fontSize: 16,
                           ),
                         ),
-                        onChanged: (_products) {
+                        onChanged: (String _products) {
                           if(_products != ""){
-                          //  searchForProducts(_products, widget._setProducts);
+                           context.read<OrderScreenManagement>().searchProducts(_products);
                           }
                           else{
-                           // widget._setProducts(allSubGroupsLocal);
+                            context.read<OrderScreenManagement>().dataToDisplay = null;
                           }
                         }),
                   ),

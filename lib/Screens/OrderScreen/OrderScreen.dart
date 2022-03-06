@@ -26,14 +26,24 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "Order",
-                    style: TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
+                    style:
+                        TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
                   ),
                 ),
                 SearchBarState(),
                 Column(
                   children: List.generate(
-                    context.read<OrderScreenManagement>().data.length,
-                    (index) => SingularProduct(index),
+                    context
+                            .watch<OrderScreenManagement>()
+                            .dataToDisplay
+                            ?.length ??
+                        context.read<OrderScreenManagement>().data.length,
+                    (index) => SingularProduct(
+                        index,
+                        context
+                                .watch<OrderScreenManagement>()
+                                .dataToDisplay?[index] ??
+                            context.watch<OrderScreenManagement>().data[index]),
                   ),
                 ),
               ],
