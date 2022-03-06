@@ -50,7 +50,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   void initializeMarkers(LatLng userPosition) {
-    userPosition = userPosition;
+    this.userPosition = userPosition;
     int count = min(5, allOutlets.length);
     List<Outlet> sortedOutlet = [];
     sortedOutlet.addAll(allOutlets);

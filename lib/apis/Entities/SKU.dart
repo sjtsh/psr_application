@@ -7,13 +7,26 @@ class SKU {
   final String primaryUnit;
   final String secondaryUnit;
   final int cf;
+  final bool isTrending;
+  final bool isPromoted;
+  final bool isNew;
 
-  SKU(this.id, this.name, this.mrp, this.ptr, this.img,
-      this.primaryUnit, this.secondaryUnit, this.cf);
+  SKU(
+      this.id,
+      this.name,
+      this.mrp,
+      this.ptr,
+      this.img,
+      this.primaryUnit,
+      this.secondaryUnit,
+      this.cf,
+      this.isTrending,
+      this.isPromoted,
+      this.isNew);
 
   factory SKU.fromJson(int id, Map<String, dynamic> json) {
     return SKU(
-    id,
+      id,
       json["name"],
       double.parse(json["mrp"]),
       double.parse(json["ptr"]),
@@ -21,6 +34,9 @@ class SKU {
       json["primary_unit"],
       json["secondary_unit"],
       json["cf"],
+      json["isTrending"],
+      json["isPromoted"],
+      json["isNew"],
     );
   }
 }
