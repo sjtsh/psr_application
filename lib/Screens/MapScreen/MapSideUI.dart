@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../StateManagement/MapManagement.dart';
+import '../OrderAllHistoryScreen.dart';
 
 class MapSideUI extends StatelessWidget {
   const MapSideUI({Key? key}) : super(key: key);
@@ -28,7 +29,9 @@ class MapSideUI extends StatelessWidget {
           children: [
             Expanded(child: Container()),
             IconButton(onPressed: () {
-             context.read<MapManagement>().openMap();
+              Navigator.push(context, MaterialPageRoute(builder: (_){
+                return OrderAllHistoryScreen();
+              }));
             },
               icon:  Icon(Icons.info_outline,  size: 32,), color: Colors.blue,),
             Expanded(child: Container()),

@@ -15,7 +15,6 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Entities/Outlet.dart';
 
 class MapScreen extends StatelessWidget {
-  GoogleMapController? _controller;
 
   final CameraPosition _kGooglePlex = const CameraPosition(
     target: LatLng(27.6539, 85.4617),
@@ -49,9 +48,9 @@ class MapScreen extends StatelessWidget {
                       .marker!).toSet(),
               onMapCreated: (GoogleMapController controller) async {
                 bool cameraRotate = false;
+                context.read<MapManagement>().controller = controller;
                 Geolocator.getPositionStream().listen((event) {
                   if (cameraRotate == false) {
-                    context.read<MapManagement>().controller = controller;
                     controller.animateCamera(CameraUpdate.newCameraPosition(
                         CameraPosition(
                             zoom: 17,

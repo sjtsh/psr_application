@@ -249,19 +249,10 @@ class OutletList extends StatelessWidget {
                               child: MaterialButton(
                                 color: Color(0xffE8E8E9),
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return OrderHistory(context
-                                            .read<MapManagement>()
-                                            .sortedOutlets[index]);
-                                      },
-                                    ),
-                                  );
+                                  context.read<MapManagement>().openMap();
                                 },
                                 child: Text(
-                                  "VIEW HISTORY",
+                                  "VIEW ON MAP",
                                   style: TextStyle(
                                       fontSize: 12, color: Colors.grey),
                                 ),
@@ -293,11 +284,15 @@ class OutletList extends StatelessWidget {
                                     : Colors.redAccent,
                                 onPressed: () {
                                   context
-                                      .read<ShopClosedController>().initialize();
+                                      .read<ShopClosedController>()
+                                      .initialize();
                                   // if (context.read<MapManagement>().sortedOutlets[index].dis! < 20) {}
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (_) {
-                                    return ShopClosedScreen(context.watch<MapManagement>().sortedOutlets[index].id);
+                                    return ShopClosedScreen(context
+                                        .watch<MapManagement>()
+                                        .sortedOutlets[index]
+                                        .id);
                                   }));
                                 },
                                 child: Text(

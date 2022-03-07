@@ -14,11 +14,13 @@ class _AverageVolumeState extends State<AverageVolume> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
-      ),
+      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: Offset(0, 2),
+            blurRadius: 3,
+            spreadRadius: 3)
+      ]),
       child: Column(
         children: [
           Padding(
@@ -30,7 +32,7 @@ class _AverageVolumeState extends State<AverageVolume> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
-                  children: {"W": true, "M": false}
+                  children: {"W": 1, "M": 2, "C": 3}
                       .entries
                       .map((e) => Expanded(
                             child: Padding(
@@ -71,7 +73,9 @@ class _AverageVolumeState extends State<AverageVolume> {
                     decoration: BoxDecoration(
                         color: Colors.green, shape: BoxShape.circle),
                   ),
-                  SizedBox(width: 12,),
+                  SizedBox(
+                    width: 12,
+                  ),
                   Text("AVG SALES VOLUME"),
                   Expanded(child: Container()),
                   Text(context.watch<AverageVolumeState>().dateRange),
@@ -97,11 +101,19 @@ class _AverageVolumeState extends State<AverageVolume> {
                         children: [
                           Countup(
                             begin: 0,
-                            end: context.read<AverageVolumeState>().isWeekly
-                                ? context.watch<AverageVolumeState>().weeklySaleVolume
-                                : context
+                            end: context.read<AverageVolumeState>().isWeekly ==
+                                    1
+                                ? context
                                     .watch<AverageVolumeState>()
-                                    .monthlySaleVolume,
+                                    .weeklySaleVolume
+                                : context.read<AverageVolumeState>().isWeekly ==
+                                        2
+                                    ? context
+                                        .watch<AverageVolumeState>()
+                                        .monthlySaleVolume
+                                    : context
+                                        .watch<AverageVolumeState>()
+                                        .customSaleVolume,
                             style: TextStyle(color: Colors.white, fontSize: 30),
                             duration: Duration(milliseconds: 200),
                             separator: ",",
@@ -136,15 +148,21 @@ class _AverageVolumeState extends State<AverageVolume> {
                         children: [
                           Countup(
                             begin: 0,
-                            end: context.read<AverageVolumeState>().isWeekly
+                            end: context.read<AverageVolumeState>().isWeekly ==
+                                    1
                                 ? context
                                         .watch<AverageVolumeState>()
                                         .weeklySKUVariance +
                                     0.0
-                                : context
+                                : context.read<AverageVolumeState>().isWeekly ==
+                                        2
+                                    ? context
+                                            .watch<AverageVolumeState>()
+                                            .monthlySKUVariance +
+                                        0.0
+                                    : context
                                         .watch<AverageVolumeState>()
-                                        .monthlySKUVariance +
-                                    0.0,
+                                        .customSKUVariance,
                             style: TextStyle(color: Colors.white, fontSize: 30),
                             duration: Duration(milliseconds: 200),
                           ),
