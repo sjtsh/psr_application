@@ -11,6 +11,7 @@ import 'package:psr_application/apis/Entities/Beat.dart';
 import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 
 import '../../StateManagement/BeatManagement.dart';
+import '../../StateManagement/MapManagement.dart';
 import '../../database.dart';
 import '../Entities/OutletOrder.dart';
 
@@ -86,6 +87,7 @@ class TourPlanService {
       context.read<TodayProgressState>().successVisitText = orders.length;
       context.read<BeatManagement>().beats =beats;
       context.read<BeatManagement>().outletOrders = orders;
+      context.read<TodayProgressState>().inProgressBeat = beats.firstWhere((element) => element.inProgress);
       context.read<TodayProgressState>().scheduleVisit =
           context.read<LogInManagement>().allOutletsLocal.length;
       context.read<TodayProgressState>().visitText = context

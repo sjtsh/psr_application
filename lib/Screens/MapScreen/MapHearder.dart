@@ -33,7 +33,7 @@ class MapHeader extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                context.read<TodayProgressState>().inProgressBeat?.name ?? "",
+                context.read<TodayProgressState>().inProgressBeat?.beatName ?? "",
                 style: const TextStyle(fontSize: 16),
               ),
             ),

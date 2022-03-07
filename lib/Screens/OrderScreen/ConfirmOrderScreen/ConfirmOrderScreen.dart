@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_utils/nepali_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmVariation.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OrderService.dart';
 
 import '../../../StateManagement/OrderScreenManagement.dart';
+import '../../../apis/Entities/OutletOrder.dart';
 
 class ConfirmOrderScreen extends StatelessWidget {
+  final OutletOrder? order;
+
+  ConfirmOrderScreen({this.order});
+
   @override
   Widget build(BuildContext context) {
     int a = 0;
@@ -38,10 +44,12 @@ class ConfirmOrderScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<OrderScreenManagement>().showRemark();
+                          },
                           icon: Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.transparent,
+                            Icons.menu,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -72,10 +80,12 @@ class ConfirmOrderScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<OrderScreenManagement>().showRemark();
+                          },
                           icon: Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.transparent,
+                            Icons.menu,
+                            color: !context.watch<OrderScreenManagement>().isRemarkShown ? Colors.black : Colors.green,
                           ),
                         ),
                       ],
@@ -147,6 +157,26 @@ class ConfirmOrderScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+
+                       !context.watch<OrderScreenManagement>().isRemarkShown? Container(): Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: TextFormField(
+                            controller: context
+                                .read<OrderScreenManagement>()
+                                .confirmOrderRemarkController,
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.book_outlined),
+                                focusColor: Colors.green,
+                                hintText: "Remark",
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: const BorderSide(color: Colors.green)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: BorderSide(color: Colors.black.withOpacity(0.1)))),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Container(
@@ -154,7 +184,8 @@ class ConfirmOrderScreen extends StatelessWidget {
                               width: double.infinity,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.green,
+                                color:
+                                    order == null ? Colors.green : Colors.red,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: MaterialButton(
@@ -169,16 +200,37 @@ class ConfirmOrderScreen extends StatelessWidget {
                                     context
                                         .read<OrderScreenManagement>()
                                         .confirmButtonDisabled = true;
-                                    bool success = await OrderService()
-                                        .insertOrder(
+                                    bool success = false;
+                                    try {
+                                      if (order == null) {
+                                        success = await OrderService()
+                                            .insertOrder(
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .singularOrder,
                                             context
                                                 .read<OrderScreenManagement>()
-                                                .singularOrder,
-                                            "remarks",
+                                                .confirmOrderRemarkController.text ,
+                                                context
+                                                    .read<MapManagement>()
+                                                    .selectedOutlet!
+                                                    .outletPlanId);
+                                      } else {
+                                        success = await OrderService()
+                                            .updateOrder(
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .singularOrder,
                                             context
-                                                .read<MapManagement>()
-                                                .selectedOutlet!
-                                                .outletPlanId);
+                                                .read<OrderScreenManagement>()
+                                                .confirmOrderRemarkController.text,
+                                                order!.id);
+                                      }
+                                    } catch (e) {
+                                      print(e);
+                                    }
                                     if (success) {
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
@@ -212,7 +264,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                                             color: Colors.white,
                                           ))
                                       : Text(
-                                          "Confirm",
+                                          order == null ? "Confirm" : "Edit",
                                           style: TextStyle(color: Colors.white),
                                         ),
                                 ),

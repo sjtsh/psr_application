@@ -13,12 +13,3 @@ class OutletOrderItem {
   OutletOrderItem(this.id, this.skuID, this.skuName, this.primaryCount, this.primaryUnit, this.secondaryUnit, this.cf, this.ptr, this.mrp,
       {this.deactivated = false});
 }
-
-// {
-// "outletID":"<outletID>",
-// "remarks":"<remarks>"
-// "items": {
-//     "<skuID>" : "<primary count>",
-//     "<skuID>" : "<primary count>"
-//   }
-// }

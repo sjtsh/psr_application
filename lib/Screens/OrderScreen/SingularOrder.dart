@@ -1,13 +1,22 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
+import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 
+import '../../StateManagement/MapManagement.dart';
+import '../../StateManagement/OrderScreenManagement.dart';
 import '../../apis/Entities/OutletOrder.dart';
+import '../../apis/Entities/SKU.dart';
+import '../../apis/Entities/SubGroup.dart';
 import '../../database.dart';
 import 'OrderItemsScreen.dart';
 
 class SingularOrder extends StatelessWidget {
   final OutletOrder outletOrder;
+  final bool editable;
 
-  SingularOrder(this.outletOrder);
+  SingularOrder(this.outletOrder, {this.editable = false});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +36,7 @@ class SingularOrder extends StatelessWidget {
           color: Colors.white,
           child: InkWell(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_){
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return OrderItemsScreen(outletOrder);
               }));
             },
@@ -78,6 +87,65 @@ class SingularOrder extends StatelessWidget {
                             ],
                           ),
                         ),
+                        editable
+                            ? GestureDetector(
+                                onTap: () {
+                                  Map<SubGroup, Map<SKU, int>> aMap = {};
+                                  List<int> skus = [];
+                                  List<int> count = [];
+                                  List.generate(outletOrder.items.length,
+                                      (index) {
+                                    skus.add(outletOrder.items[index].skuID);
+                                    count.add(
+                                        outletOrder.items[index].primaryCount);
+                                  });
+                                  context
+                                      .read<OrderScreenManagement>()
+                                      .data
+                                      .forEach((element1) {
+                                    for (var e2 in element1.skus) {
+                                      if (skus.contains(e2.id)) {
+                                        if (!aMap.containsKey(element1)) {
+                                          aMap[element1] = {
+                                            e2: count[skus.indexOf(e2.id)]
+                                          };
+                                        } else {
+                                          aMap[element1]![e2] =
+                                              count[skus.indexOf(e2.id)];
+                                        }
+                                      }
+                                    }
+                                  });
+                                  context
+                                      .read<OrderScreenManagement>()
+                                      .currentlyExpanded = null;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) {
+                                        return OrderScreen(
+                                          order: outletOrder,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12, vertical: 4.0),
+                                    child: Text(
+                                      "Edit",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                   ),

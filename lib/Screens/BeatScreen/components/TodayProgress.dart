@@ -30,7 +30,7 @@ class TodayProgress extends StatelessWidget {
               ),
               Expanded(child: Container()),
               Text(
-                context.watch<TodayProgressState>().inProgressBeat?.name ?? "",
+                context.watch<TodayProgressState>().inProgressBeat?.beatName ?? "",
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.5),
                 ),

@@ -88,10 +88,27 @@ class NoOrderScreen extends StatelessWidget {
                     .toList(),
               ),
             ),
-            Container(
-              height: 60,
-              width: double.infinity,
-              child: TextField(),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                height: 60,
+                width: double.infinity,
+                child:  TextFormField(
+                  controller: context
+                      .read<OrderScreenManagement>()
+                      .noOrderRemarkController,
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.book_outlined),
+                      hintText: "Remark",
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: const BorderSide(color: Colors.green)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          borderSide: BorderSide(color: Colors.black))),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             GestureDetector(
               onTap: () async {
@@ -116,7 +133,9 @@ class NoOrderScreen extends StatelessWidget {
                                   .read<MapManagement>()
                                   .selectedOutlet!
                                   .outletPlanId,
-                              "remarks");
+                          context
+                              .read<OrderScreenManagement>()
+                              .noOrderRemarkController.text);
                       if (success) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text("Successful")));

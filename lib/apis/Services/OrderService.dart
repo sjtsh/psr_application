@@ -59,8 +59,8 @@ class OrderService {
     }
   }
 
-  Future<bool> insertOrder(
-      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int outletPlanID) async {
+  Future<bool> insertOrder(Map<SubGroup, Map<SKU, int>> aMap, String remarks,
+      int outletPlanID) async {
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -73,10 +73,40 @@ class OrderService {
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
     bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
-
     Response res = await http.post(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/createOutletOrder"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'session_id': (meUser?.sessionID ?? ""),
+        },
+        body: jsonEncode(bodyMap));
+    if (res.statusCode == 200) {
+      return true;
+    } else {
+      throw "Status code is ${res.statusCode}";
+    }
+  }
+
+  Future<bool> updateOrder(
+      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int orderID) async {
+    Map<String, dynamic> bodyMap = {};
+    for (var element1 in aMap.values) {
+      for (var element in element1.entries) {
+        if (!bodyMap.containsKey("items")) {
+          bodyMap["items"] = {};
+        }
+        bodyMap["items"][element.key.id.toString()] = element.value.toString();
+      }
+    }
+    bodyMap["order_id"] = orderID.toString();
+    bodyMap["remarks"] = remarks +
+        "updated at" +
+        NepaliDateTime.now().toString().substring(0, 19);
+
+    Response res = await http.put(
+        Uri.parse(
+            "https://asia-south1-psr-application-342007.cloudfunctions.net/updateOutletOrder"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'session_id': (meUser?.sessionID ?? ""),

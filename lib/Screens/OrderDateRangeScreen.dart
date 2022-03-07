@@ -240,7 +240,7 @@ class OrderDateRangeScreen extends StatelessWidget {
                             : ListView(
                                 children: (context
                                             .watch<DateRangeManagement>()
-                                            .requestedOrders ??
+                                            .requestedOrders?.reversed ??
                                         [])
                                     .map(
                                       (e) => SingularOrder(e),
@@ -249,7 +249,7 @@ class OrderDateRangeScreen extends StatelessWidget {
                         : ListView(
                             children: context
                                 .watch<BeatManagement>()
-                                .outletOrders
+                                .outletOrders.reversed
                                 .map(
                                   (e) => SingularOrder(e),
                                 )

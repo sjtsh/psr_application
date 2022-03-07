@@ -51,12 +51,12 @@ class OrderHistory extends StatelessWidget {
                         child: Text("No orders in beat plan"),
                       )
                     : Container(
-                        child: Column(
+                        child: ListView(
                           children: context
                               .read<BeatManagement>()
                               .outletOrders
-                              .where((element) => element.outletID == outlet.id)
-                              .map((e) => SingularOrder(e))
+                              .where((element) => element.outletID == outlet.id).toList().reversed
+                              .map((e) => SingularOrder(e, editable: true))
                               .toList(),
                         ),
                       )),

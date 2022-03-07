@@ -6,9 +6,8 @@ import 'package:psr_application/apis/Entities/SubGroup.dart';
 class SingularProductHeader extends StatelessWidget {
   final int index;
   final SubGroup subgroup;
-  final bool isExpanded;
 
-  SingularProductHeader(this.index, this.subgroup, this.isExpanded);
+  SingularProductHeader(this.index, this.subgroup);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +19,8 @@ class SingularProductHeader extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
+            color: context.watch<OrderScreenManagement>().currentlyExpanded ==
+                index ? Color(0xffC8E6C9):Colors.white,
             border: Border(
               bottom: BorderSide(
                 color: Colors.black.withOpacity(0.1),
@@ -100,7 +101,8 @@ class SingularProductHeader extends StatelessWidget {
                         ),
                       ),
                       Icon(
-                        isExpanded ? Icons.arrow_drop_up :Icons.arrow_drop_down,
+                        context.watch<OrderScreenManagement>().currentlyExpanded ==
+                            index  ? Icons.arrow_drop_up :Icons.arrow_drop_down,
                         color: Colors.black.withOpacity(0.5),
                       ),
                       SizedBox(

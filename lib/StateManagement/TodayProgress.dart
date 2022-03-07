@@ -15,6 +15,6 @@ class TodayProgressState with ChangeNotifier, DiagnosticableTreeMixin {
   double netValueSales = 14000;
   int stdQuantitySales = 200;
   double uniqueSKU = 5;
-  Beat? inProgressBeat;
+  HollowBeat? inProgressBeat;
 
 }
