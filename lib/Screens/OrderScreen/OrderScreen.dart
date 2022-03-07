@@ -67,6 +67,7 @@ class OrderScreen extends StatelessWidget {
                   color: Colors.green, borderRadius: BorderRadius.circular(16)),
               child: MaterialButton(
                   onPressed: () {
+                    context.read<OrderScreenManagement>().makeExpansion(null);
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => ConfirmOrderScreen(order: order),

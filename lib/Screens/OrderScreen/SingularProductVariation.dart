@@ -73,7 +73,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: TextField(
-                    controller: alternative,
+                    controller: primary,
                     cursorWidth: 1,
                     keyboardType: TextInputType.number,
                     cursorColor: Colors.blue,
@@ -117,7 +117,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                     ),
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      hintText: widget.sku.secondaryUnit,
+                      hintText: widget.sku.primaryUnit,
                       border: InputBorder.none,
                       hintStyle:
                       TextStyle(color: Colors.black.withOpacity(0.3)),
@@ -141,7 +141,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: TextField(
-                    controller: primary,
+                    controller: alternative,
                     cursorWidth: 1,
                     keyboardType: TextInputType.number,
                     cursorColor: Colors.blue,
@@ -185,7 +185,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                     },
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
-                      hintText: widget.sku.primaryUnit,
+                      hintText: widget.sku.secondaryUnit,
                       hintStyle:
                           TextStyle(color: Colors.black.withOpacity(0.3)),
                       border: InputBorder.none,

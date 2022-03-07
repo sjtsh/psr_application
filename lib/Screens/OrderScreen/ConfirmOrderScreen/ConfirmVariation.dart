@@ -79,7 +79,7 @@ class ConfirmVariation extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    (f.value % f.key.cf).toString(),
+                                    (f.value ~/ f.key.cf).toString(),
                                     style: TextStyle(
                                       color: Colors.black.withOpacity(0.5),
                                     ),
@@ -99,7 +99,7 @@ class ConfirmVariation extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    (f.value ~/ f.key.cf).toString(),
+                                    (f.value % f.key.cf).toString(),
                                     style: TextStyle(
                                       color: Colors.black.withOpacity(0.5),
                                     ),

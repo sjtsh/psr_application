@@ -90,7 +90,7 @@ class OrderService {
   }
 
   Future<bool> updateOrder(
-      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int outletID) async {
+      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int orderID) async {
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -100,7 +100,7 @@ class OrderService {
         bodyMap["items"][element.key.id.toString()] = element.value.toString();
       }
     }
-    bodyMap["outlet_id"] = outletID.toString();
+    bodyMap["order_id"] = orderID.toString();
     bodyMap["remarks"] = remarks;
 
     Response res = await http.put(

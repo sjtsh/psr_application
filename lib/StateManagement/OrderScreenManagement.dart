@@ -60,15 +60,19 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     items = value;
   }
 
-  makeExpansion(int index) {
-    if (!items[index]) {
-      if (currentlyExpanded != null) {
-        items[currentlyExpanded!] = false;
+  makeExpansion(int? index) {
+    if(index!=null){
+      if (!items[index]) {
+        if (currentlyExpanded != null) {
+          items[currentlyExpanded!] = false;
+        }
+        items[index] = true;
+        currentlyExpanded = index;
+      } else {
+        items[index] = false;
+        currentlyExpanded = null;
       }
-      items[index] = true;
-      currentlyExpanded = index;
-    } else {
-      items[index] = false;
+    }else{
       currentlyExpanded = null;
     }
     notifyListeners();
