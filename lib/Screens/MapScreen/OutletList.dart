@@ -171,14 +171,7 @@ class OutletList extends StatelessWidget {
                               color: Colors.grey,
                             ),
                           ),
-                          Text(
-                            " • ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                          ),
+                          Expanded(child: Container()),
                           Text(
                             "#OU${context.watch<MapManagement>().sortedOutlets[index].id.toString().padLeft(4, "0")}",
                             style: TextStyle(

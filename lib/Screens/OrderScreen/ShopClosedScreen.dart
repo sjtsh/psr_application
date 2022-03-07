@@ -137,6 +137,10 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                                           print("clicked");
                                           context
                                               .read<ShopClosedController>()
+                                              .remarkTextEditingController
+                                              .text ="";
+                                          context
+                                              .read<ShopClosedController>()
                                               .controller
                                               ?.takePicture()
                                               .then((XFile value) {

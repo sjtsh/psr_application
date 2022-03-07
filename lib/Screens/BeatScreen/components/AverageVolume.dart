@@ -84,7 +84,7 @@ class _AverageVolumeState extends State<AverageVolume> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+            padding: const EdgeInsets.only(left: 12.0, top: 6,right: 12.0,bottom: 12),
             child: Row(
               children: [
                 Expanded(
@@ -125,7 +125,7 @@ class _AverageVolumeState extends State<AverageVolume> {
                               style:
                                   TextStyle(fontSize: 14, color: Colors.white),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

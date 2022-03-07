@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nepali_utils/nepali_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmVariation.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
@@ -210,7 +211,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                                                     .singularOrder,
                                             context
                                                 .read<OrderScreenManagement>()
-                                                .confirmOrderRemarkController.text,
+                                                .confirmOrderRemarkController.text ,
                                                 context
                                                     .read<MapManagement>()
                                                     .selectedOutlet!
@@ -222,7 +223,9 @@ class ConfirmOrderScreen extends StatelessWidget {
                                                     .read<
                                                         OrderScreenManagement>()
                                                     .singularOrder,
-                                                "remarks",
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .confirmOrderRemarkController.text,
                                                 order!.id);
                                       }
                                     } catch (e) {
