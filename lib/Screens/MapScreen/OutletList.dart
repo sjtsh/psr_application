@@ -11,6 +11,7 @@ import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../StateManagement/MapManagement.dart';
+import '../../StateManagement/ShopClosedController.dart';
 import '../OrderScreen/NoOrder/NoOrderScreen.dart';
 import '../OrderScreen/ShopClosedScreen.dart';
 
@@ -26,7 +27,7 @@ class OutletList extends StatelessWidget {
         context.watch<MapManagement>().sortedOutlets.length,
         (index) {
           return Padding(
-            padding: const EdgeInsets.only(right: 12, left: 12,bottom: 6),
+            padding: const EdgeInsets.only(right: 12, left: 12, bottom: 6),
             child: GestureDetector(
               onTap: () {
                 context.read<MapManagement>().changeSelectedMarkerOutlet(index);
@@ -45,292 +46,319 @@ class OutletList extends StatelessWidget {
                         spreadRadius: 3)
                   ],
                 ),
-                child: Builder(builder: (context) {
-                  double? dis = context.read<MapManagement>().sortedOutlets[index].dis;
-                  print("this is distance");
-                  print(context.read<MapManagement>().sortedOutlets[index].dis);
-
-                  return Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              context
-                                  .watch<MapManagement>()
-                                  .sortedOutlets[index]
-                                  .name,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            context
+                                .watch<MapManagement>()
+                                .sortedOutlets[index]
+                                .name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                             ),
-                            Text(
-                              " • ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
+                          ),
+                          Text(
+                            " • ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.grey,
                             ),
-                            Text(
-                            dis! < 1000
-                                  ? context.read<MapManagement>().sortedOutlets[index].dis!.toStringAsFixed(2) + " m"
-                                  : (dis / 1000).toStringAsFixed(2) + " km",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                height: 25,
-                                child: Center(
-                                  child: Text(
-                                    context
-                                        .watch<MapManagement>()
+                          ),
+                          Text(
+                            context
+                                        .read<MapManagement>()
                                         .sortedOutlets[index]
-                                        .category,
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                  border: Border.all(color: Colors.grey),
-                                ),
-                                height: 25,
-                                child: Center(
-                                  child: Text(
-                                    context
-                                        .watch<MapManagement>()
+                                        .dis! <
+                                    1000
+                                ? context
+                                        .read<MapManagement>()
                                         .sortedOutlets[index]
-                                        .segmentation,
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
+                                        .dis!
+                                        .toStringAsFixed(2) +
+                                    " m"
+                                : (context
+                                                .read<MapManagement>()
+                                                .sortedOutlets[index]
+                                                .dis! /
+                                            1000)
+                                        .toStringAsFixed(2) +
+                                    " km",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                                border: Border.all(color: Colors.grey),
+                              ),
+                              height: 25,
+                              child: Center(
+                                child: Text(
+                                  context
+                                      .watch<MapManagement>()
+                                      .sortedOutlets[index]
+                                      .category,
+                                  style: TextStyle(color: Colors.grey),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () => launch(
-                                  "tel://${context.read<MapManagement>().sortedOutlets[index].mobile}"),
-                              child: Icon(
-                                Icons.phone,
-                                color: Colors.grey,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                                border: Border.all(color: Colors.grey),
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              context
-                                  .watch<MapManagement>()
-                                  .sortedOutlets[index]
-                                  .mobile,
-                              style: TextStyle(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            Text(
-                              " • ",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            Text(
-                              "#OU${context.watch<MapManagement>().sortedOutlets[index].id.toString().padLeft(4, "0")}",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                height: 30,
-                                child: MaterialButton(
-                                  color: dis > 20
-                                      ? Colors.grey
-                                      : Color(0xff34C759),
-                                  onPressed: () {
-                                    //commented for development purposes ~sajat
-                                    // if (dis < 20) {
-                                    context
-                                        .read<MapManagement>()
-                                        .changeSelectedMarkerOutlet(index);
-                                    context
-                                        .read<OrderScreenManagement>()
-                                        .singularOrder = {};
-                                    context.read<OrderScreenManagement>().dataToDisplay = null;
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(builder: (_) {
-                                      return OrderScreen();
-                                    }));
-                                    // }
-                                  },
-                                  child: Text(
-                                    "TAKE ORDER",
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.white),
-                                  ),
+                              height: 25,
+                              child: Center(
+                                child: Text(
+                                  context
+                                      .watch<MapManagement>()
+                                      .sortedOutlets[index]
+                                      .segmentation,
+                                  style: TextStyle(color: Colors.grey),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => launch(
+                                "tel://${context.read<MapManagement>().sortedOutlets[index].mobile}"),
+                            child: Icon(
+                              Icons.phone,
+                              color: Colors.grey,
                             ),
-                            Expanded(
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                height: 30,
-                                child: MaterialButton(
-                                  color: Color(0xffE8E8E9),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (_) {
-                                          return OrderHistory(context
-                                              .read<MapManagement>()
-                                              .sortedOutlets[index]);
-                                        },
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    "VIEW HISTORY",
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.grey),
-                                  ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            context
+                                .watch<MapManagement>()
+                                .sortedOutlets[index]
+                                .mobile,
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            " • ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            "#OU${context.watch<MapManagement>().sortedOutlets[index].id.toString().padLeft(4, "0")}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              height: 30,
+                              child: MaterialButton(
+                                color: context
+                                            .read<MapManagement>()
+                                            .sortedOutlets[index]
+                                            .dis! >
+                                        20
+                                    ? Colors.grey
+                                    : Color(0xff34C759),
+                                onPressed: () {
+                                  //commented for development purposes ~sajat
+                                  // if (context.read<MapManagement>().sortedOutlets[index].dis < 20) {
+                                  context
+                                      .read<MapManagement>()
+                                      .changeSelectedMarkerOutlet(index);
+                                  context
+                                      .read<OrderScreenManagement>()
+                                      .singularOrder = {};
+                                  context
+                                      .read<OrderScreenManagement>()
+                                      .dataToDisplay = null;
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(builder: (_) {
+                                    return OrderScreen();
+                                  }));
+                                  // }
+                                },
+                                child: Text(
+                                  "TAKE ORDER",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.white),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                height: 30,
-                                child: MaterialButton(
-                                  color:
-                                      dis > 20 ? Colors.grey : Colors.redAccent,
-                                  onPressed: () {
-                                    context
-                                        .read<MapManagement>()
-                                        .changeSelectedMarkerOutlet(index);
-                                    // if (dis < 20) {}
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return ShopClosedScreen();
-                                    }));
-                                  },
-                                  child: Text(
-                                    "SHOP CLOSED",
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.white),
-                                  ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              height: 30,
+                              child: MaterialButton(
+                                color: Color(0xffE8E8E9),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) {
+                                        return OrderHistory(context
+                                            .read<MapManagement>()
+                                            .sortedOutlets[index]);
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  "VIEW HISTORY",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.grey),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Container(
-                                clipBehavior: Clip.hardEdge,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                height: 30,
-                                child: MaterialButton(
-                                  color: dis > 20
-                                      ? Color(0xffE8E8E9)
-                                      : Colors.orangeAccent,
-                                  onPressed: () {
-                                    context
-                                        .read<MapManagement>()
-                                        .changeSelectedMarkerOutlet(index);
-                                    context
-                                        .read<OrderScreenManagement>()
-                                        .selectedNoOrderReasonGroup = null;
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return NoOrderScreen();
-                                    }));
-                                  },
-                                  child: Text(
-                                    "NO ORDER",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: dis > 20
-                                            ? Colors.grey
-                                            : Colors.white),
-                                  ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              height: 30,
+                              child: MaterialButton(
+                                color: context
+                                            .read<MapManagement>()
+                                            .sortedOutlets[index]
+                                            .dis! >
+                                        20
+                                    ? Colors.grey
+                                    : Colors.redAccent,
+                                onPressed: () {
+                                  context
+                                      .read<ShopClosedController>().initialize();
+                                  // if (context.read<MapManagement>().sortedOutlets[index].dis! < 20) {}
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return ShopClosedScreen(context.watch<MapManagement>().sortedOutlets[index].id);
+                                  }));
+                                },
+                                child: Text(
+                                  "SHOP CLOSED",
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.white),
                                 ),
                               ),
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                }),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: Container(
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              height: 30,
+                              child: MaterialButton(
+                                color: context
+                                            .read<MapManagement>()
+                                            .sortedOutlets[index]
+                                            .dis! >
+                                        20
+                                    ? Color(0xffE8E8E9)
+                                    : Colors.orangeAccent,
+                                onPressed: () {
+                                  context
+                                      .read<MapManagement>()
+                                      .changeSelectedMarkerOutlet(index);
+                                  context
+                                      .read<OrderScreenManagement>()
+                                      .selectedNoOrderReasonGroup = null;
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return NoOrderScreen();
+                                  }));
+                                },
+                                child: Text(
+                                  "NO ORDER",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: context
+                                                  .read<MapManagement>()
+                                                  .sortedOutlets[index]
+                                                  .dis! >
+                                              20
+                                          ? Colors.grey
+                                          : Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
               ),
             ),
           );

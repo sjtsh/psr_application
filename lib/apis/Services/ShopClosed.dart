@@ -34,7 +34,8 @@ class OutletClosedService {
     if (res.statusCode == 200) {
       return true;
     } else {
-      throw "Status code is ${res.statusCode}";
+      return false;
+     // throw "Status code is ${res.statusCode}";
     }
   }
 

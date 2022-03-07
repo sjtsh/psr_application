@@ -25,13 +25,20 @@ class OrderScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    "Order",
-                    style:
-                        TextStyle(fontSize: 36, fontWeight: FontWeight.normal),
-                  ),
+                Row(
+                  children: [
+                    IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, icon: Icon(Icons.arrow_back_ios)),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        "Order",
+                        style:
+                            TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
+                      ),
+                    ),
+                  ],
                 ),
                 SearchBarState(),
                 Column(

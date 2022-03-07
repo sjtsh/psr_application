@@ -11,8 +11,9 @@ import '../../apis/Services/ShopClosed.dart';
 
 class ImagePreviewScreen extends StatelessWidget {
   final String path;
+  final int outletId;
 
-  ImagePreviewScreen(this.path);
+  ImagePreviewScreen(this.path, this.outletId);
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +25,23 @@ class ImagePreviewScreen extends StatelessWidget {
             File(path),
           ),
         ),
-
         Padding(
           padding: const EdgeInsets.all(12),
           child: TextFormField(
-            controller: context.read<ShopClosedController>().remarkTextEditingController,
-          decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.book_outlined),
-              hintText: "Remark",
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: const BorderSide(color: Colors.green)) ,
-              enabledBorder:  OutlineInputBorder(borderRadius: BorderRadius.circular(16),borderSide: BorderSide(color: Colors.black))),
-          onFieldSubmitted: (text){
-
-          },
-          style: const TextStyle(fontWeight: FontWeight.bold),
+            controller: context
+                .read<ShopClosedController>()
+                .remarkTextEditingController,
+            decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.book_outlined),
+                hintText: "Remark",
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(color: Colors.green)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide(color: Colors.black))),
+            onFieldSubmitted: (text) {},
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         Row(
@@ -72,13 +74,21 @@ class ImagePreviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: GestureDetector(
                   onTap: () {
+                    print(outletId);
                     context.read<ShopClosedController>().imageSent();
                     OutletClosedService()
                         .insertOutletClosed(
-                            File(path), "trying${path.split("\\").last}", meUser?.id ?? "0", context.read<ShopClosedController>().remarkTextEditingController.text, context.read<MapManagement>().selectedOutlet!.outletPlanId)
-
+                            File(path),
+                            "trying${path.split("\\").last}",
+                            meUser?.id ?? "0",
+                            context
+                                .read<ShopClosedController>()
+                                .remarkTextEditingController
+                                .text,
+                            outletId)
                         .then((value) {
-                      context.read<ShopClosedController>().imageSent();
+                      print("$value this is value");
+
                       Navigator.pop(context);
                       Navigator.pop(context);
                     });
@@ -90,10 +100,14 @@ class ImagePreviewScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
-                      child: !context.watch<ShopClosedController>().isloading?Text(
-                        "Done",
-                        style: TextStyle(color: Colors.white),
-                      ):CircularProgressIndicator(color: Colors.white,),
+                      child: !context.watch<ShopClosedController>().isloading
+                          ? Text(
+                              "Done",
+                              style: TextStyle(color: Colors.white),
+                            )
+                          : CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                     ),
                   ),
                 ),

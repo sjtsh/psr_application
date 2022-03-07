@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +11,15 @@ import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import '../../StateManagement/LogInManagement.dart';
 
 class ShopClosedScreen extends StatefulWidget {
-  const ShopClosedScreen({Key? key}) : super(key: key);
+  final int id;
+  ShopClosedScreen(this.id);
 
   @override
   State<ShopClosedScreen> createState() => _ShopClosedScreenState();
 }
 
 class _ShopClosedScreenState extends State<ShopClosedScreen> {
+
   @override
   Widget build(BuildContext context) {
     return (!(context
@@ -26,7 +28,7 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                 ?.value
                 .isInitialized ??
             false))
-        ? Container()
+        ? Container(color: Colors.white,)
         : MaterialApp(
             debugShowCheckedModeBanner: false,
             home: WillPopScope(
@@ -143,7 +145,7 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                                               MaterialPageRoute(
                                                 builder: (_) {
                                                   return ImagePreviewScreen(
-                                                      value.path);
+                                                      value.path, widget.id);
                                                 },
                                               ),
                                             );
