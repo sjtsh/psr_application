@@ -43,10 +43,12 @@ class ConfirmOrderScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<OrderScreenManagement>().showRemark();
+                          },
                           icon: Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.transparent,
+                            Icons.menu,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -77,10 +79,12 @@ class ConfirmOrderScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<OrderScreenManagement>().showRemark();
+                          },
                           icon: Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Colors.transparent,
+                            Icons.menu,
+                            color: !context.watch<OrderScreenManagement>().isRemarkShown ? Colors.black : Colors.green,
                           ),
                         ),
                       ],
@@ -150,6 +154,26 @@ class ConfirmOrderScreen extends StatelessWidget {
                                 style: TextStyle(fontSize: 12),
                               ),
                             ],
+                          ),
+                        ),
+
+                       !context.watch<OrderScreenManagement>().isRemarkShown? Container(): Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: TextFormField(
+                            controller: context
+                                .read<OrderScreenManagement>()
+                                .noOrderRemarkController,
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.book_outlined),
+                                focusColor: Colors.green,
+                                hintText: "Remark",
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: const BorderSide(color: Colors.green)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: BorderSide(color: Colors.black.withOpacity(0.1)))),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         Padding(

@@ -18,7 +18,7 @@ class SingularProduct extends StatelessWidget {
       child: Column(
         children: [
           SingularProductHeader(index,
-              context.watch<OrderScreenManagement>().data[index]),
+              subGroup),
           Builder(
             builder: (context) {
               if (context.watch<OrderScreenManagement>().currentlyExpanded ==
@@ -28,17 +28,13 @@ class SingularProduct extends StatelessWidget {
                     controller:
                     context.read<OrderScreenManagement>().controller,
                     shrinkWrap: true,
-                    itemCount: context
-                        .watch<OrderScreenManagement>()
-                        .data[index]
+                    itemCount: subGroup
                         .skus
                         .length,
                     itemBuilder: (_, a) => SingularProductVariation(
-                        context
-                            .watch<OrderScreenManagement>()
-                            .data[index]
+                        subGroup
                             .skus[a],
-                        context.watch<OrderScreenManagement>().data[index]),
+                        subGroup),
                   )
                 ]);
               } else {

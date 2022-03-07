@@ -11,12 +11,17 @@ import '../apis/Entities/SubGroup.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<bool> items = [];
-  Map<SubGroup, Map<SKU, int>>  singularOrder = {};
+  Map<SubGroup, Map<SKU, int>> singularOrder = {};
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
   ScrollController controller = ScrollController();
   List<SubGroup> data = [];
   List<SubGroup>? _dataToDisplay;
+  TextEditingController _noOrderRemarkController = TextEditingController();
+  TextEditingController get noOrderRemarkController => _noOrderRemarkController;
+
+  bool _isRemarkShown =false;
+  bool get isRemarkShown => _isRemarkShown;
 
   List<SubGroup>? get dataToDisplay => _dataToDisplay;
 
@@ -77,6 +82,11 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
+  showRemark(){
+    _isRemarkShown = !_isRemarkShown;
+    notifyListeners();
+  }
+
   searchProducts(String searchText) {
     _dataToDisplay = data.where((SubGroup subgroup) {
       return subgroup.name
@@ -89,5 +99,6 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
               .contains(searchText.toLowerCase());
     }).toList();
     notifyListeners();
+    print(_dataToDisplay);
   }
 }
