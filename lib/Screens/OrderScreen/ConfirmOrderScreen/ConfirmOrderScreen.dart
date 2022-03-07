@@ -159,7 +159,8 @@ class ConfirmOrderScreen extends StatelessWidget {
                               width: double.infinity,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.green,
+                                color:
+                                    order == null ? Colors.green : Colors.red,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: MaterialButton(
@@ -174,20 +175,32 @@ class ConfirmOrderScreen extends StatelessWidget {
                                     context
                                         .read<OrderScreenManagement>()
                                         .confirmButtonDisabled = true;
-                                    bool success;
-                                    if (order == null) {
-                                      success = await OrderService()
-                                          .insertOrder(
-                                              context
-                                                  .read<OrderScreenManagement>()
-                                                  .singularOrder,
-                                              "remarks",
-                                              context
-                                                  .read<MapManagement>()
-                                                  .selectedOutlet!
-                                                  .outletPlanId);
-                                    } else {
-                                      success = false;
+                                    bool success = false;
+                                    try {
+                                      if (order == null) {
+                                        success = await OrderService()
+                                            .insertOrder(
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .singularOrder,
+                                                "remarks",
+                                                context
+                                                    .read<MapManagement>()
+                                                    .selectedOutlet!
+                                                    .outletPlanId);
+                                      } else {
+                                        success = await OrderService()
+                                            .updateOrder(
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .singularOrder,
+                                                "remarks",
+                                                order!.id);
+                                      }
+                                    } catch (e) {
+                                      print(e);
                                     }
                                     if (success) {
                                       ScaffoldMessenger.of(context)
@@ -222,7 +235,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                                             color: Colors.white,
                                           ))
                                       : Text(
-                                          "Confirm",
+                                          order == null ? "Confirm" : "Edit",
                                           style: TextStyle(color: Colors.white),
                                         ),
                                 ),

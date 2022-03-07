@@ -101,7 +101,7 @@ class SingularOrder extends StatelessWidget {
                                         e2: count[skus.indexOf(e2.id)]
                                       };
                                     } else {
-                                      aMap[element1]![e2] = 2;
+                                      aMap[element1]![e2] = count[skus.indexOf(e2.id)];
                                     }
                                   }
                                 }
