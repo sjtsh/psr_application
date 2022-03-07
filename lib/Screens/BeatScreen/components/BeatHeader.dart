@@ -61,25 +61,25 @@ class BeatHeader extends StatelessWidget {
               ],
             ),
             Expanded(child: Container()),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) {
-                      NepaliDateTime date = NepaliDateTime.now();
-                      context.read<DateRangeManagement>().startDate = date;
-                      context.read<DateRangeManagement>().endDate = date;
-                      return OrderDateRangeScreen();
-                    },
-                  ),
-                );
-              },
-              icon: Icon(
-                Icons.calendar_today,
-                color: Colors.blue,
-              ),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (_) {
+            //           NepaliDateTime date = NepaliDateTime.now();
+            //           context.read<DateRangeManagement>().startDate = date;
+            //           context.read<DateRangeManagement>().endDate = date;
+            //           return OrderDateRangeScreen();
+            //         },
+            //       ),
+            //     );
+            //   },
+            //   icon: Icon(
+            //     Icons.calendar_today,
+            //     color: Colors.blue,
+            //   ),
+            // ),
             SizedBox(
               width: 12,
             ),
