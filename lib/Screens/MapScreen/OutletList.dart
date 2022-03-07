@@ -115,7 +115,7 @@ class OutletList extends StatelessWidget {
                                   context
                                       .watch<MapManagement>()
                                       .sortedOutlets[index]
-                                      .category,
+                                      .ownerName,
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ),
@@ -138,7 +138,7 @@ class OutletList extends StatelessWidget {
                                   context
                                       .watch<MapManagement>()
                                       .sortedOutlets[index]
-                                      .segmentation,
+                                      .category,
                                   style: TextStyle(color: Colors.grey),
                                 ),
                               ),

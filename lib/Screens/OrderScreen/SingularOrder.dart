@@ -109,6 +109,9 @@ class SingularOrder extends StatelessWidget {
                               });
                               context
                                   .read<OrderScreenManagement>()
+                                  .singularOrder = aMap;
+                              context
+                                  .read<OrderScreenManagement>()
                                   .currentlyExpanded = null;
                               Navigator.push(
                                 context,

@@ -124,7 +124,7 @@ class TodayProgress extends StatelessWidget {
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           Text(
-                            "Std Quantity",
+                            "Reward Points",
                             style: TextStyle(
                               fontSize: 12,
                               color: Colors.black.withOpacity(0.5),
