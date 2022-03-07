@@ -20,6 +20,9 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   TextEditingController _noOrderRemarkController = TextEditingController();
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
 
+  TextEditingController _confirmOrderRemarkController = TextEditingController();
+  TextEditingController get confirmOrderRemarkController => _confirmOrderRemarkController;
+
   bool _isRemarkShown =false;
   bool get isRemarkShown => _isRemarkShown;
 

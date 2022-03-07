@@ -162,7 +162,7 @@ class ConfirmOrderScreen extends StatelessWidget {
                           child: TextFormField(
                             controller: context
                                 .read<OrderScreenManagement>()
-                                .noOrderRemarkController,
+                                .confirmOrderRemarkController,
                             decoration: InputDecoration(
                                 prefixIcon: const Icon(Icons.book_outlined),
                                 focusColor: Colors.green,
@@ -208,7 +208,9 @@ class ConfirmOrderScreen extends StatelessWidget {
                                                     .read<
                                                         OrderScreenManagement>()
                                                     .singularOrder,
-                                                "remarks",
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .confirmOrderRemarkController.text,
                                                 context
                                                     .read<MapManagement>()
                                                     .selectedOutlet!
