@@ -21,7 +21,13 @@ class TodayProgress extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text("Today's Progress"),
+              Text(
+                "Today's Progress",
+                style: TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
               Expanded(child: Container()),
               Text(
                 context.watch<TodayProgressState>().inProgressBeat?.name ?? "",
@@ -31,15 +37,21 @@ class TodayProgress extends StatelessWidget {
               )
             ],
           ),
+          SizedBox(height: 6,),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0),
             child: Container(
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
-              ),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        offset: Offset(0, 2),
+                        blurRadius: 3,
+                        spreadRadius: 3)
+                  ]),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -72,10 +84,15 @@ class TodayProgress extends StatelessWidget {
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0, 2),
+                              blurRadius: 3,
+                              spreadRadius: 3)
+                        ]),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -107,10 +124,15 @@ class TodayProgress extends StatelessWidget {
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0, 2),
+                              blurRadius: 3,
+                              spreadRadius: 3)
+                        ]),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -142,10 +164,15 @@ class TodayProgress extends StatelessWidget {
                   child: Container(
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), offset: Offset(0,2),blurRadius: 3,spreadRadius: 3)]
-                    ),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0, 2),
+                              blurRadius: 3,
+                              spreadRadius: 3)
+                        ]),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -191,14 +218,11 @@ class TodayProgress extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "Continue Retailing",
+                  "CONTINUE RETAILING",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: 12,
           ),
         ],
       ),

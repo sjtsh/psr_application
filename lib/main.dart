@@ -16,32 +16,35 @@ import 'package:http/http.dart' as http;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (_) => LogInManagement(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => MapManagement(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => AverageVolumeState(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => TodayProgressState(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => ShopClosedController(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => BeatManagement(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => DateRangeManagement(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => OrderScreenManagement(),
-      ),
-    ], child: const MyApp()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => LogInManagement(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => MapManagement(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AverageVolumeState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TodayProgressState(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ShopClosedController(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => BeatManagement(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DateRangeManagement(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OrderScreenManagement(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
