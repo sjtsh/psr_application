@@ -101,21 +101,21 @@ class SingularOrder extends StatelessWidget {
                                         e2: count[skus.indexOf(e2.id)]
                                       };
                                     } else {
-                                      aMap[element1]![e2] = count[skus.indexOf(e2.id)];
+                                      aMap[element1]![e2] =
+                                          count[skus.indexOf(e2.id)];
                                     }
                                   }
                                 }
                               });
                               context
                                   .read<OrderScreenManagement>()
-                                  .singularOrder = aMap;
-
+                                  .currentlyExpanded = null;
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (_) {
                                     return OrderScreen(
-                                    order: outletOrder,
+                                      order: outletOrder,
                                     );
                                   },
                                 ),

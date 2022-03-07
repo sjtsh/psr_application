@@ -14,16 +14,59 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   Map<SubGroup, Map<SKU, int>> singularOrder = {};
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
+  String _dropdownValueFilter = "All";
   ScrollController controller = ScrollController();
   List<SubGroup> data = [];
   List<SubGroup>? _dataToDisplay;
   TextEditingController _noOrderRemarkController = TextEditingController();
+
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
-
   TextEditingController _confirmOrderRemarkController = TextEditingController();
-  TextEditingController get confirmOrderRemarkController => _confirmOrderRemarkController;
 
-  bool _isRemarkShown =false;
+  TextEditingController get confirmOrderRemarkController =>
+      _confirmOrderRemarkController;
+
+  String get dropdownValueFilter => _dropdownValueFilter;
+
+  set dropdownValueFilter(String value) {
+    _dropdownValueFilter = value;
+    List<SubGroup> subGroups = [];
+    try {
+      for (var element1 in data) {
+        for (var element2 in element1.skus) {
+          List<String> dropdownvalues = ["Promoted", "New", "Trending"];
+          List<bool> boolList = [
+            element2.isPromoted,
+            element2.isNew,
+            element2.isTrending
+          ];
+          if (boolList[dropdownvalues.indexOf(value)]) {
+            bool isAlreadyThere = false;
+            for (var element3 in subGroups) {
+              if (element3.name == element1.name) {
+                isAlreadyThere = true;
+                element3.skus.add(element2);
+                break;
+              }
+            }
+            if (!isAlreadyThere) {
+              subGroups.add(
+                  SubGroup(element1.name, element1.productName, [element2]));
+            }
+          }
+        }
+      }
+
+      _dataToDisplay = subGroups;
+    } catch (e) {
+      _dataToDisplay = null;
+    }
+
+    notifyListeners();
+  }
+
+  bool _isRemarkShown = false;
+
   bool get isRemarkShown => _isRemarkShown;
 
   List<SubGroup>? get dataToDisplay => _dataToDisplay;
@@ -64,7 +107,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   makeExpansion(int? index) {
-    if(index!=null){
+    if (index != null) {
       if (!items[index]) {
         if (currentlyExpanded != null) {
           items[currentlyExpanded!] = false;
@@ -75,7 +118,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
         items[index] = false;
         currentlyExpanded = null;
       }
-    }else{
+    } else {
       currentlyExpanded = null;
     }
     notifyListeners();
@@ -89,7 +132,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  showRemark(){
+  showRemark() {
     _isRemarkShown = !_isRemarkShown;
     notifyListeners();
   }

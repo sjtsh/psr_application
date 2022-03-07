@@ -87,10 +87,11 @@ class ImagePreviewScreen extends StatelessWidget {
                                 .text,
                             outletId)
                         .then((value) {
-                      print("$value this is value");
+                          context.read<ShopClosedController>().imageSent();
+                      Navigator.pop(context);
+                      Navigator.pop(context);
 
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+
                     });
                   },
                   child: Container(

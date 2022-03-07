@@ -59,8 +59,8 @@ class OrderService {
     }
   }
 
-  Future<bool> insertOrder(
-      Map<SubGroup, Map<SKU, int>> aMap, String remarks, int outletPlanID) async {
+  Future<bool> insertOrder(Map<SubGroup, Map<SKU, int>> aMap, String remarks,
+      int outletPlanID) async {
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -73,7 +73,6 @@ class OrderService {
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
     bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
-
     Response res = await http.post(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/createOutletOrder"),
@@ -101,7 +100,9 @@ class OrderService {
       }
     }
     bodyMap["order_id"] = orderID.toString();
-    bodyMap["remarks"] = remarks;
+    bodyMap["remarks"] = remarks +
+        "updated at" +
+        NepaliDateTime.now().toString().substring(0, 19);
 
     Response res = await http.put(
         Uri.parse(

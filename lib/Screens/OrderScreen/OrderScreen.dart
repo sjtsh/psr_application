@@ -68,6 +68,15 @@ class OrderScreen extends StatelessWidget {
               child: MaterialButton(
                   onPressed: () {
                     context.read<OrderScreenManagement>().makeExpansion(null);
+                    if(order == null){
+                      context
+                          .read<OrderScreenManagement>()
+                          .confirmOrderRemarkController.text = "";
+                    }else{
+                      context
+                          .read<OrderScreenManagement>()
+                          .confirmOrderRemarkController.text = order?.remarks ??"";
+                    }
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => ConfirmOrderScreen(order: order),
