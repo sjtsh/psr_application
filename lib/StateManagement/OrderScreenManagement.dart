@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/apis/Entities/NoOrderReasonGroup.dart';
+import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 import 'package:psr_application/apis/Entities/SKU.dart';
 import 'package:psr_application/apis/Entities/SKU.dart';
 import 'package:psr_application/apis/Entities/SKU.dart';
@@ -18,6 +19,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   ScrollController controller = ScrollController();
   List<SubGroup> data = [];
   List<SubGroup>? _dataToDisplay;
+  List<OutletOrderItem>outletOrderItem=[];
   TextEditingController _noOrderRemarkController = TextEditingController();
 
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;

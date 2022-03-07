@@ -51,7 +51,7 @@ class OrderHistory extends StatelessWidget {
                         child: Text("No orders in beat plan"),
                       )
                     : Container(
-                        child: Column(
+                        child: ListView(
                           children: context
                               .read<BeatManagement>()
                               .outletOrders

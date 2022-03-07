@@ -15,10 +15,14 @@ class SelectBeat extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Assigned Beats"),
-          SizedBox(
-            height: 12,
+          Text(
+            "Assigned Beats",
+            style: TextStyle(
+              // fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
+          SizedBox(height: 6,),
           Column(
             children: [
               ...context
