@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,7 +13,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   Outlet? selectedOutlet;
   GoogleMapController? controller;
   List<Outlet> sortedOutlets = [];
-  ScrollController scrollController = ScrollController();
+  CarouselController carouselController = CarouselController();
   LatLng userPosition = LatLng(0, 0);
 
   changeSelectedMarkerOutlet(int index) {
@@ -61,7 +62,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           userPosition.latitude, userPosition.longitude, a.lat, a.lng)
           .compareTo(Geolocator.distanceBetween(
           userPosition.latitude, userPosition.longitude, b.lat, b.lng));
-      });
+    });
     sortedOutlets = List.generate(
       count,
           (index) {
@@ -81,11 +82,13 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
             sortedOutlet[index].deactivated,
             sortedOutlet[index].isDone);
         outlet.dis = Geolocator.distanceBetween(
-            userPosition.latitude, userPosition.longitude, sortedOutlet[index].lat, sortedOutlet[index].lng);
+            userPosition.latitude, userPosition.longitude,
+            sortedOutlet[index].lat, sortedOutlet[index].lng);
         outlet.marker = Marker(
           onTap: () {
             selectedOutlet = sortedOutlets[index];
-            scrollController.jumpTo(0 + index * 300);
+            carouselController.animateToPage(index);
+
           },
           markerId: MarkerId(sortedOutlet[index].name),
           position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
@@ -104,4 +107,6 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
       (
     );
   }
+
+
 }
