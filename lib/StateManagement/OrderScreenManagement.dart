@@ -32,19 +32,38 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   set dropdownValueFilter(String value) {
     _dropdownValueFilter = value;
-    _dataToDisplay = [];
-    List<SubGroup> subGroup = [];
-
-    if (_dropdownValueFilter =="Promoted"){
+    List<SubGroup> subGroups = [];
+    try {
       for (var element1 in data) {
         for (var element2 in element1.skus) {
-          if(element2.isPromoted){
-            //_dataToDisplay?.addAll();
-            print(_dataToDisplay);
+          List<String> dropdownvalues = ["Promoted", "New", "Trending"];
+          List<bool> boolList = [
+            element2.isPromoted,
+            element2.isNew,
+            element2.isTrending
+          ];
+          if (boolList[dropdownvalues.indexOf(value)]) {
+            bool isAlreadyThere = false;
+            for (var element3 in subGroups) {
+              if (element3.name == element1.name) {
+                isAlreadyThere = true;
+                element3.skus.add(element2);
+                break;
+              }
+            }
+            if (!isAlreadyThere) {
+              subGroups.add(
+                  SubGroup(element1.name, element1.productName, [element2]));
+            }
           }
         }
       }
+
+      _dataToDisplay = subGroups;
+    } catch (e) {
+      _dataToDisplay = null;
     }
+
     notifyListeners();
   }
 
