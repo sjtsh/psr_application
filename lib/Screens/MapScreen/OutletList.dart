@@ -25,6 +25,7 @@ class OutletList extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: context.watch<MapManagement>().sortedOutlets.length,
       itemBuilder: (BuildContext context, int index, int realIndex) {
+        context.read<MapManagement>().changeSelectedMarkerOutletByCarousel(realIndex);
         return Padding(
           padding: const EdgeInsets.only(right: 12, left: 12, bottom: 2),
           child: GestureDetector(
@@ -53,7 +54,7 @@ class OutletList extends StatelessWidget {
                         child: Image.network(context
                             .watch<MapManagement>()
                             .sortedOutlets[index]
-                            .img)),
+                            .img, fit: BoxFit.cover,)),
                     SizedBox(
                       width: 6,
                     ),
@@ -379,7 +380,7 @@ class OutletList extends StatelessWidget {
       options: CarouselOptions(
         height: 250,
         initialPage: 0,
-        enableInfiniteScroll: true,
+        enableInfiniteScroll: false,
         reverse: false,
         viewportFraction: 1,
         autoPlayCurve: Curves.fastOutSlowIn,

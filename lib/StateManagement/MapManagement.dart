@@ -11,12 +11,24 @@ import '../apis/Entities/Outlet.dart';
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> allOutlets = [];
   Outlet? selectedOutlet;
+  Outlet? carouselOutlet;
   GoogleMapController? controller;
   List<Outlet> sortedOutlets = [];
   CarouselController carouselController = CarouselController();
   LatLng userPosition = LatLng(0, 0);
 
   changeSelectedMarkerOutlet(int index) {
+    controller?.showMarkerInfoWindow(
+        sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
+    controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: 17,
+        target: LatLng(
+          sortedOutlets[index].lat,
+          sortedOutlets[index].lng,
+        ))));
+    selectedOutlet = sortedOutlets[index];
+  }
+  changeSelectedMarkerOutletByCarousel(int index) {
     controller?.showMarkerInfoWindow(
         sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
     controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -87,7 +99,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
         outlet.marker = Marker(
           onTap: () {
             selectedOutlet = sortedOutlets[index];
-            carouselController.animateToPage(index);
+            carouselController.jumpToPage(index);
+             //   .animateToPage(index);
 
           },
           markerId: MarkerId(sortedOutlet[index].name),

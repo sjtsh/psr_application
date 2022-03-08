@@ -111,7 +111,6 @@ class MapScreen extends StatelessWidget {
                 bottom: 90,
                 child: GestureDetector(
                   onTap: () {
-
                     context.read<MapManagement>().carouselController.previousPage(
                         duration: Duration(milliseconds: 200), curve: Curves.easeIn);
                   },
