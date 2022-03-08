@@ -3,11 +3,11 @@ import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:psr_application/apis/Entities/OutletOrder.dart';
 
 class DateRangeManagement with ChangeNotifier, DiagnosticableTreeMixin {
-  NepaliDateTime startDate = NepaliDateTime(2078);
-  NepaliDateTime endDate = NepaliDateTime(2078);
+  NepaliDateTime startDate = NepaliDateTime.now();
+  NepaliDateTime endDate = NepaliDateTime.now();
 
   List<OutletOrder>? _requestedOrders;
-  bool _isRequestDisabled = false;
+  bool _isRequestDisabled = true;
 
   setEndDate(NepaliDateTime value) {
     endDate = value;

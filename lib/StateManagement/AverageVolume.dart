@@ -10,11 +10,11 @@ class AverageVolumeState with ChangeNotifier, DiagnosticableTreeMixin {
   int _isWeekly = 1;
   String dateRange = "";
   double monthlySaleVolume = 8000;
-  double monthlySKUVariance = 60;
+  int monthlySKUVariance = 60;
   double weeklySaleVolume = 8000;
-  double weeklySKUVariance = 60;
-  double customSKUVariance = 0;
-  double customSaleVolume = 0;
+  int weeklySKUVariance = 60;
+  int todaySKUVariance = 0;
+  double todaySaleVolume = 0;
 
 
   int get isWeekly => _isWeekly;

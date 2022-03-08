@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/AverageVolume.dart';
 import 'package:psr_application/StateManagement/DateRangeManagement.dart';
 import 'package:psr_application/apis/Entities/OutletOrder.dart';
 
@@ -13,6 +14,31 @@ import '../Entities/SKU.dart';
 import '../Entities/SubGroup.dart';
 
 class OrderService {
+
+  Future<void> getPerformanceDateRange(
+      String startDate, String endDate, BuildContext context) async {
+    Response res = await http.get(
+      Uri.parse(
+          "https://asia-south1-psr-application-342007.cloudfunctions.net/getProgressDateRange"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'session_id': (meUser?.sessionID ?? ""),
+        'start_date': startDate,
+        "end_date": endDate,
+      },
+    );
+    print(res.body);
+    if (res.statusCode == 200) {
+      Map<String, dynamic> a = jsonDecode(res.body);
+      // context.read<AverageVolumeState>().customSaleVolume  = double.parse(a["sales"].toString());
+      // context.read<AverageVolumeState>().customSKUVariance  = int.parse(a["sku"].toString());
+      return;
+    } else {
+      throw "Status code is ${res.statusCode}";
+    }
+  }
+
+
   Future<void> getOrdersDateRange(
       String startDate, String endDate, BuildContext context) async {
     Response res = await http.get(

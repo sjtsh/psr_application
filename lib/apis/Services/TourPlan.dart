@@ -65,18 +65,18 @@ class TourPlanService {
               double.parse(beatPlanMap[e]["distributor_lat"].toString()),
               double.parse(beatPlanMap[e]["distributor_lng"].toString())))
           .toList();
-      context.read<TodayProgressState>().uniqueSKU =
-          double.parse(aMap["daily"]["sku"].toString()) + 0.0;
+      context.read<AverageVolumeState>().todaySKUVariance =
+          int.parse(aMap["daily"]["sku"].toString());
       context.read<AverageVolumeState>().monthlySKUVariance =
-          double.parse(aMap["monthly"]["sku"].toString()) + 0.0;
-      context.read<TodayProgressState>().netValueSales =
+          int.parse(aMap["monthly"]["sku"].toString());
+      context.read<AverageVolumeState>().todaySaleVolume =
           double.parse(aMap["daily"]["sales"].toString()) + 0.0;
       context.read<AverageVolumeState>().monthlySaleVolume =
           double.parse(aMap["monthly"]["sales"].toString()) + 0.0;
       context.read<AverageVolumeState>().weeklySaleVolume =
           double.parse(aMap["weekly"]["sales"].toString()) + 0.0;
       context.read<AverageVolumeState>().weeklySKUVariance =
-          double.parse(aMap["weekly"]["sku"].toString()) + 0.0;
+          int.parse(aMap["weekly"]["sku"].toString());
       int stdQuantity = 0;
       for (var element in orders) {
         for (var element in element.items) {
@@ -85,9 +85,10 @@ class TourPlanService {
       }
       context.read<TodayProgressState>().stdQuantitySales = stdQuantity;
       context.read<TodayProgressState>().successVisitText = orders.length;
-      context.read<BeatManagement>().beats =beats;
+      context.read<BeatManagement>().beats = beats;
       context.read<BeatManagement>().outletOrders = orders;
-      context.read<TodayProgressState>().inProgressBeat = beats.firstWhere((element) => element.inProgress);
+      context.read<TodayProgressState>().inProgressBeat =
+          beats.firstWhere((element) => element.inProgress);
       context.read<TodayProgressState>().scheduleVisit =
           context.read<LogInManagement>().allOutletsLocal.length;
       context.read<TodayProgressState>().visitText = context

@@ -4,11 +4,16 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/components/BeatHeader.dart';
 import 'package:psr_application/Screens/BeatScreen/components/SelectBeat.dart';
+import '../../StateManagement/AverageVolume.dart';
 import '../../StateManagement/LogInManagement.dart';
+import '../../StateManagement/MapManagement.dart';
 import '../../StateManagement/TodayProgress.dart';
+import '../MapScreen/MapScreen.dart';
 import 'components/AverageVolume.dart';
 import 'components/BeatStat.dart';
 import 'components/IndividualBeat.dart';
@@ -87,7 +92,38 @@ class _BeatScreenState extends State<BeatScreen> {
                   ),
                   BeatHeader(),
                   AverageVolume(),
-                  TodayProgress(),
+
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Geolocator.getCurrentPosition().then(
+                          (event) {
+                            context.read<MapManagement>().initializeMarkers(
+                                LatLng(event.latitude, event.longitude));
+                            Navigator.of(context).push(
+                                MaterialPageRoute(builder: (_) => MapScreen()));
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "CONTINUE RETAILING",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   SelectBeat(),
                 ],
               )),

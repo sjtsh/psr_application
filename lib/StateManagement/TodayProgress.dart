@@ -12,9 +12,9 @@ class TodayProgressState with ChangeNotifier, DiagnosticableTreeMixin {
   int scheduleVisit = 50;
   int successVisitText = 12;
 
-  double netValueSales = 14000;
+  // double netValueSales = 14000;
   int stdQuantitySales = 200;
-  double uniqueSKU = 5;
+  // double uniqueSKU = 5;
   HollowBeat? inProgressBeat;
 
 }
