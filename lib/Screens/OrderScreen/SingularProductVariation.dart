@@ -181,6 +181,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                                 keyboardType: TextInputType.number,
                                 cursorColor: Colors.blue,
                                 onChanged: (text) {
+                                  context.read<OrderScreenManagement>().primary(text);
                                   int a = (int.tryParse(primary.text) ?? 0) *
                                           widget.sku.cf +
                                       (int.tryParse(alternative.text) ?? 0);
@@ -261,6 +262,7 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
                                   fontSize: 14,
                                 ),
                                 onChanged: (input) {
+                                  context.read<OrderScreenManagement>().primary(input);
                                   int a = (int.tryParse(primary.text) ?? 0) *
                                           widget.sku.cf +
                                       (int.tryParse(alternative.text) ?? 0);

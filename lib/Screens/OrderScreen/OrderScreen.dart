@@ -102,16 +102,21 @@ class OrderScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16)),
                       child: MaterialButton(
                           onPressed: () {
-                            try {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .pageController
-                                  .nextPage(
-                                      duration: Duration(milliseconds: 200),
-                                      curve: Curves.easeIn);
-                            } catch (e) {
-                              print(e);
+                            if(context.read<OrderScreenManagement>().validation()){
+                              print("validation");
+                            }else{
+                              print("validation full fill");
                             }
+                            // try {
+                            //   context
+                            //       .read<OrderScreenManagement>()
+                            //       .pageController
+                            //       .nextPage(
+                            //           duration: Duration(milliseconds: 200),
+                            //           curve: Curves.easeIn);
+                            // } catch (e) {
+                            //   print(e);
+                            // }
                           },
                           child: Text(
                             "NEXT",
