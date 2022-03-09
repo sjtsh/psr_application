@@ -96,22 +96,12 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  List<NoOrderReasonGroup> noOrderReasons = [];
-  NoOrderReasonGroup? _selectedNoOrderReasonGroup;
   bool _noOrderButtonDisabled = false;
 
   bool get noOrderButtonDisabled => _noOrderButtonDisabled;
 
   set noOrderButtonDisabled(bool value) {
     _noOrderButtonDisabled = value;
-    notifyListeners();
-  }
-
-  NoOrderReasonGroup? get selectedNoOrderReasonGroup =>
-      _selectedNoOrderReasonGroup;
-
-  set selectedNoOrderReasonGroup(NoOrderReasonGroup? value) {
-    _selectedNoOrderReasonGroup = value;
     notifyListeners();
   }
 

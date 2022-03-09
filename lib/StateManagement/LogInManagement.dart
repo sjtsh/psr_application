@@ -79,10 +79,6 @@ class LogInManagement
       loadingText = "Loading your SKUs";
       await SKUService().getSKUs(context);
       notifyListeners();
-      loadingAt = 60;
-      loadingText = "Loading your OrderReasons";
-      await NoOrderReasonGroupService().getNoOrderReasonGroups(context);
-      notifyListeners();
       loadingAt = 70;
       loadingText = "Loading your tourplan";
       await TourPlanService().getTourPlan(context);

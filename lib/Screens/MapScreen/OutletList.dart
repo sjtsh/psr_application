@@ -335,9 +335,6 @@ class OutletList extends StatelessWidget {
                                       context
                                           .read<MapManagement>()
                                           .changeSelectedMarkerOutlet(index);
-                                      context
-                                          .read<OrderScreenManagement>()
-                                          .selectedNoOrderReasonGroup = null;
 
                                       if (context
                                               .read<MapManagement>()
