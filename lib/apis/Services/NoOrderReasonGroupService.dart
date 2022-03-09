@@ -35,30 +35,30 @@ class NoOrderReasonGroupService {
     }
   }
 
-  Future<bool> getNoOrderReasonGroups(BuildContext context) async {
-    Response res = await http.get(
-      Uri.parse(
-          "https://asia-south1-psr-application-342007.cloudfunctions.net/getNoOrderReasonGroups"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'session_id': (meUser?.sessionID ?? ""),
-      },
-    );
-    if (res.statusCode == 200) {
-      List<dynamic> parsable = jsonDecode(res.body);
-      List<NoOrderReasonGroup> noOrderReasonGroups = parsable
-          .map(
-            (e) => NoOrderReasonGroup(
-              e["id"],
-              e["remarks"],
-            ),
-          )
-          .toList();
-      context.read<OrderScreenManagement>().noOrderReasons =
-          noOrderReasonGroups;
-      return true;
-    } else {
-      throw "Status code is ${res.statusCode}";
-    }
-  }
+  // Future<bool> getNoOrderReasonGroups(BuildContext context) async {
+  //   Response res = await http.get(
+  //     Uri.parse(
+  //         "https://asia-south1-psr-application-342007.cloudfunctions.net/getNoOrderReasonGroups"),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //       'session_id': (meUser?.sessionID ?? ""),
+  //     },
+  //   );
+  //   if (res.statusCode == 200) {
+  //     List<dynamic> parsable = jsonDecode(res.body);
+  //     List<NoOrderReasonGroup> noOrderReasonGroups = parsable
+  //         .map(
+  //           (e) => NoOrderReasonGroup(
+  //             e["id"],
+  //             e["remarks"],
+  //           ),
+  //         )
+  //         .toList();
+  //     context.read<OrderScreenManagement>().noOrderReasons =
+  //         noOrderReasonGroups;
+  //     return true;
+  //   } else {
+  //     throw "Status code is ${res.statusCode}";
+  //   }
+  // }
 }
