@@ -21,75 +21,109 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(children: [
-          Expanded(
-            child: ListView(
+        body: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    IconButton(onPressed: (){
+                IconButton(
+                    onPressed: () {
                       Navigator.pop(context);
-                    }, icon: Icon(Icons.arrow_back_ios)),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        "Order",
-                        style:
-                            TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                  ],
-                ),
-                SearchBarState(),
-                Column(
-                  children: List.generate(
-                    context
-                            .watch<OrderScreenManagement>()
-                            .dataToDisplay
-                            ?.length ??
-                        context.read<OrderScreenManagement>().data.length,
-                    (index) => SingularProduct(
-                        index,
-                        context
-                                .watch<OrderScreenManagement>()
-                                .dataToDisplay?[index] ??
-                            context.watch<OrderScreenManagement>().data[index]),
+                    },
+                    icon: Icon(Icons.arrow_back_ios)),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    "Order",
+                    style: TextStyle(
+                        fontSize: 24, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Colors.green, borderRadius: BorderRadius.circular(16)),
-              child: MaterialButton(
-                  onPressed: () {
-                    context.read<OrderScreenManagement>().makeExpansion(null);
-                    if(order == null){
+            Expanded(
+              child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller:
+                    context.read<OrderScreenManagement>().pageController,
+                children: List.generate(
+                  context
+                          .watch<OrderScreenManagement>()
+                          .dataToDisplay
+                          ?.length ??
+                      context.read<OrderScreenManagement>().data.length,
+                  (index) => SingularProduct(
+                      index,
                       context
-                          .read<OrderScreenManagement>()
-                          .confirmOrderRemarkController.text = "";
-                    }else{
-                      context
-                          .read<OrderScreenManagement>()
-                          .confirmOrderRemarkController.text = order?.remarks ??"";
-                    }
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => ConfirmOrderScreen(order: order),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    "NEXT",
-                    style: TextStyle(color: Colors.white),
-                  )),
+                              .watch<OrderScreenManagement>()
+                              .dataToDisplay?[index] ??
+                          context
+                              .watch<OrderScreenManagement>()
+                              .data[index]),
+                ),
+              ),
             ),
-          )
-        ]),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: MaterialButton(
+                          onPressed: () {
+                            try {
+                              context
+                                  .read<OrderScreenManagement>()
+                                  .pageController
+                                  .previousPage(
+                                      duration: Duration(milliseconds: 200),
+                                      curve: Curves.easeIn);
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          child: Text(
+                            "PREVIOUS",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: MaterialButton(
+                          onPressed: () {
+                            try {
+                              context
+                                  .read<OrderScreenManagement>()
+                                  .pageController
+                                  .nextPage(
+                                      duration: Duration(milliseconds: 200),
+                                      curve: Curves.easeIn);
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          child: Text(
+                            "NEXT",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

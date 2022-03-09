@@ -12,108 +12,51 @@ class SingularProductHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color:  Color(0xf2f2f2),
-      child: InkWell(
-        onTap: () {
-          context.read<OrderScreenManagement>().makeExpansion(index);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: context.watch<OrderScreenManagement>().currentlyExpanded ==
-                index ? Color(0xffC8E6C9):Colors.white,
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.black.withOpacity(0.1),
+      color: Color(0xfff2f2f2),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xfff2f2f2),
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.black.withOpacity(0.1),
+            ),
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage("assets/oats.jpg"),
+                        fit: BoxFit.contain,
+                      )),
+                ),
               ),
             ),
-          ),
-          child: Container(
-            height: 60,
-            margin: EdgeInsets.all(12),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                  },
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 60,
-                        width: 52,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black.withOpacity(0.1),
-                        ),
-                        child: Image.asset(
-                          "assets/oats.jpg",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Builder(builder: (context) {
-                                  try {
-                                    return Text(
-                                      subgroup.productName,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        color: Colors.black.withOpacity(0.5),
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  } catch (e) {
-                                    return Text(
-                                      "No name Found",
-                                      style: TextStyle(
-                                        color: Colors.black.withOpacity(0.5),
-                                        fontSize: 12,
-                                      ),
-                                    );
-                                  }
-                                }),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              subgroup.name,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Icon(
-                        context.watch<OrderScreenManagement>().currentlyExpanded ==
-                            index  ? Icons.arrow_drop_up :Icons.arrow_drop_down,
-                        color: Colors.black.withOpacity(0.5),
-                      ),
-                      SizedBox(
-                        width: 12,
-                      )
-                    ],
-                  ),
-                ),
-              ],
+            SizedBox(height: 12,),
+            Text(
+              subgroup.productName,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+                fontSize: 20,
+              ),
             ),
-          ),
+            SizedBox(height: 6,),
+            Text(
+              subgroup.name,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+            SizedBox(height: 12,),
+          ],
         ),
       ),
     );

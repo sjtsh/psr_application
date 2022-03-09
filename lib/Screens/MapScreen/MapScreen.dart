@@ -15,7 +15,6 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Entities/Outlet.dart';
 
 class MapScreen extends StatelessWidget {
-
   final CameraPosition _kGooglePlex = const CameraPosition(
     target: LatLng(27.6539, 85.4617),
   );
@@ -27,72 +26,106 @@ class MapScreen extends StatelessWidget {
         value: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
         ),
-   child: Scaffold(
-      body: Builder(builder: (context) {
-        double width = MediaQuery.of(context).size.width;
-        return Stack(children: [
-          Container(
-            height: height,
-            child: GoogleMap(
-              initialCameraPosition: _kGooglePlex,
-              myLocationButtonEnabled: false,
-              myLocationEnabled: true,
-              mapType: MapType.normal,
-              zoomGesturesEnabled: true,
-              onCameraMove: (CameraPosition a) {},
-              markers: List.generate(
-                  context.watch<MapManagement>().sortedOutlets.length,
-                  (index) => context
-                      .watch<MapManagement>()
-                      .sortedOutlets[index]
-                      .marker!).toSet(),
-              onMapCreated: (GoogleMapController controller) async {
-                bool cameraRotate = false;
-                context.read<MapManagement>().controller = controller;
-                Geolocator.getPositionStream().listen((event) {
-                  if (cameraRotate == false) {
-                    controller.animateCamera(CameraUpdate.newCameraPosition(
-                        CameraPosition(
-                            zoom: 17,
-                            tilt: 0,
-                            target:
-                                LatLng(event.latitude, event.longitude))));
-                    cameraRotate = true;
-                  }
-                  context.read<MapManagement>().initializeMarkers(
-                      LatLng(event.latitude, event.longitude));
-                });
-              },
-            ),
-          ),
-          Positioned(
-            top: height*0.05,
-            left: 12,
-            width: width-24,
-            child: MapHeader(),
-          ),
-         // Map side UI
-         const MapSideUI(),
-          //List of outlets UI
-          context.watch<MapManagement>().allOutlets.isNotEmpty
-              ? Positioned(
-                  bottom: 10,
-                  height: 210,
-                  width: width,
-                  child: const OutletList(),
-                )
-              : Positioned(
-                  bottom: 0,
+        child: Scaffold(
+          body: Builder(builder: (context) {
+            double width = MediaQuery.of(context).size.width;
+            return Stack(children: [
+              Container(
+                height: height,
+                child: GoogleMap(
+                  initialCameraPosition: _kGooglePlex,
+                  myLocationButtonEnabled: false,
+                  myLocationEnabled: true,
+                  mapType: MapType.normal,
+                  zoomGesturesEnabled: true,
+                  onCameraMove: (CameraPosition a) {},
+                  markers: List.generate(
+                      context.watch<MapManagement>().sortedOutlets.length,
+                      (index) => context
+                          .watch<MapManagement>()
+                          .sortedOutlets[index]
+                          .marker!).toSet(),
+                  onMapCreated: (GoogleMapController controller) async {
+                    bool cameraRotate = false;
+                    context.read<MapManagement>().controller = controller;
+                    Geolocator.getPositionStream().listen((event) {
+                      if (cameraRotate == false) {
+                        controller.animateCamera(CameraUpdate.newCameraPosition(
+                            CameraPosition(
+                                zoom: 17,
+                                tilt: 0,
+                                target:
+                                    LatLng(event.latitude, event.longitude))));
+                        cameraRotate = true;
+                      }
+                      context.read<MapManagement>().initializeMarkers(
+                          LatLng(event.latitude, event.longitude));
+                    });
+                  },
+                ),
+              ),
+              Positioned(
+                top: height * 0.05,
+                left: 12,
+                width: width - 24,
+                child: MapHeader(),
+              ),
+              // Map side UI
+              const MapSideUI(),
+
+              //List of outlets UI
+              context.watch<MapManagement>().allOutlets.isNotEmpty
+                  ? Positioned(
+                      bottom: 10,
+                      height: 210,
+                      width: width,
+                      child: const OutletList(),
+                    )
+                  : Positioned(
+                      bottom: 0,
+                      child: Container(
+                        height: 30,
+                        color: Colors.white,
+                        width: width,
+                        child: const Center(child: Text("No outlets found")),
+                      )),
+              Positioned(
+                right: 2,
+                bottom: 90,
+                child: GestureDetector(
+                  onTap: () {context.read<MapManagement>().carouselController.nextPage(
+                      duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+                  },
                   child: Container(
-                    height: 30,
-                    color: Colors.white,
-                    width: width,
-                    child: const Center(child: Text("No outlets found")),
-                  )),
-        ]);
-      }),)
-    );
+                    height: 50,
+                    width: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.arrow_forward_ios),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 2,
+                bottom: 90,
+                child: GestureDetector(
+                  onTap: () {
+                    context.read<MapManagement>().carouselController.previousPage(
+                        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(Icons.arrow_back_ios),
+                    ),
+                  ),
+                ),
+              ),
+            ]);
+          }),
+        ));
   }
 }
-
-
