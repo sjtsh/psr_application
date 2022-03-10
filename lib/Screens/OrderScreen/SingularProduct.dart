@@ -151,6 +151,9 @@ class SingularProduct extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide(color: Colors.black))),
                 style: const TextStyle(fontWeight: FontWeight.bold),
+                onChanged: (reason){
+
+                },
               ),
             ),
           ),

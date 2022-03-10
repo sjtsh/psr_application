@@ -34,8 +34,8 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "Order",
-                    style: TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.normal),
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
@@ -56,9 +56,7 @@ class OrderScreen extends StatelessWidget {
                       context
                               .watch<OrderScreenManagement>()
                               .dataToDisplay?[index] ??
-                          context
-                              .watch<OrderScreenManagement>()
-                              .data[index]),
+                          context.watch<OrderScreenManagement>().data[index]),
                 ),
               ),
             ),
@@ -102,11 +100,11 @@ class OrderScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16)),
                       child: MaterialButton(
                           onPressed: () {
-                            if(context.read<OrderScreenManagement>().validation()){
-                              print("validation");
-                            }else{
-                              print("validation full fill");
-                            }
+                          if(context.read<OrderScreenManagement>().singularOrder.containsKey("subgroup1")){
+                            print("true");
+                          }else{
+                            print("false");
+                          }
                             // try {
                             //   context
                             //       .read<OrderScreenManagement>()

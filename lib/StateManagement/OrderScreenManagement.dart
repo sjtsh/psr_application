@@ -27,19 +27,6 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   TextEditingController get confirmOrderRemarkController =>
       _confirmOrderRemarkController;
 
-  //Singular product variation text controller
-  String _primary = "";
-  String _alternative = "";
-  // String get primary => _primary;
-  // String get alternative => _alternative;
-
-   primary(String value) {
-    _primary = value;
-
-  }
-  alternative(String value) {
-    _alternative = value;
-  }
   //end
 
   PageController pageController = PageController();
@@ -163,13 +150,5 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
 
- bool validation(){
-    if(_primary==""||_alternative ==""){
-      return true;
-    }else {
-      return false;
-    }
-
-  }
 
 }
