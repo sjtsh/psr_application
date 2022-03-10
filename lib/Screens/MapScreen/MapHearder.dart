@@ -4,6 +4,9 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 
 class MapHeader extends StatelessWidget {
+  final Function page;
+
+  MapHeader(this.page);
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +25,19 @@ class MapHeader extends StatelessWidget {
             ]),
         child: Row(
           children: [
-           const SizedBox(
+            const SizedBox(
               width: 12,
             ),
             IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                page(0);
               },
             ),
             Expanded(
               child: Text(
-                context.read<TodayProgressState>().inProgressBeat?.beatName ?? "",
+                context.read<TodayProgressState>().inProgressBeat?.beatName ??
+                    "",
                 style: const TextStyle(fontSize: 16),
               ),
             ),
@@ -43,10 +47,10 @@ class MapHeader extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                page(0);
               },
             ),
-           const SizedBox(
+            const SizedBox(
               width: 12,
             ),
           ],

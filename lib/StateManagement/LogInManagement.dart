@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
@@ -25,9 +27,7 @@ import 'package:http/http.dart' as http;
 
 import 'TodayProgress.dart';
 
-class LogInManagement
-    with ChangeNotifier, DiagnosticableTreeMixin {
-
+class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
   TextEditingController mobileTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
   int loadingAt = 0;
@@ -83,6 +83,10 @@ class LogInManagement
       loadingText = "Loading your tourplan";
       await TourPlanService().getTourPlan(context);
       notifyListeners();
+      final event = await Geolocator.getCurrentPosition();
+      context
+          .read<MapManagement>()
+          .initializeMarkers(LatLng(event.latitude, event.longitude));
       Navigator.push(
         context,
         MaterialPageRoute(
