@@ -203,19 +203,21 @@ class ConfirmOrderScreen extends StatelessWidget {
                                     bool success = false;
                                     try {
                                       if (order == null) {
-                                        success = await OrderService()
-                                            .insertOrder(
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .singularOrder,
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .confirmOrderRemarkController.text ,
-                                                context
-                                                    .read<MapManagement>()
-                                                    .selectedOutlet!
-                                                    .outletPlanId);
+
+                                      //needed to revise
+                                        // success = await OrderService()
+                                        //     .insertOrder(
+                                        //         context
+                                        //             .read<
+                                        //                 OrderScreenManagement>()
+                                        //             .singularOrder,
+                                        //     context
+                                        //         .read<OrderScreenManagement>()
+                                        //         .confirmOrderRemarkController.text ,
+                                        //         context
+                                        //             .read<MapManagement>()
+                                        //             .selectedOutlet!
+                                        //             .outletPlanId);
                                       } else {
                                         success = await OrderService()
                                             .updateOrder(
