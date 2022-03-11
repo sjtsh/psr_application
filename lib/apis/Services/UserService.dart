@@ -61,7 +61,6 @@ class UserService {
         );
         user.sessionID = parsable["session_id"];
         meUser = user;
-        print("got user");
         return user;
       } catch (e) {
         throw "Password incorrect";

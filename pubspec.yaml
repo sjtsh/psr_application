@@ -51,6 +51,7 @@ dependencies:
   nepali_utils: ^3.0.3
   shimmer:
   connectivity_plus: ^2.2.1
+  device_preview:
 
 
   # The following adds the Cupertino Icons font to your application.

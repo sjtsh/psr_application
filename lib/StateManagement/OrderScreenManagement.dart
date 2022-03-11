@@ -22,13 +22,22 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<SubGroup>? _dataToDisplay;
   List<OutletOrderItem>outletOrderItem=[];
   TextEditingController _noOrderRemarkController = TextEditingController();
-
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
   TextEditingController _confirmOrderRemarkController = TextEditingController();
-
   TextEditingController get confirmOrderRemarkController =>
       _confirmOrderRemarkController;
+
+  //end
+
   PageController pageController = PageController();
+
+  int _pageViewInt = 0;
+  int get pageViewInt => _pageViewInt;
+
+  set pageViewInt(int value) {
+    _pageViewInt = value;
+    notifyListeners();
+  }
 
   String get dropdownValueFilter => _dropdownValueFilter;
 
@@ -145,4 +154,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
     print(_dataToDisplay);
   }
+
+
+
 }

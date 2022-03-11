@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/components/IndividualBeat.dart';
@@ -15,10 +16,12 @@ import 'SingularProductHeader.dart';
 class OrderScreen extends StatelessWidget {
   final OutletOrder? order;
 
+
   OrderScreen({this.order});
 
   @override
   Widget build(BuildContext context) {
+    int index ;
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -34,8 +37,8 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "Order",
-                    style: TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.normal),
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
@@ -51,77 +54,20 @@ class OrderScreen extends StatelessWidget {
                           .dataToDisplay
                           ?.length ??
                       context.read<OrderScreenManagement>().data.length,
-                  (index) => SingularProduct(
+                  (index) {
+                    return SingularProduct(
                       index,
                       context
                               .watch<OrderScreenManagement>()
                               .dataToDisplay?[index] ??
-                          context
-                              .watch<OrderScreenManagement>()
-                              .data[index]),
+                          context.watch<OrderScreenManagement>().data[index]);}
                 ),
+                onPageChanged: (ints){
+                  print(ints);
+                  context.read<OrderScreenManagement>().pageViewInt= ints;
+                },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: MaterialButton(
-                          onPressed: () {
-                            try {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .pageController
-                                  .previousPage(
-                                      duration: Duration(milliseconds: 200),
-                                      curve: Curves.easeIn);
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: Text(
-                            "PREVIOUS",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: MaterialButton(
-                          onPressed: () {
-                            try {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .pageController
-                                  .nextPage(
-                                      duration: Duration(milliseconds: 200),
-                                      curve: Curves.easeIn);
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: Text(
-                            "NEXT",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),

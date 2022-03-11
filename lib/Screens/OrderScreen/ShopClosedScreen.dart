@@ -45,45 +45,7 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                       Expanded(
                         child: CameraPreview(
                             context.watch<ShopClosedController>().controller!,
-                            child: context
-                                            .watch<ShopClosedController>()
-                                            .orientation ==
-                                        NativeDeviceOrientation.landscapeLeft ||
-                                    context
-                                            .watch<ShopClosedController>()
-                                            .orientation ==
-                                        NativeDeviceOrientation.landscapeRight
-                                ? Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: RotatedBox(
-                                        quarterTurns: context
-                                                    .watch<
-                                                        ShopClosedController>()
-                                                    .orientation ==
-                                                NativeDeviceOrientation
-                                                    .landscapeLeft
-                                            ? 1
-                                            : 3,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Color(0xffF1F2F6)
-                                                .withOpacity(0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text(
-                                              "Please set the orientation to landscape first",
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Column(
+                            child: Column(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -95,11 +57,7 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                                             borderRadius:
                                                 BorderRadius.circular(12),
                                           ),
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Text(
-                                                "Please set the orientation to landscape first"),
-                                          ),
+
                                         ),
                                       ),
                                       Expanded(child: Container()),
@@ -120,19 +78,7 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                                   color: Colors.white,
                                 )),
                             Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: context
-                                                .watch<ShopClosedController>()
-                                                .orientation ==
-                                            NativeDeviceOrientation
-                                                .landscapeLeft ||
-                                        context
-                                                .watch<ShopClosedController>()
-                                                .orientation ==
-                                            NativeDeviceOrientation
-                                                .landscapeRight
-                                    ? GestureDetector(
+                              child: GestureDetector(
                                         onTap: () {
                                           print("clicked");
                                           context
@@ -174,9 +120,8 @@ class _ShopClosedScreenState extends State<ShopClosedScreen> {
                                           ),
                                         ),
                                       )
-                                    : Container(),
                               ),
-                            ),
+
                             IconButton(
                                 onPressed: () {},
                                 icon: const Icon(
