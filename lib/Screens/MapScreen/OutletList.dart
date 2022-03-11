@@ -227,9 +227,6 @@ class OutletList extends StatelessWidget {
                                                   .sortedOutlets[index]
                                                   .id);
                                             }));
-                                        context
-                                            .read<ShopClosedController>()
-                                            .initialize();
                                       }
                                     },
                                     child: Text(

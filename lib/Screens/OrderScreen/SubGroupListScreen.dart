@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 
+import 'NoOrder/NoOrderScreen.dart';
+
 class SubGroupListScreen extends StatelessWidget {
   const SubGroupListScreen({Key? key}) : super(key: key);
 
@@ -83,8 +85,10 @@ class SubGroupListScreen extends StatelessWidget {
                                         ),
                                         Expanded(child: Container()),
                                         PopupMenuButton(
-                                          icon: Icon(Icons.menu,
-                                            color: Colors.white,),
+                                          icon: Icon(
+                                            Icons.menu,
+                                            color: Colors.white,
+                                          ),
                                           itemBuilder: (BuildContext context) {
                                             return [
                                               PopupMenuItem(
@@ -104,8 +108,10 @@ class SubGroupListScreen extends StatelessWidget {
                                           child: Padding(
                                             padding: const EdgeInsets.all(12.0),
                                             child: GestureDetector(
-                                              onTap: (){
-                                                Navigator.push(context, MaterialPageRoute(builder: (_){
+                                              onTap: () {
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(
+                                                        builder: (_) {
                                                   return OrderScreen();
                                                 }));
                                               },
@@ -123,12 +129,24 @@ class SubGroupListScreen extends StatelessWidget {
                                         Expanded(
                                           child: Padding(
                                             padding: const EdgeInsets.all(12.0),
-                                            child: Container(
-                                              height: 40,
-                                              width: 150,
-                                              color: Colors.white,
-                                              child: const Center(
-                                                child: Text("No Order"),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (_) {
+                                                      return NoOrderScreen();
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                height: 40,
+                                                width: 150,
+                                                color: Colors.white,
+                                                child: const Center(
+                                                  child: Text("No Order"),
+                                                ),
                                               ),
                                             ),
                                           ),

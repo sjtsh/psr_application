@@ -9,6 +9,7 @@ import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'StateManagement/AverageVolume.dart';
 import 'StateManagement/DateRangeManagement.dart';
 import 'StateManagement/LogInManagement.dart';
+import 'StateManagement/NoOrderManagement.dart';
 import 'StateManagement/OrderScreenManagement.dart';
 import 'StateManagement/TodayProgress.dart';
 
@@ -40,6 +41,9 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (_) => OrderScreenManagement(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NoOrderManagement(),
         ),
       ],
       child: const MyApp(),

@@ -37,6 +37,7 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
   bool isLoading = false;
   bool isPasswordShown = false;
   List<Outlet> allOutletsLocal = [];
+  bool isVerified = false;
 
   LoadingFromSession(BuildContext context, String sessionID) async {
     try {
@@ -87,14 +88,8 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
       context
           .read<MapManagement>()
           .initializeMarkers(LatLng(event.latitude, event.longitude));
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) {
-            return BeatScreen();
-          },
-        ),
-      );
+      isVerified = true;
+      notifyListeners();
     } else {
       Navigator.push(
         context,

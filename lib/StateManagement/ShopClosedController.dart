@@ -18,7 +18,15 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   TextEditingController remarkTextEditingController = TextEditingController();
   bool isloading = false;
   List<CameraDescription> cameras = [];
+  String? _noOrderPhotoLocalUrl;
 
+
+  String? get noOrderPhotoLocalUrl => _noOrderPhotoLocalUrl;
+
+  set noOrderPhotoLocalUrl(String? value) {
+    _noOrderPhotoLocalUrl = value;
+    notifyListeners();
+  }
 
   imageSent(){
     isloading = !isloading;
