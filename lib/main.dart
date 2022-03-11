@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +43,11 @@ void main() {
           create: (_) => OrderScreenManagement(),
         ),
       ],
-      child: const MyApp(),
+      child: DevicePreview(
+          enabled: true,builder: (BuildContext context) {
+            return const MyApp();
+      },
+          ),
     ),
   );
 }

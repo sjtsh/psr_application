@@ -31,7 +31,13 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   PageController pageController = PageController();
 
+  int _pageViewInt = 0;
+  int get pageViewInt => _pageViewInt;
 
+  set pageViewInt(int value) {
+    _pageViewInt = value;
+    notifyListeners();
+  }
 
   String get dropdownValueFilter => _dropdownValueFilter;
 

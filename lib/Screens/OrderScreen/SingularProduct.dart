@@ -157,6 +157,82 @@ class SingularProduct extends StatelessWidget {
               ),
             ),
           ),
+
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: MaterialButton(
+                        onPressed: () {
+                          try {
+                            context
+                                .read<OrderScreenManagement>()
+                                .pageController
+                                .previousPage(
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.easeIn);
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        child: Text(
+                          "PREVIOUS",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  width: 12,
+                ),
+                Expanded(
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: MaterialButton(
+                        elevation: 0,
+                        onPressed: () {
+                          print(context.read<OrderScreenManagement>().singularOrder);
+                          if(context.read<OrderScreenManagement>().singularOrder.containsKey(
+                              subGroup) ||  context
+                              .read<OrderScreenManagement>()
+                              .noOrderRemarkController.text.isNotEmpty){
+                            try {
+                              context
+                                  .read<OrderScreenManagement>()
+                                  .pageController
+                                  .nextPage(
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.easeIn);
+
+                              if(context.read<OrderScreenManagement>().pageViewInt == subGroup.skus.length){
+                                print("print");
+                              }
+                            } catch (e) {
+                              print(e);
+                            }
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
+                          }
+
+                        },
+                        child: Text(
+                          "NEXT",
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
