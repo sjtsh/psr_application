@@ -14,7 +14,6 @@ import '../Entities/SKU.dart';
 import '../Entities/SubGroup.dart';
 
 class OrderService {
-
   Future<void> getPerformanceDateRange(
       String startDate, String endDate, BuildContext context) async {
     Response res = await http.get(
@@ -37,7 +36,6 @@ class OrderService {
       throw "Status code is ${res.statusCode}";
     }
   }
-
 
   Future<void> getOrdersDateRange(
       String startDate, String endDate, BuildContext context) async {
@@ -85,8 +83,15 @@ class OrderService {
     }
   }
 
-  Future<bool> insertOrder(Map<SubGroup, Map<SKU, int>> aMap, String remarks,
-      int outletPlanID) async {
+  Future<bool> insertOrder(
+      Map<SubGroup, Map<SKU, int>> aMap,
+      String remarks,
+      int outletPlanID,
+      String signatureImgUrl,
+      String ownerImgUrl,
+      Map<SubGroup, String> competitiveExistingStock,
+      Map<SubGroup, Map<String, String>> ownExistingStock, // the value for a subgroup to have two keys first one should be stock_count and other should be img url
+      Map<SubGroup, String> noOrderReasons) async {
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -96,8 +101,15 @@ class OrderService {
         bodyMap["items"][element.key.id.toString()] = element.value.toString();
       }
     }
+
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
+    bodyMap["signature_img_url"] = signatureImgUrl;
+    bodyMap["owner_img_url"] = ownerImgUrl;
+    bodyMap["owner_img_url"] = competitiveExistingStock;
+    bodyMap["own_existing_stock"] = ownExistingStock;
+    bodyMap["no_order_reasons"] = noOrderReasons;
+
     bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
     Response res = await http.post(
         Uri.parse(
