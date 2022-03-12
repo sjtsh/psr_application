@@ -26,7 +26,6 @@ class OrderService {
         "end_date": endDate,
       },
     );
-    print(res.body);
     if (res.statusCode == 200) {
       Map<String, dynamic> a = jsonDecode(res.body);
       // context.read<AverageVolumeState>().customSaleVolume  = double.parse(a["sales"].toString());
@@ -90,7 +89,8 @@ class OrderService {
       String signatureImgUrl,
       String ownerImgUrl,
       Map<SubGroup, String> competitiveExistingStock,
-      Map<SubGroup, Map<String, String>> ownExistingStock, // the value for a subgroup to have two keys first one should be stock_count and other should be img url
+      Map<SubGroup, Map<String, String>> ownExistingStock,
+      // the value for a subgroup to have two keys first one should be stock_count and other should be img url
       Map<SubGroup, String> noOrderReasons) async {
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
@@ -102,15 +102,28 @@ class OrderService {
       }
     }
 
+    Map resultCompetitiveExistingStock = {};
+    for (var i in competitiveExistingStock.keys) {
+      resultCompetitiveExistingStock[i.name] = competitiveExistingStock[i];
+    }
+    Map resultNoOrderReasons = {};
+    for (var i in noOrderReasons.keys) {
+      resultNoOrderReasons[i.name] = noOrderReasons[i];
+    }
+    Map resultownExistingStockStock = {};
+    for (var i in ownExistingStock.keys) {
+      resultownExistingStockStock[i.name] = ownExistingStock[i];
+    }
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
     bodyMap["signature_img_url"] = signatureImgUrl;
     bodyMap["owner_img_url"] = ownerImgUrl;
-    bodyMap["owner_img_url"] = competitiveExistingStock;
-    bodyMap["own_existing_stock"] = ownExistingStock;
-    bodyMap["no_order_reasons"] = noOrderReasons;
-
+    bodyMap["owner_img_url"] = resultCompetitiveExistingStock;
+    bodyMap["own_existing_stock"] = resultownExistingStockStock;
+    bodyMap["no_order_reasons"] = resultNoOrderReasons;
     bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
+
+
     Response res = await http.post(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/createOutletOrder"),

@@ -47,12 +47,7 @@ void main() {
           create: (_) => NoOrderManagement(),
         ),
       ],
-      child: DevicePreview(
-          enabled: true,
-          builder: (BuildContext context) {
-            return const MyApp();
-      },
-          ),
+      child: MyApp(),
     ),
   );
 }

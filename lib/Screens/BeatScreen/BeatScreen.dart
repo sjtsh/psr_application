@@ -30,6 +30,8 @@ class _BeatScreenState extends State<BeatScreen> {
   StreamSubscription<ConnectivityResult>? subscription;
   String text = "connected";
   int page = 0;
+
+  @override
   initState() {
     super.initState();
     subscription = Connectivity()
@@ -43,7 +45,6 @@ class _BeatScreenState extends State<BeatScreen> {
         Future.delayed(Duration(milliseconds: 1000))
             .then((value) => setState(() => animated = true));
       } else {
-        print("not connected");
         setState(() {
           text = "Trying to connect";
           animated = false;
@@ -52,17 +53,16 @@ class _BeatScreenState extends State<BeatScreen> {
     });
   }
 
-// Be sure to cancel subscription after you are done
   @override
   dispose() {
     super.dispose();
     subscription?.cancel();
   }
 
-  setPage(int i){
-setState(() {
-  page = i;
-});
+  setPage(int i) {
+    setState(() {
+      page = i;
+    });
   }
 
   @override
@@ -81,7 +81,7 @@ setState(() {
             return Future.value(false);
           },
           child: IndexedStack(
-          index: page,
+            index: page,
             children: [
               Scaffold(
                 backgroundColor: Color(0xffF1F2F6),

@@ -14,24 +14,31 @@ import '../apis/Entities/SubGroup.dart';
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<bool> items = [];
   Map<SubGroup, Map<SKU, int>> singularOrder = {};
+  Map<SubGroup, String> competitiveExistingStock = {};
+  Map<SubGroup, Map<String, String>> ownExistingStock =
+      {}; // the value for a subgroup to have two keys first one should be stock_count and other should be img url
+  Map<SubGroup, String> noOrderReasons = {};
+
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
   String _dropdownValueFilter = "All";
-  ScrollController controller = ScrollController();
+
   List<SubGroup> data = [];
   List<SubGroup>? _dataToDisplay;
-  List<OutletOrderItem>outletOrderItem=[];
+  List<OutletOrderItem> outletOrderItem = [];
+
   TextEditingController _noOrderRemarkController = TextEditingController();
+
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
   TextEditingController _confirmOrderRemarkController = TextEditingController();
+  ScrollController controller = ScrollController();
+
   TextEditingController get confirmOrderRemarkController =>
       _confirmOrderRemarkController;
-
-  //end
-
   PageController pageController = PageController();
 
   int _pageViewInt = 0;
+
   int get pageViewInt => _pageViewInt;
 
   set pageViewInt(int value) {
@@ -152,9 +159,30 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
               .contains(searchText.toLowerCase());
     }).toList();
     notifyListeners();
-    print(_dataToDisplay);
   }
 
-
-
+  checkContains(SubGroup subGroup) {
+    bool contains = false;
+    singularOrder.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    competitiveExistingStock.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    noOrderReasons.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    ownExistingStock.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    return contains;
+  }
 }

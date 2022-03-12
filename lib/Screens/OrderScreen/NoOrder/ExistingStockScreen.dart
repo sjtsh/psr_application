@@ -7,16 +7,20 @@ import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/
 
 import '../../../StateManagement/MapManagement.dart';
 import '../../../StateManagement/ShopClosedController.dart';
+import '../../../apis/Entities/SubGroup.dart';
 import 'NoOrderCamera.dart';
 
 class ExistingStockScreen extends StatefulWidget {
+  final SubGroup subGroup;
+
+  ExistingStockScreen(this.subGroup);
+
   @override
   State<ExistingStockScreen> createState() => _ExistingStockScreenState();
 }
 
 class _ExistingStockScreenState extends State<ExistingStockScreen> {
-  PageController pageController = PageController();
-  int i = 0;
+  int insideIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +38,14 @@ class _ExistingStockScreenState extends State<ExistingStockScreen> {
                   padding: const EdgeInsets.all(6.0),
                   child: GestureDetector(
                     onTap: () {
-                      pageController.animateToPage(0,
-                          duration: Duration(milliseconds: 200),
-                          curve: Curves.easeIn);
+                      setState(() {
+                        this.insideIndex = 0;
+                      });
                     },
                     child: Container(
-                      color: i == 0 ? Colors.red : Colors.blueGrey.withOpacity(0.5),
+                      color: insideIndex == 0
+                          ? Colors.red
+                          : Colors.blueGrey.withOpacity(0.5),
                       child: Center(
                         child: Text(
                           "Competitive Stock",
@@ -57,14 +63,14 @@ class _ExistingStockScreenState extends State<ExistingStockScreen> {
                   padding: const EdgeInsets.all(6.0),
                   child: GestureDetector(
                     onTap: () {
-                      pageController.animateToPage(
-                        1,
-                        duration: Duration(milliseconds: 200),
-                        curve: Curves.easeIn,
-                      );
+                      setState(() {
+                        this.insideIndex = 1;
+                      });
                     },
                     child: Container(
-                      color: i == 1 ? Colors.green : Colors.blueGrey.withOpacity(0.5),
+                      color: insideIndex == 1
+                          ? Colors.green
+                          : Colors.blueGrey.withOpacity(0.5),
                       child: Center(
                         child: Text(
                           "Own Stock",
@@ -79,17 +85,11 @@ class _ExistingStockScreenState extends State<ExistingStockScreen> {
           ),
         ),
         Expanded(
-          child: PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: pageController,
-            onPageChanged: (i) {
-              setState(() {
-                this.i = i;
-              });
-            },
+          child: IndexedStack(
+            index: insideIndex,
             children: [
-              CompetitiveStock(),
-              OwnStock(),
+              CompetitiveStock(widget.subGroup),
+              OwnStock(widget.subGroup),
             ],
           ),
         ),

@@ -5,10 +5,30 @@ import 'package:provider/provider.dart';
 
 import '../../../../StateManagement/NoOrderManagement.dart';
 import '../../../../StateManagement/ShopClosedController.dart';
+import '../../../../apis/Entities/SubGroup.dart';
 import '../NoOrderCamera.dart';
 
-class OwnStock extends StatelessWidget {
+class OwnStock extends StatefulWidget {
+  final SubGroup subGroup;
+
+  OwnStock(this.subGroup);
+
+  @override
+  State<OwnStock> createState() => _OwnStockState();
+}
+
+class _OwnStockState extends State<OwnStock> {
   final TextEditingController controller = TextEditingController();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.text = context
+        .read<NoOrderManagement>()
+        .noOrderTextFieldTextOwnStock ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +40,11 @@ class OwnStock extends StatelessWidget {
             width: double.infinity,
             height: 60,
             child: TextField(
-            onChanged: (input){
-              context
-                  .read<NoOrderManagement>()
-                  .noOrderTextFieldTextOwnStock = input;
-            },
+            controller: controller,
+              onChanged: (input) {
+                context.read<NoOrderManagement>().noOrderTextFieldTextOwnStock =
+                    input;
+              },
               decoration: InputDecoration(
                   hintText: "Stock Count",
                   focusedBorder: OutlineInputBorder(
@@ -49,7 +69,7 @@ class OwnStock extends StatelessWidget {
               color: Colors.green,
               child: Center(
                 child: Text(
-                  context.watch<ShopClosedController>().noOrderPhotoLocalUrl ==
+                  context.watch<NoOrderManagement>().noOrderPhotoLocalUrl ==
                           null
                       ? "Click a photo"
                       : "Retake",
@@ -68,14 +88,14 @@ class OwnStock extends StatelessWidget {
                   color: Colors.black,
                 ),
                 image: (context
-                            .watch<ShopClosedController>()
+                            .watch<NoOrderManagement>()
                             .noOrderPhotoLocalUrl ==
                         null)
                     ? null
                     : DecorationImage(
                         image: FileImage(
                           File(context
-                              .watch<ShopClosedController>()
+                              .watch<NoOrderManagement>()
                               .noOrderPhotoLocalUrl!),
                         ),
                       ),
@@ -84,10 +104,14 @@ class OwnStock extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            context
+                .read<NoOrderManagement>()
+                .addNoOrderOwnExistingStock(widget.subGroup, context);
+          },
           child: Container(
             height: 60,
-            color: context.watch<ShopClosedController>().noOrderPhotoLocalUrl ==
+            color: context.watch<NoOrderManagement>().noOrderPhotoLocalUrl ==
                         null ||
                     int.tryParse(context
                                 .watch<NoOrderManagement>()

@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ImagePreviewScreen.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 
+import '../../../StateManagement/NoOrderManagement.dart';
+
 
 class NoOrderCamera extends StatefulWidget {
   @override
@@ -67,7 +69,7 @@ class _NoOrderCamera extends State<NoOrderCamera> {
                                         ?.takePicture()
                                         .then((XFile value) {
                                       context
-                                          .read<ShopClosedController>()
+                                          .read<NoOrderManagement>()
                                           .noOrderPhotoLocalUrl = value.path;
                                           Navigator.pop(context);
                                     });

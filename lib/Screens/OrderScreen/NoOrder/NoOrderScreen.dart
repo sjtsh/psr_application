@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/NoOrderReasonScreen.dart';
 
+import '../../../apis/Entities/SubGroup.dart';
+
 class NoOrderScreen extends StatefulWidget {
+  final SubGroup subGroup;
+
+  NoOrderScreen(this.subGroup);
+
   @override
   State<NoOrderScreen> createState() => _NoOrderScreenState();
 }
 
 class _NoOrderScreenState extends State<NoOrderScreen> {
-  PageController pageController = PageController(initialPage: 0);
-
-  int i = 0;
+  int outsideIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -57,16 +61,18 @@ class _NoOrderScreenState extends State<NoOrderScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        pageController.animateToPage(0,
-                            duration: Duration(milliseconds: 200),
-                            curve: Curves.easeIn);
+                        setState(() {
+                          outsideIndex = 0;
+                        });
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: i == 0 ? Colors.white : Colors.transparent,
+                          color: outsideIndex == 0
+                              ? Colors.white
+                              : Colors.transparent,
                           border: Border(
                             bottom: BorderSide(
-                                color: i == 0
+                                color: outsideIndex == 0
                                     ? Colors.blue
                                     : Colors.blue.withOpacity(0.1),
                                 width: 3),
@@ -76,7 +82,7 @@ class _NoOrderScreenState extends State<NoOrderScreen> {
                           child: Text(
                             "Existing Stock",
                             style: TextStyle(
-                                color: i == 0
+                                color: outsideIndex == 0
                                     ? Colors.black
                                     : Colors.black.withOpacity(0.5)),
                           ),
@@ -87,19 +93,18 @@ class _NoOrderScreenState extends State<NoOrderScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        print("turning");
-                        pageController.animateToPage(
-                          1,
-                          duration: Duration(milliseconds: 200),
-                          curve: Curves.easeIn,
-                        );
+                        setState(() {
+                          outsideIndex = 1;
+                        });
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                          color: i == 1 ? Colors.white : Colors.transparent,
+                          color: outsideIndex == 1
+                              ? Colors.white
+                              : Colors.transparent,
                           border: Border(
                             bottom: BorderSide(
-                                color: i == 1
+                                color: outsideIndex == 1
                                     ? Colors.blue
                                     : Colors.blue.withOpacity(0.1),
                                 width: 3),
@@ -109,7 +114,7 @@ class _NoOrderScreenState extends State<NoOrderScreen> {
                           child: Text(
                             "No Order Reason",
                             style: TextStyle(
-                                color: i == 1
+                                color: outsideIndex == 1
                                     ? Colors.black
                                     : Colors.black.withOpacity(0.5)),
                           ),
@@ -121,16 +126,11 @@ class _NoOrderScreenState extends State<NoOrderScreen> {
               ),
             ),
             Expanded(
-              child: PageView(
-                onPageChanged: (i) {
-                  setState(() {
-                    this.i = i;
-                  });
-                },
-                controller: pageController,
+              child: IndexedStack(
+                index: outsideIndex,
                 children: [
-                  ExistingStockScreen(),
-                  NoOrderReasonScreen(),
+                  ExistingStockScreen(widget.subGroup),
+                  NoOrderReasonScreen(widget.subGroup),
                 ],
               ),
             ),
