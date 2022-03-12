@@ -48,7 +48,8 @@ void main() {
         ),
       ],
       child: DevicePreview(
-          enabled: true,builder: (BuildContext context) {
+          enabled: true,
+          builder: (BuildContext context) {
             return const MyApp();
       },
           ),
