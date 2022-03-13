@@ -6,6 +6,7 @@ import 'package:psr_application/Screens/BeatScreen/components/IndividualBeat.dar
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmOrderScreen.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:psr_application/apis/Entities/OutletOrder.dart';
+import 'package:psr_application/apis/Entities/SubGroup.dart';
 
 import '../../StateManagement/MapManagement.dart';
 import 'ProductList.dart';
@@ -16,12 +17,11 @@ import 'SingularProductHeader.dart';
 class OrderScreen extends StatelessWidget {
   final OutletOrder? order;
 
-
   OrderScreen({this.order});
 
   @override
   Widget build(BuildContext context) {
-    int index ;
+    int index;
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -43,31 +43,7 @@ class OrderScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Expanded(
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller:
-                    context.read<OrderScreenManagement>().pageController,
-                children: List.generate(
-                  context
-                          .watch<OrderScreenManagement>()
-                          .dataToDisplay
-                          ?.length ??
-                      context.read<OrderScreenManagement>().data.length,
-                  (index) {
-                    return SingularProduct(
-                      index,
-                      context
-                              .watch<OrderScreenManagement>()
-                              .dataToDisplay?[index] ??
-                          context.watch<OrderScreenManagement>().data[index]);}
-                ),
-                onPageChanged: (ints){
-                  print(ints);
-                  context.read<OrderScreenManagement>().pageViewInt= ints;
-                },
-              ),
-            ),
+            // SingularProduct(),
           ],
         ),
       ),

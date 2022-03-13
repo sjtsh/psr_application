@@ -3,237 +3,92 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/NoOrderScreen.dart';
+import 'package:psr_application/Screens/OrderScreen/SubGroupDetails.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../StateManagement/OrderScreenManagement.dart';
 import 'SingularProductHeader.dart';
 import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
-  final int index;
   final SubGroup subGroup;
 
-  SingularProduct(this.index, this.subGroup);
+  SingularProduct(this.subGroup);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            height: 200,
-            child: SingularProductHeader(index, subGroup),
-          ),
-          Container(
-            height: 300,
-            color: Colors.white,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                reverse: false,
-                viewportFraction: 0.8,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: true,
-                scrollDirection: Axis.horizontal,
-              ),
-              items: List.generate(subGroup.skus.length,
-                  (a) => SingularProductVariation(subGroup.skus[a], subGroup)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: ExpandablePanel(
-              collapsed: ExpandableButton(
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Existing Stock",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Container(
+            //   height: 200,
+            //   child: SingularProductHeader(index, subGroup),
+            // ),
+            Container(
+              height: 400,
+              child: Center(
+                child: CarouselSlider.builder(
+                  itemCount: subGroup.skus.length,
+                  options: CarouselOptions(
+                      height: 316,
+                      initialPage: 0,
+                      enableInfiniteScroll: false,
+                      reverse: false,
+                      viewportFraction: 0.7,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: true,
+                      scrollDirection: Axis.horizontal,
+                      onPageChanged: (int i, reason) {
+                        //print(i);
+                        context.read<OrderScreenManagement>().skuIndex = i;
+                      }),
+                  itemBuilder: (BuildContext context, int index, int realIndex) {
+                    return Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.black.withOpacity(0.2),
+                            ),
+                          ),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset("assets/oats.jpg")));
+                  },
                 ),
               ),
-              expanded: Column(
-                children: [
-                  ExpandableButton(
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: Color(0xfff2f2f2),
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Existing Stock",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Color(0xfff2f2f2),
-                      border: Border(bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.5),)
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Own Stock",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                      ),
-                      SizedBox(width: 4,),
-                      Text("OR"),
-                      SizedBox(width: 4,),
-                      Expanded(
-                        child: Divider(
-                          color: Colors.black.withOpacity(0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border(bottom: BorderSide(
-                        color: Colors.black.withOpacity(0.5),)
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Competing Stock",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              height: 60,
-              width: double.infinity,
-              child: TextFormField(
-                controller: context
-                    .read<OrderScreenManagement>()
-                    .noOrderRemarkController,
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.book_outlined),
-                    hintText: "Other Reasons",
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(color: Colors.green)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide(color: Colors.black))),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-                onChanged: (reason){
-
-                },
-              ),
+            SizedBox(
+              height: 12,
             ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
+            SizedBox(
+              height: 100,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 8,
+                  itemBuilder: (_, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 60,
+                        width: 60,
                         color: Colors.green,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: MaterialButton(
-                        onPressed: () {
-                          try {
-                            context
-                                .read<OrderScreenManagement>()
-                                .pageController
-                                .previousPage(
-                                duration: Duration(milliseconds: 200),
-                                curve: Curves.easeIn);
-                          } catch (e) {
-                            print(e);
-                          }
-                        },
-                        child: Text(
-                          "PREVIOUS",
-                          style: TextStyle(color: Colors.white),
-                        )),
-                  ),
-                ),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: Container(
-                    clipBehavior: Clip.hardEdge,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(16)),
-                    child: MaterialButton(
-                        elevation: 0,
-                        onPressed: () {
-                          print(context.read<OrderScreenManagement>().singularOrder);
-                          if(context.read<OrderScreenManagement>().singularOrder.containsKey(
-                              subGroup) ||  context
-                              .read<OrderScreenManagement>()
-                              .noOrderRemarkController.text.isNotEmpty){
-                            try {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .pageController
-                                  .nextPage(
-                                  duration: Duration(milliseconds: 200),
-                                  curve: Curves.easeIn);
-
-                              if(context.read<OrderScreenManagement>().pageViewInt == subGroup.skus.length){
-                                print("print");
-                              }
-                            } catch (e) {
-                              print(e);
-                            }
-                          }else{
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill all fields")));
-                          }
-
-                        },
-                        child: Text(
-                          "NEXT",
-                          style: TextStyle(color: Colors.white),
-                        )),
-                  ),
-                ),
-              ],
+                      ),
+                    );
+                  }),
             ),
-          ),
-        ],
+            SizedBox(
+              height: 12,
+            ),
+            Divider(
+              height: 2,
+              thickness: 4,
+            ),
+            SubgroupDetails(
+                subGroup.skus[context.watch<OrderScreenManagement>().skuIndex],
+                subGroup)
+          ],
+        ),
       ),
     );
   }

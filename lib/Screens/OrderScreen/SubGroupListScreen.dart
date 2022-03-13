@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
+import 'package:psr_application/Screens/OrderScreen/SingularProduct.dart';
 import 'package:psr_application/StateManagement/NoOrderManagement.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 
 import '../../StateManagement/ShopClosedController.dart';
+import '../../apis/Entities/SubGroup.dart';
 import 'NoOrder/NoOrderScreen.dart';
 
 class SubGroupListScreen extends StatelessWidget {
@@ -143,7 +145,7 @@ class SubGroupListScreen extends StatelessWidget {
                                                   Navigator.push(context,
                                                       MaterialPageRoute(
                                                           builder: (_) {
-                                                            return OrderScreen();
+                                                            return SingularProduct(e);
                                                           }));
                                                 },
                                                 child: Container(
