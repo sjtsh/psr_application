@@ -32,6 +32,17 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   String get dropdownValueFilter => _dropdownValueFilter;
 
+
+  int _skuIndex = 0;
+
+
+  int get skuIndex => _skuIndex;
+
+  set skuIndex(int value) {
+    _skuIndex = value;
+    notifyListeners();
+  }
+
   set dropdownValueFilter(String value) {
     _dropdownValueFilter = value;
     List<SubGroup> subGroups = [];

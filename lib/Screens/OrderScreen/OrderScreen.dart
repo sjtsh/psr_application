@@ -34,8 +34,8 @@ class OrderScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(12.0),
                   child: Text(
                     "Order",
-                    style: TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.normal),
+                    style:
+                        TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
@@ -56,9 +56,7 @@ class OrderScreen extends StatelessWidget {
                       context
                               .watch<OrderScreenManagement>()
                               .dataToDisplay?[index] ??
-                          context
-                              .watch<OrderScreenManagement>()
-                              .data[index]),
+                          context.watch<OrderScreenManagement>().data[index]),
                 ),
               ),
             ),
@@ -73,22 +71,23 @@ class OrderScreen extends StatelessWidget {
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(16)),
                       child: MaterialButton(
-                          onPressed: () {
-                            try {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .pageController
-                                  .previousPage(
-                                      duration: Duration(milliseconds: 200),
-                                      curve: Curves.easeIn);
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: Text(
-                            "PREVIOUS",
-                            style: TextStyle(color: Colors.white),
-                          )),
+                        onPressed: () {
+                          try {
+                            context
+                                .read<OrderScreenManagement>()
+                                .pageController
+                                .previousPage(
+                                    duration: Duration(milliseconds: 200),
+                                    curve: Curves.easeIn);
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        child: Text(
+                          "PREVIOUS",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -96,6 +95,7 @@ class OrderScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
+                      clipBehavior: Clip.hardEdge,
                       width: double.infinity,
                       decoration: BoxDecoration(
                           color: Colors.green,
