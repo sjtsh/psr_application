@@ -1,9 +1,14 @@
 import 'dart:typed_data';
 
+import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:psr_application/Signature/signature_preview_page.dart';
 import 'package:signature/signature.dart';
+
+import '../StateManagement/ShopClosedController.dart';
 
 class SignaturePage extends StatefulWidget {
   @override
@@ -31,86 +36,125 @@ class _SignaturePageState extends State<SignaturePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: Signature(
-                controller: controller,
-                backgroundColor: Colors.white,
-              ),
+        body: SafeArea(
+          child: Scaffold(
+            backgroundColor: Color(0xfff2f2f2),
+            body: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    height: 300,
+                    child: Center(
+                      child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: Color(0xfff2f2f2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: CameraPreview(
+                            context.watch<ShopClosedController>().controller!),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadiusDirectional.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, -2),
+                                spreadRadius: 3,
+                                blurRadius: 3)
+                          ]),
+                      child: Signature(
+                        controller: controller,
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 6,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 6.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            controller.clear();
+                          },
+                          child: Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Clear",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 6.0),
+                        child: GestureDetector(
+                          onTap: () async {
+                            if (controller.isNotEmpty) {
+                              final signature = await exportSignature();
+
+                              await Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                builder: (context) =>
+                                    SignaturePreviewPage(signature!),
+                              ));
+
+                              controller.clear();
+                            }
+                          },
+                          child: Container(
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Confirm",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 6,
+                    ),
+                  ],
+                )
+              ],
             ),
-            buildButtons(context),
-            buildSwapOrientation(),
-          ],
+          ),
         ),
-      );
-
-  Widget buildSwapOrientation() {
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
-
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () {
-        final newOrientation =
-            isPortrait ? Orientation.landscape : Orientation.portrait;
-
-        // controller.clear();
-        setOrientation(newOrientation);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              isPortrait
-                  ? Icons.screen_lock_portrait
-                  : Icons.screen_lock_landscape,
-              size: 40,
-            ),
-            const SizedBox(width: 12),
-            Text(
-              'Tap to change signature orientation',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildButtons(BuildContext context) => Container(
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            buildCheck(context),
-            buildClear(),
-          ],
-        ),
-      );
-
-  Widget buildCheck(BuildContext context) => IconButton(
-        iconSize: 36,
-        icon: Icon(Icons.check, color: Colors.green),
-        onPressed: () async {
-          if (controller.isNotEmpty) {
-            final signature = await exportSignature();
-
-            await Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => SignaturePreviewPage(signature!),
-            ));
-
-            controller.clear();
-          }
-        },
-      );
-
-  Widget buildClear() => IconButton(
-        iconSize: 36,
-        icon: Icon(Icons.clear, color: Colors.red),
-        onPressed: () => controller.clear(),
       );
 
   Future<Uint8List?> exportSignature() async {
@@ -120,24 +164,10 @@ class _SignaturePageState extends State<SignaturePage> {
       exportBackgroundColor: Colors.white,
       points: controller.points,
     );
-
-    final signature = await exportController.toPngBytes();
+    XFile ownerImg =
+        await context.watch<ShopClosedController>().controller!.takePicture();
+    Uint8List? signature = await exportController.toPngBytes();
     exportController.dispose();
-
     return signature;
-  }
-
-  void setOrientation(Orientation orientation) {
-    if (orientation == Orientation.landscape) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-      ]);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    }
   }
 }
