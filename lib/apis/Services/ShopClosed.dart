@@ -49,6 +49,7 @@ class OutletClosedService {
             app: Firebase.app('psrapplication'))
         .ref('camera_uploads/$userID/$name')
         .putFile(file);
+    print(uploading.ref.getDownloadURL());
     return uploading.ref.getDownloadURL();
   }
 }

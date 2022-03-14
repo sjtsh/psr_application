@@ -13,6 +13,7 @@ import 'package:psr_application/apis/Entities/SKU.dart';
 import '../apis/Entities/SubGroup.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
+  ScrollController scrollController = ScrollController();
   List<bool> items = [];
   Map<SubGroup, Map<SKU, int>> singularOrder = {};
   Map<SubGroup, String> competitiveExistingStock = {};
@@ -38,25 +39,17 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
       _confirmOrderRemarkController;
   PageController pageController = PageController();
 
-  int _pageViewInt = 0;
-
-  int get pageViewInt => _pageViewInt;
-
-  set pageViewInt(int value) {
-    _pageViewInt = value;
-    notifyListeners();
-  }
-
   String get dropdownValueFilter => _dropdownValueFilter;
 
-
   int _skuIndex = 0;
-
 
   int get skuIndex => _skuIndex;
 
   set skuIndex(int value) {
     _skuIndex = value;
+    print(82 * value - scrollController.offset);
+    scrollController.animateTo((82 * value + 164.0),
+        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     notifyListeners();
   }
 
