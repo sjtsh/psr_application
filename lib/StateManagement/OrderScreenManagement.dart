@@ -44,11 +44,14 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   int _skuIndex = 0;
 
   int get skuIndex => _skuIndex;
+  PageController detailsController = PageController();
 
   set skuIndex(int value) {
     _skuIndex = value;
     print(82 * value - scrollController.offset);
     scrollController.animateTo((82 * value + 164.0),
+        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    detailsController.animateToPage(value,
         duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     notifyListeners();
   }
