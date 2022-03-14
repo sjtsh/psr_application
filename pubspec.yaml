@@ -52,6 +52,10 @@ dependencies:
   shimmer:
   connectivity_plus: ^2.2.1
   device_preview:
+  signature:
+  permission_handler:
+  image_gallery_saver:
+  flushbar:
 
 
   # The following adds the Cupertino Icons font to your application.

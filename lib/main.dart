@@ -1,4 +1,8 @@
-
+import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +17,7 @@ import 'StateManagement/LogInManagement.dart';
 import 'StateManagement/NoOrderManagement.dart';
 import 'StateManagement/OrderScreenManagement.dart';
 import 'StateManagement/TodayProgress.dart';
+import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,9 +86,28 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.robotoTextTheme(
-            Theme.of(context).textTheme,
+            Theme
+                .of(context)
+                .textTheme,
           ),
         ),
         home: CheckSessionScreen());
   }
+}
+
+getUrls(){
+
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+    name: 'psrapplication',
+  ).then((value) {
+    Reference uploading = firebase_storage.FirebaseStorage.instanceFor(
+        app: Firebase.app('psrapplication'))
+        .ref('skus');
+    uploading.listAll().then((value) {
+      value.items.forEach((element) {
+        element.getDownloadURL().then((value) => print(value));
+      });
+    });
+  });
 }
