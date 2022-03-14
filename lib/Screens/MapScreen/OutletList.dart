@@ -15,6 +15,7 @@ import '../../StateManagement/MapManagement.dart';
 import '../../StateManagement/ShopClosedController.dart';
 import '../OrderScreen/NoOrder/NoOrderScreen.dart';
 import '../OrderScreen/ShopClosedScreen.dart';
+import '../OrderScreen/SubGroupListScreen.dart';
 
 class OutletList extends StatelessWidget {
   const OutletList({Key? key}) : super(key: key);
@@ -207,32 +208,29 @@ class OutletList extends StatelessWidget {
                                   height: 30,
                                   child: MaterialButton(
                                     color: context
-                                                .read<MapManagement>()
-                                                .sortedOutlets[index]
-                                                .dis! >
-                                            20
+                                        .read<MapManagement>()
+                                        .sortedOutlets[index]
+                                        .dis! >
+                                        20
                                         ? Colors.grey
-                                        : Color(0xff34C759),
+                                        : Colors.redAccent,
                                     onPressed: () {
-                                      //commented for development purposes ~sajat
-                                      // if (context.read<MapManagement>().sortedOutlets[index].dis < 20) {
-                                      context
+                                      if (context
                                           .read<MapManagement>()
-                                          .changeSelectedMarkerOutlet(index);
-                                      context
-                                          .read<OrderScreenManagement>()
-                                          .singularOrder = {};
-                                      context
-                                          .read<OrderScreenManagement>()
-                                          .dataToDisplay = null;
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(builder: (_) {
-                                        return OrderScreen();
-                                      }));
-                                      // }
+                                          .sortedOutlets[index]
+                                          .dis! <
+                                          20) {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (_) {
+                                              return ShopClosedScreen(context
+                                                  .watch<MapManagement>()
+                                                  .sortedOutlets[index]
+                                                  .id);
+                                            }));
+                                      }
                                     },
                                     child: Text(
-                                      "TAKE ORDER",
+                                      "SHOP CLOSED",
                                       style: TextStyle(
                                           fontSize: 12, color: Colors.white),
                                     ),
@@ -280,84 +278,34 @@ class OutletList extends StatelessWidget {
                                   height: 30,
                                   child: MaterialButton(
                                     color: context
-                                                .read<MapManagement>()
-                                                .sortedOutlets[index]
-                                                .dis! >
-                                            20
+                                        .read<MapManagement>()
+                                        .sortedOutlets[index]
+                                        .dis! >
+                                        20
                                         ? Colors.grey
-                                        : Colors.redAccent,
+                                        : Color(0xff34C759),
                                     onPressed: () {
-                                      if (context
-                                              .read<MapManagement>()
-                                              .sortedOutlets[index]
-                                              .dis! <
-                                          20) {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (_) {
-                                          return ShopClosedScreen(context
-                                              .watch<MapManagement>()
-                                              .sortedOutlets[index]
-                                              .id);
-                                        }));
-                                        context
-                                            .read<ShopClosedController>()
-                                            .initialize();
-                                      }
-                                    },
-                                    child: Text(
-                                      "SHOP CLOSED",
-                                      style: TextStyle(
-                                          fontSize: 12, color: Colors.white),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  height: 30,
-                                  child: MaterialButton(
-                                    color: context
-                                                .read<MapManagement>()
-                                                .sortedOutlets[index]
-                                                .dis! >
-                                            20
-                                        ? Color(0xffE8E8E9)
-                                        : Colors.orangeAccent,
-                                    onPressed: () {
+                                      //commented for development purposes ~sajat
+                                      // if (context.read<MapManagement>().sortedOutlets[index].dis < 20) {
                                       context
                                           .read<MapManagement>()
                                           .changeSelectedMarkerOutlet(index);
-
-                                      if (context
-                                              .read<MapManagement>()
-                                              .sortedOutlets[index]
-                                              .dis! <
-                                          20) {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (_) {
-                                          return Container();
-                                        }));
-                                      }
+                                      context
+                                          .read<OrderScreenManagement>()
+                                          .singularOrder = {};
+                                      context
+                                          .read<OrderScreenManagement>()
+                                          .dataToDisplay = null;
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) {
+                                        return SubGroupListScreen();
+                                      }));
+                                      // }
                                     },
                                     child: Text(
-                                      "NO ORDER",
+                                      "TAKE ORDER",
                                       style: TextStyle(
-                                          fontSize: 12,
-                                          color: context
-                                                      .read<MapManagement>()
-                                                      .sortedOutlets[index]
-                                                      .dis! >
-                                                  20
-                                              ? Colors.grey
-                                              : Colors.white),
+                                          fontSize: 12, color: Colors.white),
                                     ),
                                   ),
                                 ),

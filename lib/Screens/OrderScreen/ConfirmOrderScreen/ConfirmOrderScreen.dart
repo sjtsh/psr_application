@@ -85,7 +85,11 @@ class ConfirmOrderScreen extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.menu,
-                            color: !context.watch<OrderScreenManagement>().isRemarkShown ? Colors.black : Colors.green,
+                            color: !context
+                                    .watch<OrderScreenManagement>()
+                                    .isRemarkShown
+                                ? Colors.black
+                                : Colors.green,
                           ),
                         ),
                       ],
@@ -157,26 +161,34 @@ class ConfirmOrderScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                       !context.watch<OrderScreenManagement>().isRemarkShown? Container(): Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: TextFormField(
-                            controller: context
-                                .read<OrderScreenManagement>()
-                                .confirmOrderRemarkController,
-                            decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.book_outlined),
-                                focusColor: Colors.green,
-                                hintText: "Remark",
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    borderSide: const BorderSide(color: Colors.green)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    borderSide: BorderSide(color: Colors.black.withOpacity(0.1)))),
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        !context.watch<OrderScreenManagement>().isRemarkShown
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: TextFormField(
+                                  controller: context
+                                      .read<OrderScreenManagement>()
+                                      .confirmOrderRemarkController,
+                                  decoration: InputDecoration(
+                                      prefixIcon:
+                                          const Icon(Icons.book_outlined),
+                                      focusColor: Colors.green,
+                                      hintText: "Remark",
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          borderSide: const BorderSide(
+                                              color: Colors.green)),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          borderSide: BorderSide(
+                                              color: Colors.black
+                                                  .withOpacity(0.1)))),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12),
                           child: Container(
@@ -203,19 +215,20 @@ class ConfirmOrderScreen extends StatelessWidget {
                                     bool success = false;
                                     try {
                                       if (order == null) {
-                                        success = await OrderService()
-                                            .insertOrder(
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .singularOrder,
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .confirmOrderRemarkController.text ,
-                                                context
-                                                    .read<MapManagement>()
-                                                    .selectedOutlet!
-                                                    .outletPlanId);
+                                        //needed to revise
+                                        // success = await OrderService()
+                                        //     .insertOrder(
+                                        //         context
+                                        //             .read<
+                                        //                 OrderScreenManagement>()
+                                        //             .singularOrder,
+                                        //     context
+                                        //         .read<OrderScreenManagement>()
+                                        //         .confirmOrderRemarkController.text ,
+                                        //         context
+                                        //             .read<MapManagement>()
+                                        //             .selectedOutlet!
+                                        //             .outletPlanId);
                                       } else {
                                         success = await OrderService()
                                             .updateOrder(
@@ -223,9 +236,11 @@ class ConfirmOrderScreen extends StatelessWidget {
                                                     .read<
                                                         OrderScreenManagement>()
                                                     .singularOrder,
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .confirmOrderRemarkController.text,
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .confirmOrderRemarkController
+                                                    .text,
                                                 order!.id);
                                       }
                                     } catch (e) {

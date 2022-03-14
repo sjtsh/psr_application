@@ -19,13 +19,12 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   bool isloading = false;
   List<CameraDescription> cameras = [];
 
-
   imageSent(){
     isloading = !isloading;
     notifyListeners();
   }
 
-
+  @override
   void dispose(){
     timer?.cancel();
     print("cancelled");

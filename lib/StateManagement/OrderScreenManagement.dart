@@ -12,19 +12,27 @@ import 'package:psr_application/apis/Entities/SKU.dart';
 import '../apis/Entities/SubGroup.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
+  ScrollController scrollController = ScrollController();
   List<bool> items = [];
   Map<SubGroup, Map<SKU, int>> singularOrder = {};
+  Map<SubGroup, String> competitiveExistingStock = {};
+  Map<SubGroup, Map<String, String>> ownExistingStock =
+      {}; // the value for a subgroup to have two keys first one should be stock_count and other should be img url
+  Map<SubGroup, String> noOrderReasons = {};
+
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
   String _dropdownValueFilter = "All";
-  ScrollController controller = ScrollController();
+
   List<SubGroup> data = [];
   List<SubGroup>? _dataToDisplay;
-  List<OutletOrderItem>outletOrderItem=[];
+  List<OutletOrderItem> outletOrderItem = [];
+
   TextEditingController _noOrderRemarkController = TextEditingController();
 
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
   TextEditingController _confirmOrderRemarkController = TextEditingController();
+  ScrollController controller = ScrollController();
 
   TextEditingController get confirmOrderRemarkController =>
       _confirmOrderRemarkController;
@@ -32,14 +40,15 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   String get dropdownValueFilter => _dropdownValueFilter;
 
-
   int _skuIndex = 0;
-
 
   int get skuIndex => _skuIndex;
 
   set skuIndex(int value) {
     _skuIndex = value;
+    print(82 * value - scrollController.offset);
+    scrollController.animateTo((82 * value + 164.0),
+        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     notifyListeners();
   }
 
@@ -154,6 +163,30 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
               .contains(searchText.toLowerCase());
     }).toList();
     notifyListeners();
-    print(_dataToDisplay);
+  }
+
+  checkContains(SubGroup subGroup) {
+    bool contains = false;
+    singularOrder.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    competitiveExistingStock.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    noOrderReasons.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    ownExistingStock.forEach((key, value) {
+      if (key.name == subGroup.name) {
+        contains = true;
+      }
+    });
+    return contains;
   }
 }

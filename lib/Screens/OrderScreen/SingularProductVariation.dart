@@ -60,9 +60,10 @@ class _SingularProductVariationState extends State<SingularProductVariation> {
           BoxShadow(color: Colors.black.withOpacity(0.1),
             blurRadius: 3,
             offset: Offset(0, 3),
+
           ),
-        ],
-      ),
-    );
+        ]
+      ));
+
   }
 }

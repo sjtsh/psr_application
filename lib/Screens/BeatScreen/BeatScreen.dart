@@ -29,7 +29,9 @@ class _BeatScreenState extends State<BeatScreen> {
   int index = 0;
   StreamSubscription<ConnectivityResult>? subscription;
   String text = "connected";
+  int page = 0;
 
+  @override
   initState() {
     super.initState();
     subscription = Connectivity()
@@ -43,7 +45,6 @@ class _BeatScreenState extends State<BeatScreen> {
         Future.delayed(Duration(milliseconds: 1000))
             .then((value) => setState(() => animated = true));
       } else {
-        print("not connected");
         setState(() {
           text = "Trying to connect";
           animated = false;
@@ -52,11 +53,16 @@ class _BeatScreenState extends State<BeatScreen> {
     });
   }
 
-// Be sure to cancel subscription after you are done
   @override
   dispose() {
     super.dispose();
     subscription?.cancel();
+  }
+
+  setPage(int i) {
+    setState(() {
+      page = i;
+    });
   }
 
   @override
@@ -74,59 +80,59 @@ class _BeatScreenState extends State<BeatScreen> {
           onWillPop: () {
             return Future.value(false);
           },
-          child: Scaffold(
-              backgroundColor: Color(0xffF1F2F6),
-              body: ListView(
-                children: [
-                  AnimatedContainer(
-                    height: animated ? 0 : 20,
-                    color:
-                        text == "Trying to connect" ? Colors.red : Colors.green,
-                    duration: const Duration(milliseconds: 200),
-                    child: Center(
-                      child: Text(
-                        text,
-                        style: TextStyle(color: Colors.white),
+          child: IndexedStack(
+            index: page,
+            children: [
+              Scaffold(
+                backgroundColor: Color(0xffF1F2F6),
+                body: ListView(
+                  children: [
+                    AnimatedContainer(
+                      height: animated ? 0 : 20,
+                      color: text == "Trying to connect"
+                          ? Colors.red
+                          : Colors.green,
+                      duration: const Duration(milliseconds: 200),
+                      child: Center(
+                        child: Text(
+                          text,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                  BeatHeader(),
-                  AverageVolume(),
-
-                  SizedBox(
-                    height: 12,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Geolocator.getCurrentPosition().then(
-                          (event) {
-                            context.read<MapManagement>().initializeMarkers(
-                                LatLng(event.latitude, event.longitude));
-                            Navigator.of(context).push(
-                                MaterialPageRoute(builder: (_) => MapScreen()));
-                          },
-                        );
-                      },
-                      child: Container(
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "CONTINUE RETAILING",
-                            style: TextStyle(color: Colors.white),
+                    BeatHeader(),
+                    AverageVolume(),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          setPage(1);
+                        },
+                        child: Container(
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "CONTINUE RETAILING",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SelectBeat(),
-                ],
-              )),
+                    SelectBeat(),
+                  ],
+                ),
+              ),
+              MapScreen(setPage),
+            ],
+          ),
         ),
       ),
     );

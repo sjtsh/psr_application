@@ -1,184 +1,142 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:psr_application/StateManagement/MapManagement.dart';
-// import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
-// import 'package:psr_application/apis/Services/NoOrderReasonGroupService.dart';
-//
-// class NoOrderScreen extends StatelessWidget {
-//   const NoOrderScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         body: Column(
-//           children: [
-//             Container(
-//               height: 60,
-//               child: Row(
-//                 children: [
-//                   IconButton(
-//                       onPressed: () {
-//                         Navigator.pop(context);
-//                       },
-//                       icon: Icon(Icons.arrow_back_ios)),
-//                   const Expanded(
-//                     child: Center(
-//                       child: Text("No Order"),
-//                     ),
-//                   ),
-//                   IconButton(
-//                     onPressed: () {},
-//                     icon: const Icon(
-//                       Icons.arrow_back_ios,
-//                       color: Colors.transparent,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Expanded(
-//               child: GridView.count(
-//                 crossAxisCount: 2,
-//                 children: context
-//                     .watch<OrderScreenManagement>()
-//                     .noOrderReasons
-//                     .map(
-//                       (e) => Padding(
-//                         padding: const EdgeInsets.all(12.0),
-//                         child: GestureDetector(
-//                           onTap: () {
-//                             context
-//                                 .read<OrderScreenManagement>()
-//                                 .selectedNoOrderReasonGroup = e;
-//                           },
-//                           child: Container(
-//                             width: 150,
-//                             height: 100,
-//                             decoration: BoxDecoration(
-//                               color: context
-//                                           .watch<OrderScreenManagement>()
-//                                           .selectedNoOrderReasonGroup
-//                                           ?.id ==
-//                                       e.id
-//                                   ? Colors.green
-//                                   : Colors.white,
-//                               border: Border.all(
-//                                 color: Colors.black.withOpacity(0.5),
-//                               ),
-//                               borderRadius: BorderRadius.circular(12),
-//                             ),
-//                             child: Center(
-//                               child: Text(
-//                                 e.remarks,
-//                                 style: TextStyle(
-//                                     color: context
-//                                                 .watch<OrderScreenManagement>()
-//                                                 .selectedNoOrderReasonGroup
-//                                                 ?.id ==
-//                                             e.id
-//                                         ? Colors.white
-//                                         : Colors.black),
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     )
-//                     .toList(),
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(12.0),
-//               child: Container(
-//                 height: 60,
-//                 width: double.infinity,
-//                 child:  TextFormField(
-//                   controller: context
-//                       .read<OrderScreenManagement>()
-//                       .noOrderRemarkController,
-//                   decoration: InputDecoration(
-//                       prefixIcon: const Icon(Icons.book_outlined),
-//                       hintText: "Remark",
-//                       focusedBorder: OutlineInputBorder(
-//                           borderRadius: BorderRadius.circular(16),
-//                           borderSide: const BorderSide(color: Colors.green)),
-//                       enabledBorder: OutlineInputBorder(
-//                           borderRadius: BorderRadius.circular(16),
-//                           borderSide: BorderSide(color: Colors.black))),
-//                   style: const TextStyle(fontWeight: FontWeight.bold),
-//                 ),
-//               ),
-//             ),
-//             GestureDetector(
-//               onTap: () async {
-//                 if (!context
-//                     .read<OrderScreenManagement>()
-//                     .noOrderButtonDisabled) {
-//                   if (context
-//                           .read<OrderScreenManagement>()
-//                           .selectedNoOrderReasonGroup !=
-//                       null) {
-//                     context
-//                         .read<OrderScreenManagement>()
-//                         .noOrderButtonDisabled = true;
-//                     try {
-//                       bool success = await NoOrderReasonGroupService()
-//                           .insertNoOrder(
-//                               context
-//                                   .read<OrderScreenManagement>()
-//                                   .selectedNoOrderReasonGroup!
-//                                   .id,
-//                               context
-//                                   .read<MapManagement>()
-//                                   .selectedOutlet!
-//                                   .outletPlanId,
-//                           context
-//                               .read<OrderScreenManagement>()
-//                               .noOrderRemarkController.text);
-//                       if (success) {
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                             SnackBar(content: Text("Successful")));
-//                         Navigator.pop(context);
-//                       } else {
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                             SnackBar(content: Text("Unsuccessful")));
-//                       }
-//                     } catch (e) {
-//                       print(e);
-//                     }
-//
-//                     context
-//                         .read<OrderScreenManagement>()
-//                         .noOrderButtonDisabled = false;
-//                   }
-//                 }
-//               },
-//               child: Container(
-//                 height: 60,
-//                 color: context
-//                             .watch<OrderScreenManagement>()
-//                             .selectedNoOrderReasonGroup ==
-//                         null
-//                     ? Colors.blueGrey
-//                     : Colors.green,
-//                 child: Center(
-//                   child: !context
-//                           .watch<OrderScreenManagement>()
-//                           .noOrderButtonDisabled
-//                       ? Text(
-//                           "Confirm",
-//                           style: TextStyle(color: Colors.white),
-//                         )
-//                       : CircularProgressIndicator(
-//                           color: Colors.white,
-//                         ),
-//                 ),
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:flutter/material.dart';
+import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen.dart';
+import 'package:psr_application/Screens/OrderScreen/NoOrder/NoOrderReasonScreen.dart';
+
+import '../../../apis/Entities/SubGroup.dart';
+
+class NoOrderScreen extends StatefulWidget {
+  final SubGroup subGroup;
+
+  NoOrderScreen(this.subGroup);
+
+  @override
+  State<NoOrderScreen> createState() => _NoOrderScreenState();
+}
+
+class _NoOrderScreenState extends State<NoOrderScreen> {
+  int outsideIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              height: 60,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 12,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back_ios),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text("No Order Screen"),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              decoration: BoxDecoration(color: Color(0xfff2f2f2)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          outsideIndex = 0;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: outsideIndex == 0
+                              ? Colors.white
+                              : Colors.transparent,
+                          border: Border(
+                            bottom: BorderSide(
+                                color: outsideIndex == 0
+                                    ? Colors.blue
+                                    : Colors.blue.withOpacity(0.1),
+                                width: 3),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Existing Stock",
+                            style: TextStyle(
+                                color: outsideIndex == 0
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.5)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          outsideIndex = 1;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: outsideIndex == 1
+                              ? Colors.white
+                              : Colors.transparent,
+                          border: Border(
+                            bottom: BorderSide(
+                                color: outsideIndex == 1
+                                    ? Colors.blue
+                                    : Colors.blue.withOpacity(0.1),
+                                width: 3),
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "No Order Reason",
+                            style: TextStyle(
+                                color: outsideIndex == 1
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.5)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: IndexedStack(
+                index: outsideIndex,
+                children: [
+                  ExistingStockScreen(widget.subGroup),
+                  NoOrderReasonScreen(widget.subGroup),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
