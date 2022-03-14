@@ -11,8 +11,9 @@ import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
   final SubGroup subGroup;
+  final Function refresh;
 
-  SingularProduct(this.subGroup);
+  SingularProduct(this.subGroup, this.refresh);
 
   @override
   Widget build(BuildContext context) {

@@ -26,7 +26,9 @@ class OutletList extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: context.watch<MapManagement>().sortedOutlets.length,
       itemBuilder: (BuildContext context, int index, int realIndex) {
-        context.read<MapManagement>().changeSelectedMarkerOutletByCarousel(realIndex);
+        context
+            .read<MapManagement>()
+            .changeSelectedMarkerOutletByCarousel(realIndex);
         return Padding(
           padding: const EdgeInsets.only(right: 12, left: 12, bottom: 2),
           child: GestureDetector(
@@ -52,10 +54,13 @@ class OutletList extends StatelessWidget {
                   children: [
                     Container(
                         width: 100,
-                        child: Image.network(context
-                            .watch<MapManagement>()
-                            .sortedOutlets[index]
-                            .img, fit: BoxFit.cover,)),
+                        child: Image.network(
+                          context
+                              .watch<MapManagement>()
+                              .sortedOutlets[index]
+                              .img,
+                          fit: BoxFit.cover,
+                        )),
                     SizedBox(
                       width: 6,
                     ),
@@ -208,25 +213,25 @@ class OutletList extends StatelessWidget {
                                   height: 30,
                                   child: MaterialButton(
                                     color: context
-                                        .read<MapManagement>()
-                                        .sortedOutlets[index]
-                                        .dis! >
-                                        20
+                                                .read<MapManagement>()
+                                                .sortedOutlets[index]
+                                                .dis! >
+                                            20
                                         ? Colors.grey
                                         : Colors.redAccent,
                                     onPressed: () {
                                       if (context
-                                          .read<MapManagement>()
-                                          .sortedOutlets[index]
-                                          .dis! <
+                                              .read<MapManagement>()
+                                              .sortedOutlets[index]
+                                              .dis! <
                                           20) {
                                         Navigator.push(context,
                                             MaterialPageRoute(builder: (_) {
-                                              return ShopClosedScreen(context
-                                                  .watch<MapManagement>()
-                                                  .sortedOutlets[index]
-                                                  .id);
-                                            }));
+                                          return ShopClosedScreen(context
+                                              .watch<MapManagement>()
+                                              .sortedOutlets[index]
+                                              .id);
+                                        }));
                                       }
                                     },
                                     child: Text(
@@ -278,10 +283,10 @@ class OutletList extends StatelessWidget {
                                   height: 30,
                                   child: MaterialButton(
                                     color: context
-                                        .read<MapManagement>()
-                                        .sortedOutlets[index]
-                                        .dis! >
-                                        20
+                                                .read<MapManagement>()
+                                                .sortedOutlets[index]
+                                                .dis! >
+                                            20
                                         ? Colors.grey
                                         : Color(0xff34C759),
                                     onPressed: () {
@@ -296,11 +301,21 @@ class OutletList extends StatelessWidget {
                                       context
                                           .read<OrderScreenManagement>()
                                           .dataToDisplay = null;
+
+                                      context
+                                              .read<OrderScreenManagement>()
+                                              .keys =
+                                          List.generate(
+                                              context
+                                                  .read<
+                                                      OrderScreenManagement>()
+                                                  .data
+                                                  .length,
+                                              (index) => GlobalKey());
                                       Navigator.of(context)
                                           .push(MaterialPageRoute(builder: (_) {
                                         return SubGroupListScreen();
                                       }));
-                                      // }
                                     },
                                     child: Text(
                                       "TAKE ORDER",

@@ -6,8 +6,9 @@ import '../../../apis/Entities/SubGroup.dart';
 
 class NoOrderScreen extends StatefulWidget {
   final SubGroup subGroup;
+  final Function refresh;
 
-  NoOrderScreen(this.subGroup);
+  NoOrderScreen(this.subGroup, this.refresh);
 
   @override
   State<NoOrderScreen> createState() => _NoOrderScreenState();
@@ -129,8 +130,8 @@ class _NoOrderScreenState extends State<NoOrderScreen> {
               child: IndexedStack(
                 index: outsideIndex,
                 children: [
-                  ExistingStockScreen(widget.subGroup),
-                  NoOrderReasonScreen(widget.subGroup),
+                  ExistingStockScreen(widget.subGroup, widget.refresh),
+                  NoOrderReasonScreen(widget.subGroup, widget.refresh),
                 ],
               ),
             ),
