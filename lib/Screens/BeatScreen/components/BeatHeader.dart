@@ -1,14 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:nepali_date_picker/nepali_date_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/DateRangeManagement.dart';
-import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/database.dart';
 
-import '../../../StateManagement/BeatManagement.dart';
-import '../../OrderDateRangeScreen.dart';
-import './BeatStat.dart';
 
 class BeatHeader extends StatelessWidget {
   const BeatHeader({Key? key}) : super(key: key);

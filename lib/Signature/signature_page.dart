@@ -121,11 +121,11 @@ class _SignaturePageState extends State<SignaturePage> {
                             if (controller.isNotEmpty) {
                               final signature = await exportSignature();
 
-                              await Navigator.of(context)
-                                  .push(MaterialPageRoute(
-                                builder: (context) =>
-                                    SignaturePreviewPage(signature!),
-                              ));
+                              // await Navigator.of(context)
+                              //     .push(MaterialPageRoute(
+                              //   builder: (context) =>
+                              //       SignaturePreviewPage(signature!),
+                              // ));
 
                               controller.clear();
                             }

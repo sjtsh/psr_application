@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/EditOrderModal.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:psr_application/apis/Entities/SKU.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
+
+import '../../../StateManagement/OrderVariation.dart';
 
 class ConfirmVariation extends StatelessWidget {
   final MapEntry<SubGroup, Map<SKU, int>> e;
@@ -46,12 +49,24 @@ class ConfirmVariation extends StatelessWidget {
                       color: Colors.white,
                       child: InkWell(
                         onTap: () {
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return ConfirmationModalSheet(f, updateReceiptData);
-                          //   },
-                          // );
+
+                          context
+                              .read<OrderVariation>()
+                              .tempSubGroupVariation = {};
+                          context
+                              .read<OrderVariation>()
+                              .tempSubGroupVariation
+                              .addAll(context
+                              .read<OrderScreenManagement>()
+                              .singularOrder[e.key] ??
+                              {});
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditOrderModal(e.key);
+                            },
+                          );
+                            // context.read<OrderScreenManagement>().removeSKU(e.key, f.key);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -116,14 +131,9 @@ class ConfirmVariation extends StatelessWidget {
                               SizedBox(
                                 width: 10,
                               ),
-                              InkWell(
-                                onTap: () {
-                                context.read<OrderScreenManagement>().removeSKU(e.key, f.key);
-                                },
-                                child: Icon(
-                                  Icons.cancel_outlined,
-                                  color: Colors.red,
-                                ),
+                              Icon(
+                                Icons.edit,
+                                color: Colors.red,
                               )
                             ],
                           ),

@@ -10,9 +10,8 @@ import '../NoOrderCamera.dart';
 
 class OwnStock extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  OwnStock(this.subGroup, this.refresh);
+  OwnStock(this.subGroup);
 
   @override
   State<OwnStock> createState() => _OwnStockState();
@@ -108,7 +107,7 @@ class _OwnStockState extends State<OwnStock> {
           onTap: () {
             context
                 .read<NoOrderManagement>()
-                .addNoOrderOwnExistingStock(widget.subGroup, widget.refresh, context);
+                .addNoOrderOwnExistingStock(widget.subGroup,context);
           },
           child: Container(
             height: 60,

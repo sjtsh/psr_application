@@ -16,6 +16,7 @@ import 'StateManagement/DateRangeManagement.dart';
 import 'StateManagement/LogInManagement.dart';
 import 'StateManagement/NoOrderManagement.dart';
 import 'StateManagement/OrderScreenManagement.dart';
+import 'StateManagement/OrderVariation.dart';
 import 'StateManagement/TodayProgress.dart';
 import 'firebase_options.dart';
 
@@ -51,6 +52,9 @@ void main() {
         ChangeNotifierProvider(
           create: (_) => NoOrderManagement(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => OrderVariation(),
+        )
       ],
       child: MyApp(),
     ),

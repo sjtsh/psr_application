@@ -11,6 +11,7 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
   String? _noOrderTextFieldTextOwnStock;
   String? _noOrderReasonTextField;
   String? _noOrderPhotoLocalUrl;
+
   String? get noOrderPhotoLocalUrl => _noOrderPhotoLocalUrl;
 
   set noOrderPhotoLocalUrl(String? value) {
@@ -76,7 +77,7 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  addNoOrderReason(SubGroup subGroup, Function refresh, BuildContext context) {
+  addNoOrderReason(SubGroup subGroup, BuildContext context) {
     if (noOrderReasonTextField != "" && noOrderReasonTextField != null) {
       context.read<OrderScreenManagement>().noOrderReasons[subGroup] =
           noOrderReasonTextField!;
@@ -86,13 +87,16 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
           .remove(subGroup);
       context.read<OrderScreenManagement>().ownExistingStock.remove(subGroup);
       context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
+      context.read<OrderScreenManagement>().validation(context);
+      Map<SubGroup,String> aMap = {};
+      aMap.addAll(context.read<OrderScreenManagement>().noOrderReasons);
+      context.read<OrderScreenManagement>().noOrderReasons = aMap;
       notifyListeners();
       Navigator.pop(context);
-      refresh();
     }
   }
 
-  addNoOrderCompetitiveExistingStock(SubGroup subGroup, Function refresh, BuildContext context) {
+  addNoOrderCompetitiveExistingStock(SubGroup subGroup, BuildContext context) {
     if (_noOrderTextFieldTextCompetitiveStock != "" &&
         _noOrderTextFieldTextCompetitiveStock != null) {
       context.read<OrderScreenManagement>().competitiveExistingStock[subGroup] =
@@ -100,13 +104,16 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
       context.read<OrderScreenManagement>().noOrderReasons.remove(subGroup);
       context.read<OrderScreenManagement>().ownExistingStock.remove(subGroup);
       context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
+      context.read<OrderScreenManagement>().validation(context);
+      Map<SubGroup,String> aMap = {};
+      aMap.addAll(context.read<OrderScreenManagement>().competitiveExistingStock);
+      context.read<OrderScreenManagement>().competitiveExistingStock = aMap;
       notifyListeners();
       Navigator.pop(context);
-      refresh();
     }
   }
 
-  addNoOrderOwnExistingStock(SubGroup subGroup, Function refresh, BuildContext context) {
+  addNoOrderOwnExistingStock(SubGroup subGroup, BuildContext context) {
     if (_noOrderTextFieldTextOwnStock != "" &&
         _noOrderTextFieldTextOwnStock != null &&
         _noOrderPhotoLocalUrl != null) {
@@ -120,9 +127,12 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
           .competitiveExistingStock
           .remove(subGroup);
       context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
+      context.read<OrderScreenManagement>().validation(context);
+      Map<SubGroup, Map<String, String>> aMap = {};
+      aMap.addAll(context.read<OrderScreenManagement>().ownExistingStock);
+      context.read<OrderScreenManagement>().ownExistingStock = aMap;
       notifyListeners();
       Navigator.pop(context);
-      refresh();
     }
   }
 }

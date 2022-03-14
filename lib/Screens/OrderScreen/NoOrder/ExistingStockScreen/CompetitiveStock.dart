@@ -6,9 +6,8 @@ import '../../../../apis/Entities/SubGroup.dart';
 
 class CompetitiveStock extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  CompetitiveStock(this.subGroup, this.refresh);
+  CompetitiveStock(this.subGroup,);
 
   @override
   State<CompetitiveStock> createState() => _CompetitiveStockState();
@@ -60,7 +59,7 @@ class _CompetitiveStockState extends State<CompetitiveStock> {
           onTap: () {
             context
                 .read<NoOrderManagement>()
-                .addNoOrderCompetitiveExistingStock(widget.subGroup, widget.refresh, context);
+                .addNoOrderCompetitiveExistingStock(widget.subGroup, context);
           },
           child: Container(
             height: 60,

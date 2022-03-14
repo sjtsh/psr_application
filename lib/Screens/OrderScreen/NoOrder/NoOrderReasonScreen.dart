@@ -6,9 +6,8 @@ import 'package:psr_application/apis/Entities/SubGroup.dart';
 
 class NoOrderReasonScreen extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  NoOrderReasonScreen(this.subGroup, this.refresh);
+  NoOrderReasonScreen(this.subGroup);
 
   @override
   State<NoOrderReasonScreen> createState() => _NoOrderReasonScreenState();
@@ -57,7 +56,7 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
         ),
         GestureDetector(
           onTap: () {
-            context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup, widget.refresh, context);
+            context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup,  context);
           },
           child: Container(
             height: 60,
