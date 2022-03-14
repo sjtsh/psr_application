@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/DialogPrompt/DialogBox.dart';
@@ -25,6 +27,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     bool isAllDone = true;
     return SafeArea(
       child: Scaffold(
@@ -187,7 +192,38 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                   showDialog(
                                                       context: context,
                                                       builder: (_) {
-                                                        return MyDialogBox(e.value,refresh);
+                                                        return GestureDetector(
+                                                          onTap: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: ClipRect(
+                                                            child:
+                                                                BackdropFilter(
+                                                              filter: ImageFilter
+                                                                  .blur(
+                                                                      sigmaX:
+                                                                          2.0,
+                                                                      sigmaY:
+                                                                          2.0),
+                                                              child: Container(
+                                                                width: width,
+                                                                height: height,
+                                                                decoration: BoxDecoration(
+                                                                    color: Colors
+                                                                        .grey
+                                                                        .shade100
+                                                                        .withOpacity(
+                                                                            0.1)),
+                                                                child: Center(
+                                                                  child: MyDialogBox(
+                                                                      e.value,
+                                                                      refresh),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
                                                       });
                                                 },
                                                 child: Container(
