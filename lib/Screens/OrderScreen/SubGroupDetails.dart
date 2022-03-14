@@ -24,6 +24,7 @@ class _SubgroupdetailsState extends State<SubgroupDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print(widget.sku.id);
     primary.text = (context
                     .read<OrderScreenManagement>()
                     .singularOrder[widget.subGroup]?[widget.sku] ==
