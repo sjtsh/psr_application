@@ -100,44 +100,53 @@ class SingularProduct extends StatelessWidget {
                 height: 70,
                 child: ListView(
                   dragStartBehavior: DragStartBehavior.start,
-                  controller: context.read<OrderScreenManagement>().scrollController,
+                  controller:
+                      context.read<OrderScreenManagement>().scrollController,
                   scrollDirection: Axis.horizontal,
-                  children: [SizedBox(width: 164,),...List.generate(subGroup.skus.length, (int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        controller.animateToPage(index,
-                            duration: Duration(
-                              milliseconds: 500,
+                  children: [
+                    SizedBox(
+                      width: 164,
+                    ),
+                    ...List.generate(subGroup.skus.length, (int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          controller.animateToPage(index,
+                              duration: Duration(
+                                milliseconds: 500,
+                              ),
+                              curve: Curves.easeInOutCubic);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(6),
+                          height: 70,
+                          width: 70,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: index ==
+                                      context
+                                          .watch<OrderScreenManagement>()
+                                          .skuIndex
+                                  ? Colors.black
+                                  : Colors.transparent,
                             ),
-                            curve: Curves.easeInOutCubic);
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(6),
-                        height: 70,
-                        width: 70,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: index ==
-                                    context
-                                        .watch<OrderScreenManagement>()
-                                        .skuIndex
-                                ? Colors.black
-                                : Colors.transparent,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 3,
-                              offset: Offset(0, 2),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 3,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                            image: const DecorationImage(
+                              image: AssetImage("assets/oats.jpg"),
                             ),
-                          ],
-                          image: const DecorationImage(
-                            image: AssetImage("assets/oats.jpg"),
                           ),
                         ),
-                      ),
-                    );
-                  }),SizedBox(width: 164,),],
+                      );
+                    }),
+                    SizedBox(
+                      width: 164,
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(
