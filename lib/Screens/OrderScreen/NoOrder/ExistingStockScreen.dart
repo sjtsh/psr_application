@@ -12,8 +12,9 @@ import 'NoOrderCamera.dart';
 
 class ExistingStockScreen extends StatefulWidget {
   final SubGroup subGroup;
+  final Function refresh;
 
-  ExistingStockScreen(this.subGroup);
+  ExistingStockScreen(this.subGroup, this.refresh);
 
   @override
   State<ExistingStockScreen> createState() => _ExistingStockScreenState();
@@ -88,8 +89,8 @@ class _ExistingStockScreenState extends State<ExistingStockScreen> {
           child: IndexedStack(
             index: insideIndex,
             children: [
-              CompetitiveStock(widget.subGroup),
-              OwnStock(widget.subGroup),
+              CompetitiveStock(widget.subGroup, widget.refresh),
+              OwnStock(widget.subGroup, widget.refresh),
             ],
           ),
         ),

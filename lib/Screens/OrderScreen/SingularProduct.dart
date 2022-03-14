@@ -13,10 +13,10 @@ import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
   final SubGroup subGroup;
+  final Function refresh;
 
-  CarouselController controller = CarouselController();
-
-  SingularProduct(this.subGroup);
+  SingularProduct(this.subGroup, this.refresh);
+  final CarouselController controller = CarouselController();
 
   @override
   Widget build(BuildContext context) {

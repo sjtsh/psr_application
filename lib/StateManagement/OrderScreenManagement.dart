@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/apis/Entities/NoOrderReasonGroup.dart';
 import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
@@ -19,7 +20,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   Map<SubGroup, Map<String, String>> ownExistingStock =
       {}; // the value for a subgroup to have two keys first one should be stock_count and other should be img url
   Map<SubGroup, String> noOrderReasons = {};
-
+  List<GlobalKey> keys = [];
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
   String _dropdownValueFilter = "All";
@@ -165,28 +166,40 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  checkContains(SubGroup subGroup) {
+  String checkContains(SubGroup subGroup) {
     bool contains = false;
     singularOrder.forEach((key, value) {
       if (key.name == subGroup.name) {
         contains = true;
       }
     });
+    if(contains){
+      return "Order taken";
+    }
     competitiveExistingStock.forEach((key, value) {
       if (key.name == subGroup.name) {
         contains = true;
       }
     });
+    if(contains){
+      return "Competitive Stock";
+    }
     noOrderReasons.forEach((key, value) {
       if (key.name == subGroup.name) {
         contains = true;
       }
     });
+    if(contains){
+      return "No Order Available";
+    }
     ownExistingStock.forEach((key, value) {
       if (key.name == subGroup.name) {
         contains = true;
       }
     });
-    return contains;
+    if(contains){
+      return "Own Stock";
+    }
+    return "Order to be taken";
   }
 }

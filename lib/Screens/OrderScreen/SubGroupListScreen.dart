@@ -7,13 +7,22 @@ import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 
 import '../../StateManagement/ShopClosedController.dart';
 import '../../apis/Entities/SubGroup.dart';
+import 'ConfirmOrderScreen/ConfirmOrderScreen.dart';
 import 'NoOrder/NoOrderScreen.dart';
 
-class SubGroupListScreen extends StatelessWidget {
-  const SubGroupListScreen({Key? key}) : super(key: key);
+class SubGroupListScreen extends StatefulWidget {
+  @override
+  State<SubGroupListScreen> createState() => _SubGroupListScreenState();
+}
+
+class _SubGroupListScreenState extends State<SubGroupListScreen> {
+  void refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isAllDone = true;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -50,18 +59,21 @@ class SubGroupListScreen extends StatelessWidget {
                   children: context
                       .watch<OrderScreenManagement>()
                       .data
+                      .asMap()
+                      .entries
                       .map(
-                        (e) =>
-                        Padding(
+                        (e) => Padding(
                           padding: const EdgeInsets.only(bottom: 6.0),
                           child: Builder(builder: (context) {
-                            bool contains = context
-                                .read<OrderScreenManagement>().checkContains(e);
+                            String message = context
+                                .read<OrderScreenManagement>()
+                                .checkContains(e.value);
+                            if (message == "Order to be taken") {
+                              isAllDone = false;
+                            }
                             return Container(
                               height: 200,
                               decoration: BoxDecoration(
-                                border: contains ? null
-                                    : Border.all(color: Colors.red, width: 3),
                                 gradient: LinearGradient(
                                     colors: [
                                       Colors.black.withOpacity(0.75),
@@ -77,26 +89,26 @@ class SubGroupListScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
                                                 mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "${e.name} ",
+                                                    "${e.value.name} ",
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                     ),
                                                   ),
                                                   Text(
-                                                    "- ${e.productName}",
+                                                    "- ${e.value.productName}",
                                                     style: TextStyle(
                                                       color: Colors.white
                                                           .withOpacity(0.5),
@@ -105,8 +117,7 @@ class SubGroupListScreen extends StatelessWidget {
                                                 ],
                                               ),
                                               Text(
-                                                "${e.skus
-                                                    .length} SKUs available",
+                                                "${e.value.skus.length} SKUs available",
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 10,
@@ -115,21 +126,25 @@ class SubGroupListScreen extends StatelessWidget {
                                             ],
                                           ),
                                           Expanded(child: Container()),
-                                          PopupMenuButton(
-                                            icon: Icon(
-                                              Icons.menu,
-                                              color: Colors.white,
+                                          Tooltip(
+                                            message: message,
+                                            key: message == "Order to be taken"
+                                                ? context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .keys[e.key]
+                                                : null,
+                                            verticalOffset: 10,
+                                            triggerMode: TooltipTriggerMode.tap,
+                                            showDuration:
+                                                const Duration(seconds: 5),
+                                            child: Icon(
+                                              Icons.info,
+                                              color:
+                                                  message == "Order to be taken"
+                                                      ? Colors.red
+                                                      : Colors.green,
                                             ),
-                                            itemBuilder:
-                                                (BuildContext context) {
-                                              return [
-                                                PopupMenuItem(
-                                                  child: Text(
-                                                    "Archive",
-                                                  ),
-                                                )
-                                              ];
-                                            },
                                           ),
                                         ],
                                       ),
@@ -139,14 +154,15 @@ class SubGroupListScreen extends StatelessWidget {
                                           Expanded(
                                             child: Padding(
                                               padding:
-                                              const EdgeInsets.all(12.0),
+                                                  const EdgeInsets.all(12.0),
                                               child: GestureDetector(
                                                 onTap: () {
                                                   Navigator.push(context,
                                                       MaterialPageRoute(
                                                           builder: (_) {
-                                                            return SingularProduct(e);
-                                                          }));
+                                                    return SingularProduct(
+                                                        e.value, refresh);
+                                                  }));
                                                 },
                                                 child: Container(
                                                   height: 40,
@@ -162,18 +178,19 @@ class SubGroupListScreen extends StatelessWidget {
                                           Expanded(
                                             child: Padding(
                                               padding:
-                                              const EdgeInsets.all(12.0),
+                                                  const EdgeInsets.all(12.0),
                                               child: GestureDetector(
                                                 onTap: () {
                                                   context
                                                       .read<NoOrderManagement>()
                                                       .initializeNoOrder(
-                                                      e, context);
+                                                          e.value, context);
                                                   Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (_) {
-                                                        return NoOrderScreen(e);
+                                                        return NoOrderScreen(
+                                                            e.value, refresh);
                                                       },
                                                     ),
                                                   );
@@ -198,17 +215,36 @@ class SubGroupListScreen extends StatelessWidget {
                             );
                           }),
                         ),
-                  )
+                      )
                       .toList(),
                 ),
               ),
-              Container(
-                height: 60,
-                color: Colors.blueGrey,
-                child: Center(
-                  child: Text(
-                    "Confirm",
-                    style: TextStyle(color: Colors.white),
+              GestureDetector(
+                onTap: () {
+                  // if (isAllDone) {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return ConfirmOrderScreen();
+                    }));
+                  // } else {
+                  //   context
+                  //       .read<OrderScreenManagement>()
+                  //       .keys
+                  //       .forEach((element) {
+                  //     try {
+                  //       final dynamic tooltip = element.currentState;
+                  //       tooltip.ensureTooltipVisible();
+                  //     } catch (e) {}
+                  //   });
+                  // }
+                },
+                child: Container(
+                  height: 60,
+                  color: isAllDone ? Colors.green : Colors.blueGrey,
+                  child: Center(
+                    child: Text(
+                      "Confirm",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               )

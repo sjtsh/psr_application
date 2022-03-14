@@ -76,7 +76,7 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  addNoOrderReason(SubGroup subGroup, BuildContext context) {
+  addNoOrderReason(SubGroup subGroup, Function refresh, BuildContext context) {
     if (noOrderReasonTextField != "" && noOrderReasonTextField != null) {
       context.read<OrderScreenManagement>().noOrderReasons[subGroup] =
           noOrderReasonTextField!;
@@ -88,10 +88,11 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
       context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
       notifyListeners();
       Navigator.pop(context);
+      refresh();
     }
   }
 
-  addNoOrderCompetitiveExistingStock(SubGroup subGroup, BuildContext context) {
+  addNoOrderCompetitiveExistingStock(SubGroup subGroup, Function refresh, BuildContext context) {
     if (_noOrderTextFieldTextCompetitiveStock != "" &&
         _noOrderTextFieldTextCompetitiveStock != null) {
       context.read<OrderScreenManagement>().competitiveExistingStock[subGroup] =
@@ -101,10 +102,11 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
       context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
       notifyListeners();
       Navigator.pop(context);
+      refresh();
     }
   }
 
-  addNoOrderOwnExistingStock(SubGroup subGroup, BuildContext context) {
+  addNoOrderOwnExistingStock(SubGroup subGroup, Function refresh, BuildContext context) {
     if (_noOrderTextFieldTextOwnStock != "" &&
         _noOrderTextFieldTextOwnStock != null &&
         _noOrderPhotoLocalUrl != null) {
@@ -120,6 +122,7 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
       context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
       notifyListeners();
       Navigator.pop(context);
+      refresh();
     }
   }
 }
