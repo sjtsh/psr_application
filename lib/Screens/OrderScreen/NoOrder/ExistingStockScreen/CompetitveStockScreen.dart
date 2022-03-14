@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/NoOrderManagement.dart';
-import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
-import 'package:psr_application/apis/Entities/SubGroup.dart';
 
-class NoOrderReasonScreen extends StatefulWidget {
+import '../../../../StateManagement/NoOrderManagement.dart';
+import '../../../../apis/Entities/SubGroup.dart';
+
+class CompetitiveStockScreen extends StatefulWidget {
   final SubGroup subGroup;
   final Function refresh;
 
-  NoOrderReasonScreen(this.subGroup, this.refresh);
+  CompetitiveStockScreen(this.subGroup, this.refresh);
 
   @override
-  State<NoOrderReasonScreen> createState() => _NoOrderReasonScreenState();
+  State<CompetitiveStockScreen> createState() => _CompetitiveStockScreenState();
 }
 
-class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
-  final TextEditingController controller = TextEditingController();
+class _CompetitiveStockScreenState extends State<CompetitiveStockScreen> {
+  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
@@ -23,9 +23,8 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
     super.initState();
     controller.text = context
         .read<NoOrderManagement>()
-        .noOrderReasonTextField ?? "";
+        .noOrderTextFieldTextCompetitiveStock ?? "";
   }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,7 +46,7 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
                   ),
                   Expanded(
                     child: Center(
-                      child: Text("No Order Screen"),
+                      child: Text("Competitive Screen"),
                     ),
                   ),
                   SizedBox(
@@ -70,13 +69,14 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
                   width: double.infinity,
                   height: double.infinity,
                   child: TextField(
-                  controller: controller,
+                    controller: controller,
                     onChanged: (input) {
-                      context.read<NoOrderManagement>().noOrderReasonTextField =
-                          input;
+                      context
+                          .read<NoOrderManagement>()
+                          .noOrderTextFieldTextCompetitiveStock = input;
                     },
                     decoration: InputDecoration(
-                        hintText: "Reason for no order",
+                        hintText: "Name of competition",
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
                             borderSide: const BorderSide(color: Colors.green)),
@@ -90,14 +90,20 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
             ),
             GestureDetector(
               onTap: () {
-                context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup, widget.refresh, context);
+                context
+                    .read<NoOrderManagement>()
+                    .addNoOrderCompetitiveExistingStock(widget.subGroup, widget.refresh, context);
               },
               child: Container(
                 height: 60,
-                color: context.watch<NoOrderManagement>().noOrderReasonTextField ==
-                            "" ||
-                        context.watch<NoOrderManagement>().noOrderReasonTextField ==
-                            null
+                color: context
+                    .watch<NoOrderManagement>()
+                    .noOrderTextFieldTextCompetitiveStock ==
+                    "" ||
+                    context
+                        .watch<NoOrderManagement>()
+                        .noOrderTextFieldTextCompetitiveStock ==
+                        null
                     ? Colors.blueGrey
                     : Colors.green,
                 child: Center(
@@ -107,7 +113,7 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

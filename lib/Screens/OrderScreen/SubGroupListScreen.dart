@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/OrderScreen/DialogPrompt/DialogBox.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/SingularProduct.dart';
 import 'package:psr_application/StateManagement/NoOrderManagement.dart';
@@ -19,6 +20,8 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
   void refresh() {
     setState(() {});
   }
+
+  bool onExistingStockTap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -181,19 +184,11 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                   const EdgeInsets.all(12.0),
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  context
-                                                      .read<NoOrderManagement>()
-                                                      .initializeNoOrder(
-                                                          e.value, context);
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
+                                                  showDialog(
+                                                      context: context,
                                                       builder: (_) {
-                                                        return NoOrderScreen(
-                                                            e.value, refresh);
-                                                      },
-                                                    ),
-                                                  );
+                                                        return MyDialogBox(e.value,refresh);
+                                                      });
                                                 },
                                                 child: Container(
                                                   height: 40,
@@ -222,9 +217,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               GestureDetector(
                 onTap: () {
                   // if (isAllDone) {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return ConfirmOrderScreen();
-                    }));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return ConfirmOrderScreen();
+                  }));
                   // } else {
                   //   context
                   //       .read<OrderScreenManagement>()

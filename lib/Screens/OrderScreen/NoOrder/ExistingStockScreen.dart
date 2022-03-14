@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/CompetitiveStock.dart';
+import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/CompetitveStockScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/OwnStock.dart';
 
 import '../../../StateManagement/MapManagement.dart';
@@ -89,7 +89,7 @@ class _ExistingStockScreenState extends State<ExistingStockScreen> {
           child: IndexedStack(
             index: insideIndex,
             children: [
-              CompetitiveStock(widget.subGroup, widget.refresh),
+              CompetitiveStockScreen(widget.subGroup, widget.refresh),
               OwnStock(widget.subGroup, widget.refresh),
             ],
           ),
