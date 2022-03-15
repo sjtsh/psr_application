@@ -27,54 +27,95 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: TextField(
-              controller: controller,
-                onChanged: (input) {
-                  context.read<NoOrderManagement>().noOrderReasonTextField =
-                      input;
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              height: 60,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 12,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(Icons.arrow_back_ios),
+                  ),
+                  Expanded(
+                    child: Center(
+                      child: Text("No Order Screen"),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.transparent,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+
+                onTap: () {
+                  context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup,  context);
                 },
-                decoration: InputDecoration(
-                    hintText: "Reason for no order",
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(color: Colors.green)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
-                        borderSide: BorderSide(color: Colors.black))),
-                maxLines: 100,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: TextField(
+                    controller: controller,
+                      onChanged: (input) {
+                        context.read<NoOrderManagement>().noOrderReasonTextField =
+                            input;
+                      },
+                      decoration: InputDecoration(
+                          hintText: "Reason for no order",
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: const BorderSide(color: Colors.green)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(color: Colors.black))),
+                      maxLines: 100,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ),
+            GestureDetector(
+              onTap: () {
+                context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup, context);
+              },
+              child: Container(
+                height: 60,
+                color: context.watch<NoOrderManagement>().noOrderReasonTextField ==
+                            "" ||
+                        context.watch<NoOrderManagement>().noOrderReasonTextField ==
+                            null
+                    ? Colors.blueGrey
+                    : Colors.green,
+                child: Center(
+                  child: Text(
+                    "Confirm",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
-        GestureDetector(
-          onTap: () {
-            context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup,  context);
-          },
-          child: Container(
-            height: 60,
-            color: context.watch<NoOrderManagement>().noOrderReasonTextField ==
-                        "" ||
-                    context.watch<NoOrderManagement>().noOrderReasonTextField ==
-                        null
-                ? Colors.blueGrey
-                : Colors.green,
-            child: Center(
-              child: Text(
-                "Confirm",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-        )
-      ],
+      ),
     );
   }
 }

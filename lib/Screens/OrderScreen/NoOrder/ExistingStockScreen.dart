@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/CompetitiveStock.dart';
+import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/CompetitveStockScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/OwnStock.dart';
 
 import '../../../StateManagement/MapManagement.dart';
 import '../../../StateManagement/ShopClosedController.dart';
 import '../../../apis/Entities/SubGroup.dart';
+import 'ExistingStockScreen/CompetitiveStock.dart';
 import 'NoOrderCamera.dart';
 
 class ExistingStockScreen extends StatefulWidget {
