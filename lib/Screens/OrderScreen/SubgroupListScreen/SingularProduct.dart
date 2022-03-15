@@ -23,219 +23,216 @@ class SingularProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
-            body: Builder(
-              builder: (context) {
-                double height = MediaQuery.of(context).size.height;
-                return SizedBox(
-                  height: height,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 50,
-                        color: Color(0Xfff2f2f2),
-                        child: Row(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(Icons.arrow_back_ios)),
-                            Expanded(
-                              child: Center(
-                                  child: Text("SKU Header",
-                                      style: TextStyle(fontSize: 20))),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.transparent,
+      child: Builder(builder: (context) {
+        return Scaffold(
+          body: Builder(builder: (context) {
+            double height = MediaQuery.of(context).size.height;
+            return SizedBox(
+              height: height,
+              child: Column(
+                children: [
+                  Container(
+                    height: 50,
+                    color: Color(0Xfff2f2f2),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back_ios)),
+                        Expanded(
+                          child: Center(
+                              child: Text("SKU Header",
+                                  style: TextStyle(fontSize: 20))),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Container(
+                  //   height: 200,
+                  //   child: SingularProductHeader(index, subGroup),
+                  // ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      color: const Color(0xffF6F6F6),
+                      child: CarouselSlider.builder(
+                        carouselController: controller,
+                        options: CarouselOptions(
+                            initialPage: 0,
+                            height: height / 3,
+                            enableInfiniteScroll: false,
+                            reverse: false,
+                            viewportFraction: 0.6,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (int index, i) {
+                              context.read<OrderScreenManagement>().skuIndex =
+                                  index;
+                            }),
+                        itemCount: subGroup.skus.length,
+                        itemBuilder:
+                            (BuildContext context, int index, int realIndex) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/oats.jpg"),
+                                  fit: BoxFit.cover,
+                                ),
+                                // color: Color(0xffE8F5E9),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 3,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ]),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Container(
+                    height: 70,
+                    child: ListView(
+                      dragStartBehavior: DragStartBehavior.start,
+                      controller: context
+                          .read<OrderScreenManagement>()
+                          .scrollController,
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        SizedBox(
+                          width: 164,
+                        ),
+                        ...List.generate(subGroup.skus.length, (int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              controller.animateToPage(index,
+                                  duration: Duration(
+                                    milliseconds: 500,
+                                  ),
+                                  curve: Curves.easeInOutCubic);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(6),
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: index ==
+                                          context
+                                              .watch<OrderScreenManagement>()
+                                              .skuIndex
+                                      ? Colors.black
+                                      : Colors.transparent,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 3,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                                image: const DecorationImage(
+                                  image: AssetImage("assets/oats.jpg"),
+                                ),
                               ),
                             ),
-                          ],
+                          );
+                        }),
+                        SizedBox(
+                          width: 164,
                         ),
-                      ),
-                      // Container(
-                      //   height: 200,
-                      //   child: SingularProductHeader(index, subGroup),
-                      // ),
-                      Expanded(
-                      flex: 2,
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          color: const Color(0xffF6F6F6),
-                          child: CarouselSlider.builder(
-                            carouselController: controller,
-                            options: CarouselOptions(
-                                initialPage: 0,
-                                height: height/3,
-                                enableInfiniteScroll: false,
-                                reverse: false,
-                                viewportFraction: 0.6,
-                                autoPlayCurve: Curves.fastOutSlowIn,
-                                enlargeCenterPage: true,
-                                scrollDirection: Axis.horizontal,
-                                onPageChanged: (int index, i) {
-                                  context.read<OrderScreenManagement>().skuIndex =
-                                      index;
-                                }),
-                            itemCount: subGroup.skus.length,
-                            itemBuilder:
-                                (BuildContext context, int index, int realIndex) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage("assets/oats.jpg"),
-                                      fit: BoxFit.cover,
-                                    ),
-                                    // color: Color(0xffE8F5E9),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        blurRadius: 3,
-                                        offset: Offset(0, 3),
-                                      ),
-                                    ]),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Container(
-                        height: 70,
-                        child: ListView(
-                          dragStartBehavior: DragStartBehavior.start,
-                          controller: context
-                              .read<OrderScreenManagement>()
-                              .scrollController,
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            SizedBox(
-                              width: 164,
-                            ),
-                            ...List.generate(subGroup.skus.length, (int index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  controller.animateToPage(index,
-                                      duration: Duration(
-                                        milliseconds: 500,
-                                      ),
-                                      curve: Curves.easeInOutCubic);
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.all(6),
-                                  height: 70,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: index ==
-                                              context
-                                                  .watch<OrderScreenManagement>()
-                                                  .skuIndex
-                                          ? Colors.black
-                                          : Colors.transparent,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        blurRadius: 3,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                    image: const DecorationImage(
-                                      image: AssetImage("assets/oats.jpg"),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                            SizedBox(
-                              width: 164,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Divider(
-                        indent: 20,
-                        endIndent: 20,
-                        thickness: 3,
-                        height: 4,
-                        color: Colors.grey,
-                      ),
-                      Expanded(
-                      flex: 1,
-                        child: PageView(
-                          physics: NeverScrollableScrollPhysics(),
-                          controller: context
-                              .read<OrderScreenManagement>()
-                              .detailsController,
-                          children: subGroup.skus
-                              .map((e) => SubgroupDetails(e, subGroup))
-                              .toList(),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12, left: 12, top: 8, bottom: 12),
-                        child: Container(
-                          clipBehavior: Clip.hardEdge,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: MaterialButton(
-                            height: 50,
-                            onPressed: () async {
-                              if (context
-                                  .read<OrderVariation>()
-                                  .tempSubGroupVariation
-                                  .isNotEmpty) {
-                                context
-                                        .read<OrderScreenManagement>()
-                                        .singularOrder[subGroup] =
-                                    context
-                                        .read<OrderVariation>()
-                                        .tempSubGroupVariation;
-                                context
-                                        .read<OrderScreenManagement>()
-                                        .singularOrder =
-                                    context
-                                        .read<OrderScreenManagement>()
-                                        .singularOrder;
-                                Navigator.pop(context);
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text("Please insert quantity")));
-                              }
-                            },
-                            child: Center(
-                              child: !context.watch<LogInManagement>().isLoading
-                                  ? const Text(
-                                      "Confirm ",
-                                      style: TextStyle(color: Colors.white),
-                                    )
-                                  : CircularProgressIndicator(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
-                );
-              }
-            ),
-          );
-        }
-      ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const Divider(
+                    indent: 20,
+                    endIndent: 20,
+                    thickness: 3,
+                    height: 4,
+                    color: Colors.grey,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: context
+                          .read<OrderScreenManagement>()
+                          .detailsController,
+                      children: subGroup.skus
+                          .map((e) => SubgroupDetails(e, subGroup))
+                          .toList(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 12, left: 12, top: 8, bottom: 12),
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: MaterialButton(
+                        height: 50,
+                        onPressed: () async {
+                          if (context
+                              .read<OrderVariation>()
+                              .tempSubGroupVariation
+                              .isNotEmpty) {
+                            context
+                                    .read<OrderScreenManagement>()
+                                    .singularOrder[subGroup] =
+                                context
+                                    .read<OrderVariation>()
+                                    .tempSubGroupVariation;
+                            context
+                                    .read<OrderScreenManagement>()
+                                    .singularOrder =
+                                context
+                                    .read<OrderScreenManagement>()
+                                    .singularOrder;
+                            Navigator.pop(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("Please insert quantity")));
+                          }
+                        },
+                        child: Center(
+                          child: !context.watch<LogInManagement>().isLoading
+                              ? const Text(
+                                  "Confirm ",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              : CircularProgressIndicator(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }),
+        );
+      }),
     );
   }
 }
