@@ -119,7 +119,7 @@ class _MyDialogBoxState extends State<MyDialogBox> {
                           context,
                           MaterialPageRoute(
                             builder: (_) {
-                              return NoOrderReasonScreen(widget.e, widget.refresh);
+                              return NoOrderReasonScreen(widget.e);
                             },
                           ),
                         );
@@ -133,7 +133,7 @@ class _MyDialogBoxState extends State<MyDialogBox> {
                           context,
                           MaterialPageRoute(
                             builder: (_) {
-                              return OwnStock(widget.e, widget.refresh);
+                              return OwnStock(widget.e,);
                             },
                           ),
                         );

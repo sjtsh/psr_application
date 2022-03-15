@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/DialogPrompt/DialogBox.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
-import 'package:psr_application/Screens/OrderScreen/SingularProduct.dart';
 import 'package:psr_application/StateManagement/NoOrderManagement.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 
@@ -12,6 +11,7 @@ import '../../StateManagement/ShopClosedController.dart';
 import '../../apis/Entities/SubGroup.dart';
 import 'ConfirmOrderScreen/ConfirmOrderScreen.dart';
 import 'NoOrder/NoOrderScreen.dart';
+import 'SubgroupListScreen/SingularProduct.dart';
 
 class SubGroupListScreen extends StatefulWidget {
   @override
@@ -169,7 +169,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                       MaterialPageRoute(
                                                           builder: (_) {
                                                     return SingularProduct(
-                                                        e.value, refresh);
+                                                        e.value,);
                                                   }));
                                                 },
                                                 child: Container(
