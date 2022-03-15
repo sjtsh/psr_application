@@ -1,16 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/OrderVariation.dart';
 
 import '../../StateManagement/OrderScreenManagement.dart';
 import '../../apis/Entities/SKU.dart';
 import '../../apis/Entities/SubGroup.dart';
 
 class SubgroupDetails extends StatefulWidget {
-  SKU sku;
-  SubGroup subGroup;
+  final SKU sku;
+  final SubGroup subGroup;
 
-  SubgroupDetails(this.sku, this.subGroup);
+  SubgroupDetails(
+    this.sku,
+    this.subGroup,
+  );
 
   @override
   _SubgroupdetailsState createState() => _SubgroupdetailsState();
@@ -24,27 +28,18 @@ class _SubgroupdetailsState extends State<SubgroupDetails> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(widget.sku.id);
-    primary.text = (context
-                    .read<OrderScreenManagement>()
-                    .singularOrder[widget.subGroup]?[widget.sku] ==
-                null
-            ? ""
-            : context
-                    .read<OrderScreenManagement>()
-                    .singularOrder[widget.subGroup]![widget.sku]! ~/
-                widget.sku.cf)
-        .toString();
-    alternative.text = (context
-                    .read<OrderScreenManagement>()
-                    .singularOrder[widget.subGroup]?[widget.sku] ==
-                null
-            ? ""
-            : context
-                    .read<OrderScreenManagement>()
-                    .singularOrder[widget.subGroup]![widget.sku]! %
-                widget.sku.cf)
-        .toString();
+    print(context.read<OrderVariation>().tempSubGroupVariation);
+    if (context.read<OrderVariation>().tempSubGroupVariation[widget.sku] !=
+        null) {
+      primary.text =
+          (context.read<OrderVariation>().tempSubGroupVariation[widget.sku]! ~/
+                  widget.sku.cf)
+              .toString();
+      alternative.text =
+          (context.read<OrderVariation>().tempSubGroupVariation[widget.sku]! %
+                  widget.sku.cf)
+              .toString();
+    }
   }
 
   @override
@@ -62,6 +57,7 @@ class _SubgroupdetailsState extends State<SubgroupDetails> {
               ["MRP:", widget.sku.mrp],
               ["PTR:", widget.sku.ptr],
               ["CF:", widget.sku.cf],
+              ["Profit:", widget.sku.mrp - widget.sku.ptr],
             ]
                 .map(
                   (e) => Row(
@@ -107,35 +103,14 @@ class _SubgroupdetailsState extends State<SubgroupDetails> {
                             (int.tryParse(primary.text) ?? 0) * widget.sku.cf +
                                 (int.tryParse(alternative.text) ?? 0);
                         if (a != 0) {
-                          if (context
-                              .read<OrderScreenManagement>()
-                              .singularOrder
-                              .containsKey(widget.subGroup)) {
-                            context.read<OrderScreenManagement>().singularOrder[
-                                widget.subGroup]![widget.sku] = a;
-                          } else {
-                            context
-                                .read<OrderScreenManagement>()
-                                .singularOrder[widget.subGroup] = {
-                              widget.sku: a
-                            };
-                          }
+                          context
+                              .read<OrderVariation>()
+                              .tempSubGroupVariation[widget.sku] = a;
                         } else {
                           context
-                              .read<OrderScreenManagement>()
-                              .singularOrder[widget.subGroup]
-                              ?.remove(widget.sku);
-                          if (context
-                                  .read<OrderScreenManagement>()
-                                  .singularOrder[widget.subGroup]
-                                  ?.keys
-                                  .isEmpty ??
-                              false) {
-                            context
-                                .read<OrderScreenManagement>()
-                                .singularOrder
-                                .remove(widget.subGroup);
-                          }
+                              .read<OrderVariation>()
+                              .tempSubGroupVariation
+                              .remove(widget.sku);
                         }
                       },
                       style: TextStyle(
@@ -181,37 +156,14 @@ class _SubgroupdetailsState extends State<SubgroupDetails> {
                                   widget.sku.cf +
                               (int.tryParse(alternative.text) ?? 0);
                           if (a != 0) {
-                            if (context
-                                .read<OrderScreenManagement>()
-                                .singularOrder
-                                .containsKey(widget.subGroup)) {
-                              context
-                                      .read<OrderScreenManagement>()
-                                      .singularOrder[widget.subGroup]![
-                                  widget.sku] = a;
-                            } else {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .singularOrder[widget.subGroup] = {
-                                widget.sku: a
-                              };
-                            }
+                            context
+                                .read<OrderVariation>()
+                                .tempSubGroupVariation[widget.sku] = a;
                           } else {
                             context
-                                .read<OrderScreenManagement>()
-                                .singularOrder[widget.subGroup]
-                                ?.remove(widget.sku);
-                            if (context
-                                    .read<OrderScreenManagement>()
-                                    .singularOrder[widget.subGroup]
-                                    ?.keys
-                                    .isEmpty ??
-                                false) {
-                              context
-                                  .read<OrderScreenManagement>()
-                                  .singularOrder
-                                  .remove(widget.subGroup);
-                            }
+                                .read<OrderVariation>()
+                                .tempSubGroupVariation
+                                .remove(widget.sku);
                           }
                         },
                         textAlign: TextAlign.left,

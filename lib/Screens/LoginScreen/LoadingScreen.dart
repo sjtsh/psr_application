@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Signature/signature_page.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 
 import '../BeatScreen/BeatScreen.dart';
@@ -49,6 +50,7 @@ class LoadingScreen extends StatelessWidget {
       );
     }else{
       return BeatScreen();
+      // return SignaturePage();
     }
   }
 }

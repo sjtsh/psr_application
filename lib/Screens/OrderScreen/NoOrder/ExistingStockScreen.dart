@@ -8,13 +8,13 @@ import 'package:psr_application/Screens/OrderScreen/NoOrder/ExistingStockScreen/
 import '../../../StateManagement/MapManagement.dart';
 import '../../../StateManagement/ShopClosedController.dart';
 import '../../../apis/Entities/SubGroup.dart';
+import 'ExistingStockScreen/CompetitiveStock.dart';
 import 'NoOrderCamera.dart';
 
 class ExistingStockScreen extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  ExistingStockScreen(this.subGroup, this.refresh);
+  ExistingStockScreen(this.subGroup);
 
   @override
   State<ExistingStockScreen> createState() => _ExistingStockScreenState();
@@ -89,8 +89,8 @@ class _ExistingStockScreenState extends State<ExistingStockScreen> {
           child: IndexedStack(
             index: insideIndex,
             children: [
-              CompetitiveStockScreen(widget.subGroup, widget.refresh),
-              OwnStock(widget.subGroup, widget.refresh),
+              CompetitiveStock(widget.subGroup),
+              OwnStock(widget.subGroup),
             ],
           ),
         ),

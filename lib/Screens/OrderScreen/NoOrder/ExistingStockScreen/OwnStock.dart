@@ -10,9 +10,8 @@ import '../NoOrderCamera.dart';
 
 class OwnStock extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  OwnStock(this.subGroup, this.refresh);
+  OwnStock(this.subGroup);
 
   @override
   State<OwnStock> createState() => _OwnStockState();
@@ -110,27 +109,34 @@ class _OwnStockState extends State<OwnStock> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                    ),
-                    image: (context
-                                .watch<NoOrderManagement>()
-                                .noOrderPhotoLocalUrl ==
-                            null)
-                        ? DecorationImage(
-                            image: AssetImage("assets/camera.png"),
-                            alignment: Alignment.center)
-                        : DecorationImage(
-                            image: FileImage(
-                              File(context
+              child: GestureDetector(
+                onTap: () {
+                  context
+                      .read<NoOrderManagement>()
+                      .addNoOrderOwnExistingStock(widget.subGroup, context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                      ),
+                      image: (context
                                   .watch<NoOrderManagement>()
-                                  .noOrderPhotoLocalUrl!),
+                                  .noOrderPhotoLocalUrl ==
+                              null)
+                          ? DecorationImage(
+                              image: AssetImage("assets/camera.png"),
+                              alignment: Alignment.center)
+                          : DecorationImage(
+                              image: FileImage(
+                                File(context
+                                    .watch<NoOrderManagement>()
+                                    .noOrderPhotoLocalUrl!),
+                              ),
                             ),
-                          ),
+                    ),
                   ),
                 ),
               ),
@@ -138,7 +144,7 @@ class _OwnStockState extends State<OwnStock> {
             GestureDetector(
               onTap: () {
                 context.read<NoOrderManagement>().addNoOrderOwnExistingStock(
-                    widget.subGroup, widget.refresh, context);
+                    widget.subGroup, context);
               },
               child: Container(
                 height: 60,

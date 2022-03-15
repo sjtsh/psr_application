@@ -9,8 +9,6 @@ import 'package:psr_application/Screens/OrderScreen/SubGroupDetails.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../StateManagement/LogInManagement.dart';
 import '../../StateManagement/OrderScreenManagement.dart';
-import 'SingularProductHeader.dart';
-import 'SingularProductVariation.dart';
 
 class SingularProduct extends StatelessWidget {
   final SubGroup subGroup;

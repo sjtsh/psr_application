@@ -10,6 +10,8 @@ class SKU {
   final bool isTrending;
   final bool isPromoted;
   final bool isNew;
+  final int reward;
+  final String erpID;
 
   SKU(
       this.id,
@@ -22,7 +24,9 @@ class SKU {
       this.cf,
       this.isTrending,
       this.isPromoted,
-      this.isNew);
+      this.isNew,
+      this.reward,
+      this.erpID);
 
   factory SKU.fromJson(int id, Map<String, dynamic> json) {
     return SKU(
@@ -37,6 +41,8 @@ class SKU {
       json["isTrending"].toString() == "1",
       json["isPromoted"].toString() == "1",
       json["isNew"].toString() == "1",
+      json["reward"],
+      json["erpID"],
     );
   }
 }

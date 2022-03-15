@@ -7,7 +7,7 @@ import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/database.dart';
 
-import '../../apis/Services/ShopClosed.dart';
+import '../../../apis/Services/ShopClosed.dart';
 
 class ImagePreviewScreen extends StatelessWidget {
   final String path;

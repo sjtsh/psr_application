@@ -11,15 +11,16 @@ import 'package:psr_application/apis/Entities/SKU.dart';
 import 'package:psr_application/apis/Entities/SKU.dart';
 
 import '../apis/Entities/SubGroup.dart';
+import 'OrderVariation.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   ScrollController scrollController = ScrollController();
   List<bool> items = [];
-  Map<SubGroup, Map<SKU, int>> singularOrder = {};
-  Map<SubGroup, String> competitiveExistingStock = {};
-  Map<SubGroup, Map<String, String>> ownExistingStock =
+  Map<SubGroup, Map<SKU, int>> _singularOrder = {};
+  Map<SubGroup, String> _competitiveExistingStock = {};
+  Map<SubGroup, Map<String, String>> _ownExistingStock =
       {}; // the value for a subgroup to have two keys first one should be stock_count and other should be img url
-  Map<SubGroup, String> noOrderReasons = {};
+  Map<SubGroup, String> _noOrderReasons = {};
   List<GlobalKey> keys = [];
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
@@ -43,14 +44,43 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   int _skuIndex = 0;
 
+  Map<SubGroup, String> get competitiveExistingStock =>
+      _competitiveExistingStock;
+
+  set competitiveExistingStock(Map<SubGroup, String> value) {
+    _competitiveExistingStock = value;
+    notifyListeners();
+  }
+
+  Map<SubGroup, String> get noOrderReasons => _noOrderReasons;
+
+  set noOrderReasons(Map<SubGroup, String> value) {
+    _noOrderReasons = value;
+    notifyListeners();
+  }
+
+  Map<SubGroup, Map<SKU, int>> get singularOrder => _singularOrder;
+
+  set singularOrder(Map<SubGroup, Map<SKU, int>> value) {
+    _singularOrder = value;
+    print("running setter");
+    notifyListeners();
+  }
+
+  Map<SubGroup, Map<String, String>> get ownExistingStock => _ownExistingStock;
+
+  set ownExistingStock(Map<SubGroup, Map<String, String>> value) {
+    _ownExistingStock = value;
+    notifyListeners();
+  }
+
   int get skuIndex => _skuIndex;
   PageController detailsController = PageController();
 
   set skuIndex(int value) {
     _skuIndex = value;
-    print(82 * value - scrollController.offset);
-    scrollController.animateTo((82 * value + 164.0),
-        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    print((82 * value + 164.0));
+    scrollController.jumpTo(82 * value +0.0 );
     detailsController.animateToPage(value,
         duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     notifyListeners();
@@ -169,6 +199,18 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
+  validation(BuildContext context) {
+    context.read<OrderVariation>().isAllDone = true;
+    for (var element in data) {
+      String message =
+          context.read<OrderScreenManagement>().checkContains(element);
+      if (message == "Order to be taken") {
+        context.read<OrderVariation>().isAllDone = false;
+        break;
+      }
+    }
+  }
+
   String checkContains(SubGroup subGroup) {
     bool contains = false;
     singularOrder.forEach((key, value) {
@@ -176,7 +218,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
         contains = true;
       }
     });
-    if(contains){
+    if (contains) {
       return "Order taken";
     }
     competitiveExistingStock.forEach((key, value) {
@@ -184,7 +226,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
         contains = true;
       }
     });
-    if(contains){
+    if (contains) {
       return "Competitive Stock";
     }
     noOrderReasons.forEach((key, value) {
@@ -192,7 +234,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
         contains = true;
       }
     });
-    if(contains){
+    if (contains) {
       return "No Order Available";
     }
     ownExistingStock.forEach((key, value) {
@@ -200,7 +242,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
         contains = true;
       }
     });
-    if(contains){
+    if (contains) {
       return "Own Stock";
     }
     return "Order to be taken";

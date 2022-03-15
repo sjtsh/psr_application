@@ -89,7 +89,7 @@ class _CompetitiveStockScreenState extends State<CompetitiveStockScreen> {
               onTap: () {
                 context
                     .read<NoOrderManagement>()
-                    .addNoOrderCompetitiveExistingStock(widget.subGroup, widget.refresh, context);
+                    .addNoOrderCompetitiveExistingStock(widget.subGroup, context);
               },
               child: Container(
                 height: 60,

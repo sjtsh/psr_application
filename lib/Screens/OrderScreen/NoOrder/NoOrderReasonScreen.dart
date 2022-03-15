@@ -6,9 +6,8 @@ import 'package:psr_application/apis/Entities/SubGroup.dart';
 
 class NoOrderReasonScreen extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  NoOrderReasonScreen(this.subGroup, this.refresh);
+  NoOrderReasonScreen(this.subGroup);
 
   @override
   State<NoOrderReasonScreen> createState() => _NoOrderReasonScreenState();
@@ -61,33 +60,39 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
               ),
             ),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: TextField(
-                  controller: controller,
-                    onChanged: (input) {
-                      context.read<NoOrderManagement>().noOrderReasonTextField =
-                          input;
-                    },
-                    decoration: InputDecoration(
-                        hintText: "Reason for no order",
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: const BorderSide(color: Colors.green)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(color: Colors.black))),
-                    maxLines: 100,
+              child: GestureDetector(
+
+                onTap: () {
+                  context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup,  context);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    child: TextField(
+                    controller: controller,
+                      onChanged: (input) {
+                        context.read<NoOrderManagement>().noOrderReasonTextField =
+                            input;
+                      },
+                      decoration: InputDecoration(
+                          hintText: "Reason for no order",
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: const BorderSide(color: Colors.green)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                              borderSide: BorderSide(color: Colors.black))),
+                      maxLines: 100,
+                    ),
                   ),
                 ),
               ),
             ),
             GestureDetector(
               onTap: () {
-                context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup, widget.refresh, context);
+                context.read<NoOrderManagement>().addNoOrderReason(widget.subGroup, context);
               },
               child: Container(
                 height: 60,

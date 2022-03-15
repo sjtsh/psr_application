@@ -14,8 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../StateManagement/MapManagement.dart';
 import '../../StateManagement/ShopClosedController.dart';
 import '../OrderScreen/NoOrder/NoOrderScreen.dart';
-import '../OrderScreen/ShopClosedScreen.dart';
-import '../OrderScreen/SubGroupListScreen.dart';
+import '../OrderScreen/ShopClosedScreen/ShopClosedScreen.dart';
+import '../OrderScreen/SubgroupListScreen/SubGroupListScreen.dart';
 
 class OutletList extends StatelessWidget {
   const OutletList({Key? key}) : super(key: key);
