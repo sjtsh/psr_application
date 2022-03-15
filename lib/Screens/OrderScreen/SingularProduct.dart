@@ -188,6 +188,9 @@ class SingularProduct extends StatelessWidget {
                       child: MaterialButton(
                         height: 50,
                         onPressed: () async {
+                          // print(context
+                          //     .read<OrderScreenManagement>()
+                          //     .noOrderReasons.entries.map((e) => e.ke));
                           if (context
                               .read<OrderScreenManagement>()
                               .singularOrder

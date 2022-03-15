@@ -79,8 +79,8 @@ class MapScreen extends StatelessWidget {
             //List of outlets UI
             context.watch<MapManagement>().allOutlets.isNotEmpty
                 ? Positioned(
-                    bottom: 46,
-                    height: 210,
+                    bottom: 0,
+                    height: 300,
                     width: width,
                     child: const OutletList(),
                   )
@@ -92,72 +92,6 @@ class MapScreen extends StatelessWidget {
                       width: width,
                       child: const Center(child: Text("No outlets found")),
                     )),
-            Positioned(
-              bottom: 0,
-              height: 50,
-              width: width,
-              child: GestureDetector(
-                onTap: () {
-                  context.read<MapManagement>().carouselController.nextPage(
-                      duration: Duration(milliseconds: 200),
-                      curve: Curves.easeIn);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(16)),
-                          child: MaterialButton(
-                              onPressed: () {
-                                context
-                                    .read<MapManagement>()
-                                    .carouselController
-                                    .previousPage(
-                                        duration: Duration(milliseconds: 200),
-                                        curve: Curves.easeIn);
-                              },
-                              child: Text(
-                                "PREVIOUS",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Expanded(
-                        child: Container(
-                          clipBehavior: Clip.hardEdge,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(16)),
-                          child: MaterialButton(
-                              elevation: 0,
-                              onPressed: () {
-                                context
-                                    .read<MapManagement>()
-                                    .carouselController
-                                    .nextPage(
-                                        duration: Duration(milliseconds: 200),
-                                        curve: Curves.easeIn);
-                              },
-                              child: Text(
-                                "NEXT",
-                                style: TextStyle(color: Colors.white),
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
           ]),
         ),
       ),

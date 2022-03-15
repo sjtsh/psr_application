@@ -35,9 +35,6 @@ class _CompetitiveStockScreenState extends State<CompetitiveStockScreen> {
               height: 60,
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 12,
-                  ),
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);

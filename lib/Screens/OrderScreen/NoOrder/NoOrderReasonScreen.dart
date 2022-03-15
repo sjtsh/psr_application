@@ -36,9 +36,6 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
               height: 60,
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 12,
-                  ),
                   IconButton(
                     onPressed: () {
                       Navigator.pop(context);
