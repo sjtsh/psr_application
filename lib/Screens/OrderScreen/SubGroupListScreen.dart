@@ -30,7 +30,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    bool isAllDone = true;
+    bool isAllDone = false;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -252,21 +252,21 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  // if (isAllDone) {
+                  if (isAllDone) {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
                     return ConfirmOrderScreen();
                   }));
-                  // } else {
-                  //   context
-                  //       .read<OrderScreenManagement>()
-                  //       .keys
-                  //       .forEach((element) {
-                  //     try {
-                  //       final dynamic tooltip = element.currentState;
-                  //       tooltip.ensureTooltipVisible();
-                  //     } catch (e) {}
-                  //   });
-                  // }
+                  } else {
+                    context
+                        .read<OrderScreenManagement>()
+                        .keys
+                        .forEach((element) {
+                      try {
+                        final dynamic tooltip = element.currentState;
+                        tooltip.ensureTooltipVisible();
+                      } catch (e) {}
+                    });
+                  }
                 },
                 child: Container(
                   height: 60,
