@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -12,6 +13,7 @@ import '../../database.dart';
 import '../Entities/OutletOrderItem.dart';
 import '../Entities/SKU.dart';
 import '../Entities/SubGroup.dart';
+import 'ShopClosed.dart';
 
 class OrderService {
   Future<void> getPerformanceDateRange(
@@ -92,6 +94,7 @@ class OrderService {
       Map<SubGroup, Map<String, String>> ownExistingStock,
       // the value for a subgroup to have two keys first one should be stock_count and other should be img url
       Map<SubGroup, String> noOrderReasons) async {
+    print("into the insert function");
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -116,14 +119,24 @@ class OrderService {
     }
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
-    bodyMap["signature_img_url"] = signatureImgUrl;
-    bodyMap["owner_img_url"] = ownerImgUrl;
-    bodyMap["owner_img_url"] = resultCompetitiveExistingStock;
-    bodyMap["own_existing_stock"] = resultownExistingStockStock;
+    bodyMap["signature_img"] = signatureImgUrl;
+    bodyMap["owner_img"] = ownerImgUrl;
+    bodyMap["competitive_existing_stocks"] = resultCompetitiveExistingStock;
+
+    List keys = resultownExistingStockStock.keys.toList();
+    for(int i=0; i<keys.length; i++){
+      String path = resultownExistingStockStock[keys[i]]["img"];
+      String ownerUrl = await OutletClosedService().uploadFile(
+          file: File(path),
+          name: "existing_stock/${NepaliDateTime.now()}",
+          userID: meUser!.id);
+      resultownExistingStockStock[keys[i]]["img"] = ownerUrl;
+    }
+
+    bodyMap["own_existing_stocks"] = resultownExistingStockStock;
     bodyMap["no_order_reasons"] = resultNoOrderReasons;
     bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
-
-
+    print(bodyMap);
     Response res = await http.post(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/createOutletOrder"),
@@ -132,6 +145,7 @@ class OrderService {
           'session_id': (meUser?.sessionID ?? ""),
         },
         body: jsonEncode(bodyMap));
+    print(res.body);
     if (res.statusCode == 200) {
       return true;
     } else {

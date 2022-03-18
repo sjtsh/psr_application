@@ -1,16 +1,22 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/BeatManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
+import 'Screens/MapScreen/MapScreen.dart';
 import 'StateManagement/AverageVolume.dart';
 import 'StateManagement/DateRangeManagement.dart';
 import 'StateManagement/LogInManagement.dart';
@@ -81,6 +87,16 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     ask();
+
+    rootBundle.loadString('assets/long-new-sample_output.json').then((value) {
+        print("started");
+        context.read<ShopClosedController>().latlngs = jsonDecode(value).map((f) {
+        final k = f["value"][0];
+        final j = f["value"][1];
+        return LatLng(k, j);
+      }).toList();
+      print(context.read<ShopClosedController>().latlngs.length);
+    });
   }
 
   @override
@@ -90,23 +106,21 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.robotoTextTheme(
-            Theme
-                .of(context)
-                .textTheme,
+    Theme.of(context).textTheme,
           ),
         ),
-        home: CheckSessionScreen());
+        // home: CheckSessionScreen());
+        home: MapScreen(() {}));
   }
 }
 
-getUrls(){
-
+getUrls() {
   Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
     name: 'psrapplication',
   ).then((value) {
     Reference uploading = firebase_storage.FirebaseStorage.instanceFor(
-        app: Firebase.app('psrapplication'))
+            app: Firebase.app('psrapplication'))
         .ref('skus');
     uploading.listAll().then((value) {
       value.items.forEach((element) {

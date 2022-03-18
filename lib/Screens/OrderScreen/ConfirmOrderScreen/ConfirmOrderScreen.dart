@@ -3,6 +3,7 @@ import 'package:nepali_utils/nepali_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmNoOrderScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmVariation.dart';
+import 'package:psr_application/Signature/signature_page.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OrderService.dart';
 
@@ -255,7 +256,10 @@ class ConfirmOrderScreen extends StatelessWidget {
                               ),
                               child: MaterialButton(
                                 onPressed: () async {
+                                  Navigator.push(context, MaterialPageRoute(builder: (_){
 
+                                    return SignaturePage();
+                                  }));
                                 },
                                 child: Center(
                                   child: context

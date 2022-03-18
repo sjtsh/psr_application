@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +16,7 @@ import '../apis/Entities/SubGroup.dart';
 import 'OrderVariation.dart';
 
 class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
+  bool _isConfirmed = false;
   ScrollController scrollController = ScrollController();
   List<bool> items = [];
   Map<SubGroup, Map<SKU, int>> _singularOrder = {};
@@ -30,10 +33,10 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<SubGroup>? _dataToDisplay;
   List<OutletOrderItem> outletOrderItem = [];
 
-  TextEditingController _noOrderRemarkController = TextEditingController();
+  final TextEditingController _noOrderRemarkController = TextEditingController();
 
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
-  TextEditingController _confirmOrderRemarkController = TextEditingController();
+  final TextEditingController _confirmOrderRemarkController = TextEditingController();
   ScrollController controller = ScrollController();
 
   TextEditingController get confirmOrderRemarkController =>
@@ -43,6 +46,13 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   String get dropdownValueFilter => _dropdownValueFilter;
 
   int _skuIndex = 0;
+
+  bool get isConfirmed => _isConfirmed;
+
+  set isConfirmed(bool value) {
+    _isConfirmed = value;
+    notifyListeners();
+  }
 
   Map<SubGroup, String> get competitiveExistingStock =>
       _competitiveExistingStock;
@@ -80,7 +90,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   set skuIndex(int value) {
     _skuIndex = value;
     print((82 * value + 164.0));
-    scrollController.jumpTo(82 * value +0.0 );
+    scrollController.jumpTo(82 * value + 0.0);
     detailsController.animateToPage(value,
         duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     notifyListeners();
