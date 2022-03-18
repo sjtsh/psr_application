@@ -296,32 +296,36 @@ class OutletList extends StatelessWidget {
                                             : Color(0xff34C759),
                                         onPressed: () {
                                           //commented for development purposes ~sajat
-                                          // if (context.read<MapManagement>().sortedOutlets[index].dis < 20) {
-                                          context
+                                          if (context
                                               .read<MapManagement>()
-                                              .changeSelectedMarkerOutlet(
-                                                  index);
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .singularOrder = {};
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .dataToDisplay = null;
+                                              .sortedOutlets[index].dis! < 20) {
+                                            context
+                                                .read<MapManagement>()
+                                                .changeSelectedMarkerOutlet(
+                                                index);
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .singularOrder = {};
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .dataToDisplay = null;
 
-                                          context
-                                                  .read<OrderScreenManagement>()
-                                                  .keys =
-                                              List.generate(
-                                                  context
-                                                      .read<
-                                                          OrderScreenManagement>()
-                                                      .data
-                                                      .length,
-                                                  (index) => GlobalKey());
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(builder: (_) {
-                                            return SubGroupListScreen();
-                                          }));
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .keys =
+                                                List.generate(
+                                                    context
+                                                        .read<
+                                                        OrderScreenManagement>()
+                                                        .data
+                                                        .length,
+                                                        (index) => GlobalKey());
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(builder: (_) {
+                                                  return SubGroupListScreen();
+                                                }));
+                                          }
+
                                         },
                                         child: Text(
                                           "TAKE ORDER",
@@ -418,7 +422,7 @@ class OutletList extends StatelessWidget {
         reverse: false,
         viewportFraction: 1,
         autoPlayCurve: Curves.fastOutSlowIn,
-        enlargeCenterPage: true,
+        enlargeCenterPage: false,
         scrollDirection: Axis.horizontal,
       ),
       carouselController: context.read<MapManagement>().carouselController,

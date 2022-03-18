@@ -11,9 +11,8 @@ import '../NoOrder/NoOrderScreen.dart';
 
 class MyDialogBox extends StatefulWidget {
   final SubGroup e;
-  Function refresh;
 
-  MyDialogBox(this.e, this.refresh);
+  MyDialogBox(this.e,);
 
   @override
   State<MyDialogBox> createState() => _MyDialogBoxState();
@@ -73,7 +72,7 @@ class _MyDialogBoxState extends State<MyDialogBox> {
                           context,
                           MaterialPageRoute(
                             builder: (_) {
-                              return CompetitiveStockScreen(widget.e, widget.refresh);
+                              return CompetitiveStockScreen(widget.e);
                             },
                           ),
                         );

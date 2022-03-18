@@ -60,15 +60,20 @@ class _SubgroupdetailsState extends State<SubgroupDetails> {
               ["Profit:", widget.sku.mrp - widget.sku.ptr],
             ]
                 .map(
-                  (e) => Row(
+                  (e) => Column(
                     children: [
-                      Text(
-                        e[0].toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            e[0].toString(),
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Expanded(child: Container()),
+                          Text(e[1].toString(),
+                              style: TextStyle(color: Colors.grey))
+                        ],
                       ),
-                      Expanded(child: Container()),
-                      Text(e[1].toString(),
-                          style: TextStyle(color: Colors.grey))
+                      SizedBox(height: 6,),
                     ],
                   ),
                 )

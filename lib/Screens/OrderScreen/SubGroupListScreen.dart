@@ -30,7 +30,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    bool isAllDone = true;
+    bool isAllDone = false;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -169,7 +169,8 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                       MaterialPageRoute(
                                                           builder: (_) {
                                                     return SingularProduct(
-                                                        e.value,);
+                                                      e.value,
+                                                    );
                                                   }));
                                                 },
                                                 child: Container(
@@ -217,8 +218,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                                             0.1)),
                                                                 child: Center(
                                                                   child: MyDialogBox(
-                                                                      e.value,
-                                                                      refresh),
+                                                                      e.value),
                                                                 ),
                                                               ),
                                                             ),

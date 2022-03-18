@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/OrderScreen/DialogPrompt/DialogBox.dart';
 
 import '../../../StateManagement/NoOrderManagement.dart';
 import '../../../StateManagement/OrderScreenManagement.dart';
@@ -23,6 +26,8 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(bottom: 6.0),
       child: Builder(builder: (context) {
@@ -181,6 +186,10 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
                                       },
                                     ),
                                   );
+                                  context
+                                      .read<
+                                      OrderScreenManagement>()
+                                      .skuIndex =0;
                                 },
                                 child: Container(
                                   height: 40,
@@ -197,21 +206,53 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: GestureDetector(
+                                // onTap: () {
+                                //   context
+                                //       .read<NoOrderManagement>()
+                                //       .initializeNoOrder(
+                                //           widget.subgroup, context);
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (_) {
+                                //         return MyDialogBox(
+                                //           widget.subgroup,
+                                //         );
+                                //       },
+                                //     ),
+                                //   );
+                                // },
                                 onTap: () {
-                                  context
-                                      .read<NoOrderManagement>()
-                                      .initializeNoOrder(
-                                          widget.subgroup, context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
+                                  showDialog(
+                                      context: context,
                                       builder: (_) {
-                                        return NoOrderScreen(
-                                          widget.subgroup,
+                                        return GestureDetector(
+                                          onTap: () {
+                                            context
+                                                .read<NoOrderManagement>()
+                                                .initializeNoOrder(
+                                                    widget.subgroup, context);
+                                            Navigator.pop(context);
+                                          },
+                                          child: ClipRect(
+                                            child: BackdropFilter(
+                                              filter: ImageFilter.blur(
+                                                  sigmaX: 2.0, sigmaY: 2.0),
+                                              child: Container(
+                                                width: width,
+                                                height: height,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey.shade100
+                                                        .withOpacity(0.1)),
+                                                child: Center(
+                                                  child: MyDialogBox(
+                                                      widget.subgroup),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         );
-                                      },
-                                    ),
-                                  );
+                                      });
                                 },
                                 child: Container(
                                   height: 40,

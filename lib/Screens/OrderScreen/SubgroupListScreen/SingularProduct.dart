@@ -40,7 +40,6 @@ class SingularProduct extends StatelessWidget {
                         children: [
                           Container(
                             height: 50,
-                            color: Color(0Xfff2f2f2),
                             child: Row(
                               children: [
                                 IconButton(
@@ -68,15 +67,14 @@ class SingularProduct extends StatelessWidget {
                           //   child: SingularProductHeader(index, subGroup),
                           // ),
                           Expanded(
-                            flex: 2,
+                            // flex: 2,
                             child: Container(
                               padding: const EdgeInsets.all(12),
-                              color: const Color(0xffF6F6F6),
                               child: CarouselSlider.builder(
                                 carouselController: controller,
                                 options: CarouselOptions(
                                     initialPage: 0,
-                                    height: height / 3,
+                                    height: height / 2,
                                     enableInfiniteScroll: false,
                                     reverse: false,
                                     viewportFraction: 0.6,
@@ -154,11 +152,11 @@ class SingularProduct extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 12,
-                          ),
                           Container(
-                            height: 70,
+                            height: 80,
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                            ),
                             child: ListView(
                               dragStartBehavior: DragStartBehavior.start,
                               controller: context
@@ -184,7 +182,7 @@ class SingularProduct extends StatelessWidget {
                                       children: [
                                         Container(
                                           margin: EdgeInsets.all(6),
-                                          height: 70,
+                                          height: 80,
                                           width: 70,
                                           decoration: BoxDecoration(
                                             border: Border.all(
@@ -207,6 +205,8 @@ class SingularProduct extends StatelessWidget {
                                             image: const DecorationImage(
                                               image:
                                                   AssetImage("assets/oats.jpg"),
+
+                                              fit: BoxFit.contain,
                                             ),
                                           ),
                                         ),
@@ -246,9 +246,9 @@ class SingularProduct extends StatelessWidget {
                           const Divider(
                             indent: 20,
                             endIndent: 20,
-                            thickness: 3,
-                            height: 4,
-                            color: Colors.grey,
+                            thickness: 2,
+                            height: 2,
+                            color: Color(0xffc2c0c0),
                           ),
                           Expanded(
                             flex: 1,

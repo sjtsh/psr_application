@@ -33,10 +33,12 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<SubGroup>? _dataToDisplay;
   List<OutletOrderItem> outletOrderItem = [];
 
-  final TextEditingController _noOrderRemarkController = TextEditingController();
+  final TextEditingController _noOrderRemarkController =
+      TextEditingController();
 
   TextEditingController get noOrderRemarkController => _noOrderRemarkController;
-  final TextEditingController _confirmOrderRemarkController = TextEditingController();
+  final TextEditingController _confirmOrderRemarkController =
+      TextEditingController();
   ScrollController controller = ScrollController();
 
   TextEditingController get confirmOrderRemarkController =>
@@ -89,10 +91,11 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   set skuIndex(int value) {
     _skuIndex = value;
-    print((82 * value + 164.0));
-    scrollController.jumpTo(82 * value + 0.0);
-    detailsController.animateToPage(value,
-        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    try {
+      scrollController.jumpTo(82 * value + 0.0);
+      detailsController.animateToPage(value,
+          duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    } catch (e) {}
     notifyListeners();
   }
 
