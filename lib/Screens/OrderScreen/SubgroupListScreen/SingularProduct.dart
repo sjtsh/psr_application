@@ -26,6 +26,7 @@ class SingularProduct extends StatelessWidget {
     return SafeArea(
       child: Builder(builder: (context) {
         return Scaffold(
+          backgroundColor: Color(0xffF6F6F6),
           body: Builder(builder: (context) {
             double height = MediaQuery.of(context).size.height;
             return Column(
@@ -38,7 +39,6 @@ class SingularProduct extends StatelessWidget {
                         children: [
                           Container(
                             height: 50,
-                            color: Color(0Xfff2f2f2),
                             child: Row(
                               children: [
                                 IconButton(
@@ -66,15 +66,14 @@ class SingularProduct extends StatelessWidget {
                           //   child: SingularProductHeader(index, subGroup),
                           // ),
                           Expanded(
-                            flex: 2,
+                            // flex: 2,
                             child: Container(
                               padding: const EdgeInsets.all(12),
-                              color: const Color(0xffF6F6F6),
                               child: CarouselSlider.builder(
                                 carouselController: controller,
                                 options: CarouselOptions(
                                     initialPage: 0,
-                                    height: height / 3,
+                                    height: height / 2,
                                     enableInfiniteScroll: false,
                                     reverse: false,
                                     viewportFraction: 0.6,
@@ -82,71 +81,81 @@ class SingularProduct extends StatelessWidget {
                                     enlargeCenterPage: true,
                                     scrollDirection: Axis.horizontal,
                                     onPageChanged: (int index, i) {
-                                      context.read<OrderScreenManagement>().skuIndex =
-                                          index;
+                                      context
+                                          .read<OrderScreenManagement>()
+                                          .skuIndex = index;
                                     }),
                                 itemCount: subGroup.skus.length,
-                                itemBuilder:
-                                    (BuildContext context, int index, int realIndex) {
+                                itemBuilder: (BuildContext context, int index,
+                                    int realIndex) {
                                   return Stack(
                                     clipBehavior: Clip.none,
-                                   // overflow: Overflow.visible,
+                                    // overflow: Overflow.visible,
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
-                                              image: AssetImage("assets/oats.jpg"),
+                                              image:
+                                                  AssetImage("assets/oats.jpg"),
                                               fit: BoxFit.cover,
                                             ),
                                             // color: Color(0xffE8F5E9),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withOpacity(0.1),
+                                                color: Colors.black
+                                                    .withOpacity(0.1),
                                                 blurRadius: 3,
                                                 offset: Offset(0, 3),
                                               ),
                                             ]),
                                       ),
-                                      subGroup.skus[index].reward!=0? Positioned(
-                                          right:-6,
-                                          top:-18,
-                                          child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xffDCF1F8),
-                                          shape: BoxShape.circle,
-                                          border: Border.all(color: Colors.greenAccent),
-                                          boxShadow: [BoxShadow(
-                                            offset: Offset(0,2),
-                                            blurRadius: 2,
-                                            color: Colors.black.withOpacity(0.1)
-                                          ),
-                                          ],
-
-
-                                        ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(12.0),
-                                              child: Column(
-                                                children: [
-                                                  Text("⭐"),
-                                                  SizedBox(height: 3,),
-                                                  Text(subGroup.skus[index].reward.toString()),
-
-                                                ],
-                                              ),
-                                            ),
-                                      )): Container()
+                                      subGroup.skus[index].reward != 0
+                                          ? Positioned(
+                                              right: -6,
+                                              top: -18,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xffDCF1F8),
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color:
+                                                          Colors.greenAccent),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        offset: Offset(0, 2),
+                                                        blurRadius: 2,
+                                                        color: Colors.black
+                                                            .withOpacity(0.1)),
+                                                  ],
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Column(
+                                                    children: [
+                                                      Text("⭐"),
+                                                      SizedBox(
+                                                        height: 3,
+                                                      ),
+                                                      Text(subGroup
+                                                          .skus[index].reward
+                                                          .toString()),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ))
+                                          : Container()
                                     ],
                                   );
                                 },
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 12,
-                          ),
                           Container(
-                            height: 70,
+                            height: 80,
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                            ),
                             child: ListView(
                               dragStartBehavior: DragStartBehavior.start,
                               controller: context
@@ -157,7 +166,8 @@ class SingularProduct extends StatelessWidget {
                                 SizedBox(
                                   width: 164,
                                 ),
-                                ...List.generate(subGroup.skus.length, (int index) {
+                                ...List.generate(subGroup.skus.length,
+                                    (int index) {
                                   return GestureDetector(
                                     onTap: () {
                                       controller.animateToPage(index,
@@ -171,41 +181,53 @@ class SingularProduct extends StatelessWidget {
                                       children: [
                                         Container(
                                           margin: EdgeInsets.all(6),
-                                          height: 70,
+                                          height: 80,
                                           width: 70,
                                           decoration: BoxDecoration(
                                             border: Border.all(
                                               color: index ==
                                                       context
-                                                          .watch<OrderScreenManagement>()
+                                                          .watch<
+                                                              OrderScreenManagement>()
                                                           .skuIndex
                                                   ? Colors.black
                                                   : Colors.transparent,
                                             ),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.black.withOpacity(0.1),
+                                                color: Colors.black
+                                                    .withOpacity(0.1),
                                                 blurRadius: 3,
                                                 offset: Offset(0, 2),
                                               ),
                                             ],
                                             image: const DecorationImage(
-                                              image: AssetImage("assets/oats.jpg"),
+                                              image:
+                                                  AssetImage("assets/oats.jpg"),
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),
-                                       subGroup.skus[index].reward !=0 ? Positioned(
-                                          top: 0,
-                                            right: 0,child: Container(
-                                         decoration: BoxDecoration(
-                                           color: Colors.transparent,
-                                           shape: BoxShape.circle,
-                                           border: Border.all(color: Colors.transparent)
-                                         ),
-                                           child: Padding(
-                                             padding: const EdgeInsets.all(3.0),
-                                             child: Center(child: Text("🎖️")),
-                                           ))) : Container()
+                                        subGroup.skus[index].reward != 0
+                                            ? Positioned(
+                                                top: 0,
+                                                right: 0,
+                                                child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color:
+                                                            Colors.transparent,
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent)),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              3.0),
+                                                      child: Center(
+                                                          child: Text("🎖️")),
+                                                    )))
+                                            : Container()
                                       ],
                                     ),
                                   );
@@ -222,9 +244,9 @@ class SingularProduct extends StatelessWidget {
                           const Divider(
                             indent: 20,
                             endIndent: 20,
-                            thickness: 3,
-                            height: 4,
-                            color: Colors.grey,
+                            thickness: 2,
+                            height: 2,
+                            color: Color(0xffc2c0c0),
                           ),
                           Expanded(
                             flex: 1,
@@ -261,14 +283,12 @@ class SingularProduct extends StatelessWidget {
                             .tempSubGroupVariation
                             .isNotEmpty) {
                           context
-                              .read<OrderScreenManagement>()
-                              .singularOrder[subGroup] =
+                                  .read<OrderScreenManagement>()
+                                  .singularOrder[subGroup] =
                               context
                                   .read<OrderVariation>()
                                   .tempSubGroupVariation;
-                          context
-                              .read<OrderScreenManagement>()
-                              .singularOrder =
+                          context.read<OrderScreenManagement>().singularOrder =
                               context
                                   .read<OrderScreenManagement>()
                                   .singularOrder;
@@ -281,9 +301,9 @@ class SingularProduct extends StatelessWidget {
                       child: Center(
                         child: !context.watch<LogInManagement>().isLoading
                             ? const Text(
-                          "Confirm ",
-                          style: TextStyle(color: Colors.white),
-                        )
+                                "Confirm ",
+                                style: TextStyle(color: Colors.white),
+                              )
                             : CircularProgressIndicator(color: Colors.white),
                       ),
                     ),

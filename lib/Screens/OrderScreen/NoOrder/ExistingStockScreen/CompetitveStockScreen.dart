@@ -6,9 +6,8 @@ import '../../../../apis/Entities/SubGroup.dart';
 
 class CompetitiveStockScreen extends StatefulWidget {
   final SubGroup subGroup;
-  final Function refresh;
 
-  CompetitiveStockScreen(this.subGroup, this.refresh);
+  CompetitiveStockScreen(this.subGroup);
 
   @override
   State<CompetitiveStockScreen> createState() => _CompetitiveStockScreenState();

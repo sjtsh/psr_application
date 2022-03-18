@@ -217,8 +217,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                                             0.1)),
                                                                 child: Center(
                                                                   child: MyDialogBox(
-                                                                      e.value,
-                                                                      refresh),
+                                                                      e.value),
                                                                 ),
                                                               ),
                                                             ),
