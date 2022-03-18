@@ -37,6 +37,13 @@
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
   <script>
+  document.addEventListener('wheel', function(e) {
+    e.ctrlKey && e.preventDefault();
+  }, {
+    passive: false,
+  });
+</script>
+  <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {

@@ -87,16 +87,6 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     ask();
-
-    rootBundle.loadString('assets/long-new-sample_output.json').then((value) {
-        print("started");
-        context.read<ShopClosedController>().latlngs = jsonDecode(value).map((f) {
-        final k = f["value"][0];
-        final j = f["value"][1];
-        return LatLng(k, j);
-      }).toList();
-      print(context.read<ShopClosedController>().latlngs.length);
-    });
   }
 
   @override
@@ -106,11 +96,10 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.robotoTextTheme(
-    Theme.of(context).textTheme,
+            Theme.of(context).textTheme,
           ),
         ),
-        // home: CheckSessionScreen());
-        home: MapScreen(() {}));
+        home: CheckSessionScreen());
   }
 }
 

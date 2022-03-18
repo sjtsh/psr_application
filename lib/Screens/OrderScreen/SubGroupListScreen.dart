@@ -252,21 +252,21 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  // if (isAllDone) {
+                  if (isAllDone) {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
                     return ConfirmOrderScreen();
                   }));
-                  // } else {
-                  //   context
-                  //       .read<OrderScreenManagement>()
-                  //       .keys
-                  //       .forEach((element) {
-                  //     try {
-                  //       final dynamic tooltip = element.currentState;
-                  //       tooltip.ensureTooltipVisible();
-                  //     } catch (e) {}
-                  //   });
-                  // }
+                  } else {
+                    context
+                        .read<OrderScreenManagement>()
+                        .keys
+                        .forEach((element) {
+                      try {
+                        final dynamic tooltip = element.currentState;
+                        tooltip.ensureTooltipVisible();
+                      } catch (e) {}
+                    });
+                  }
                 },
                 child: Container(
                   height: 60,
