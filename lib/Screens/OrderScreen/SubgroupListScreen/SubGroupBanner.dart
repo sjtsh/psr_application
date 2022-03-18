@@ -186,6 +186,10 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
                                       },
                                     ),
                                   );
+                                  context
+                                      .read<
+                                      OrderScreenManagement>()
+                                      .skuIndex =0;
                                 },
                                 child: Container(
                                   height: 40,

@@ -80,9 +80,13 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   set skuIndex(int value) {
     _skuIndex = value;
     print((82 * value + 164.0));
-    scrollController.jumpTo(82 * value +0.0 );
-    detailsController.animateToPage(value,
-        duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    try{
+      scrollController.jumpTo(82 * value + 0.0);
+      detailsController.animateToPage(value,
+          duration: Duration(milliseconds: 200), curve: Curves.easeIn);
+    }catch(e){
+
+    }
     notifyListeners();
   }
 

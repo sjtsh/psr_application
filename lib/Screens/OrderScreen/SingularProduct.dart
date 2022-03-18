@@ -194,6 +194,13 @@ class SingularProduct extends StatelessWidget {
                               .singularOrder
                               .containsKey(subGroup)) {
                             Navigator.pop(context);
+
+                            context.read<OrderScreenManagement>().noOrderReasons.remove(subGroup);
+                            context
+                                .read<OrderScreenManagement>()
+                                .competitiveExistingStock
+                                .remove(subGroup);
+                            context.read<OrderScreenManagement>().singularOrder.remove(subGroup);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text("Please insert quantity")));

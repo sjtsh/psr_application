@@ -169,7 +169,8 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                                                       MaterialPageRoute(
                                                           builder: (_) {
                                                     return SingularProduct(
-                                                        e.value,);
+                                                      e.value,
+                                                    );
                                                   }));
                                                 },
                                                 child: Container(
@@ -252,9 +253,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               GestureDetector(
                 onTap: () {
                   if (isAllDone) {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return ConfirmOrderScreen();
-                  }));
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return ConfirmOrderScreen();
+                    }));
                   } else {
                     context
                         .read<OrderScreenManagement>()

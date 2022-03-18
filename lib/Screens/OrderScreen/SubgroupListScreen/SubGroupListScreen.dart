@@ -69,19 +69,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                     if (context
                             .read<OrderScreenManagement>()
                             .singularOrder
-                            .isEmpty &&
-                        (context
-                                .read<OrderScreenManagement>()
-                                .competitiveExistingStock
-                                .isNotEmpty ||
-                            context
-                                .read<OrderScreenManagement>()
-                                .noOrderReasons
-                                .isEmpty ||
-                            context
-                                .read<OrderScreenManagement>()
-                                .ownExistingStock
-                                .isEmpty)) {
+                            .isEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return ConfirmOrder();
                       }));
