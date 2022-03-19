@@ -16,11 +16,12 @@ class TodayProgress extends StatelessWidget {
   final int todaySKUVariance;
   final int rewardPoints;
   final double totalSaleVolume;
-  final int successVisitText;
+  final int successVisit;
   final int scheduledVisit;
+  final int productiveVisit;
 
   TodayProgress(this.isWeekly, this.todaySKUVariance, this.rewardPoints,
-      this.totalSaleVolume, this.successVisitText, this.scheduledVisit);
+      this.totalSaleVolume, this.successVisit, this.scheduledVisit, this.productiveVisit);
 
   @override
   Widget build(BuildContext context) {
@@ -74,12 +75,12 @@ class TodayProgress extends StatelessWidget {
                   children: [
                     Countup(
                       begin: 0,
-                      end: context.watch<TodayProgressState>().visitText + 0.0,
+                      end: successVisit + 0.0,
                       suffix: "/${scheduledVisit.toString()} visits",
                       style: TextStyle(color: Colors.black, fontSize: 30),
                     ),
                     Text(
-                      successVisitText.toString() + " productive visits",
+                      productiveVisit.toString() + " productive visits",
                       style: TextStyle(color: Colors.green, fontSize: 16),
                     ),
                   ],

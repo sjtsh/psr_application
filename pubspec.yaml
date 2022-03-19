@@ -30,7 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   provider:
-  firebase_storage:
+  firebase_storage: ^10.2.9
   firebase_core:
   firebase_analytics:
   path_provider:
@@ -57,6 +57,8 @@ dependencies:
   image_gallery_saver:
   flushbar:
   hive:
+  hive_generator:
+  build_runner:
 
 
   # The following adds the Cupertino Icons font to your application.

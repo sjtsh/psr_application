@@ -11,10 +11,14 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/BeatManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
+import 'LocalNoSQL/OutletOrder.dart';
+import 'LocalNoSQL/Performance.dart';
 import 'Screens/LoginScreen/CheckSessionScreen.dart';
 import 'Screens/MapScreen/MapScreen.dart';
 import 'StateManagement/AverageVolume.dart';
@@ -28,6 +32,7 @@ import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiProvider(
       providers: [
@@ -87,11 +92,23 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     ask();
+    // context.read<TodayProgressState>().
+    getApplicationDocumentsDirectory().then((Directory path) async {
+      Hive
+        ..init(path.path)
+        ..registerAdapter(PerformanceAdapter())
+        ..registerAdapter(OutletOrderLocalAdapter());
+      Hive.openBox('performances').then((value) {
+        context.read<TodayProgressState>().performanceBox = value;
+      });
+      Hive.openBox('orders').then((value) {
+        context.read<TodayProgressState>().orderBox = value;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    ask();
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

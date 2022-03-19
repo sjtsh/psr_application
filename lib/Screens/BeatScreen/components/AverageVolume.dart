@@ -1,7 +1,9 @@
 import 'package:countup/countup.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/LocalNoSQL/Performance.dart';
 import 'package:psr_application/StateManagement/AverageVolume.dart';
 
 import 'package:nepali_date_picker/nepali_date_picker.dart' as picker;
@@ -21,15 +23,17 @@ class AverageVolume extends StatefulWidget {
 class _AverageVolumeState extends State<AverageVolume> {
   @override
   Widget build(BuildContext context) {
+    Box<dynamic>? performance = context.read<TodayProgressState>().performanceBox;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              offset: Offset(0, 2),
-              blurRadius: 3,
-              spreadRadius: 3)
+            color: Colors.black.withOpacity(0.1),
+            offset: Offset(0, 2),
+            blurRadius: 3,
+            spreadRadius: 3,
+          ),
         ],
       ),
       child: Column(
@@ -100,175 +104,26 @@ class _AverageVolumeState extends State<AverageVolume> {
               }),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
-          //   child: Container(
-          //     height: 30,
-          //     child: Row(
-          //       children: [
-          //         Container(
-          //           height: 10,
-          //           width: 10,
-          //           decoration: BoxDecoration(
-          //               color: Colors.green, shape: BoxShape.circle),
-          //         ),
-          //         SizedBox(
-          //           width: 12,
-          //         ),
-          //         Text("AVG SALES VOLUME"),
-          //         SizedBox(
-          //           width: 12,
-          //         ),
-          //         context.watch<AverageVolumeState>().isWeekly != 3
-          //             ? Container()
-          //             : Expanded(
-          //                 child: Row(
-          //                   children: [
-          //                     Expanded(
-          //                       child: GestureDetector(
-          //                         onTap: () async {
-          //                           picker.showCupertinoDatePicker(
-          //                             context: context,
-          //                             initialDate: context
-          //                                 .read<DateRangeManagement>()
-          //                                 .startDate,
-          //                             firstDate: NepaliDateTime(
-          //                                 NepaliDateTime.now().year - 1),
-          //                             lastDate: NepaliDateTime.now(),
-          //                             onDateChanged: (NepaliDateTime value) {
-          //                               if (NepaliDateTime.now()
-          //                                   .isAfter(value)) {
-          //                                 context
-          //                                     .read<DateRangeManagement>()
-          //                                     .setStartDate(value);
-          //                               }
-          //                             },
-          //                           );
-          //                         },
-          //                         child: Container(
-          //                           decoration: BoxDecoration(
-          //                             borderRadius: BorderRadius.circular(12),
-          //                             color: const Color(0xffF1F2F6),
-          //                           ),
-          //                           child: Center(
-          //                             child: Text(context
-          //                                     .watch<DateRangeManagement>()
-          //                                     .startDate
-          //                                     .month
-          //                                     .toString()
-          //                                     .padLeft(2, "0") +
-          //                                 "-" +
-          //                                 context
-          //                                     .watch<DateRangeManagement>()
-          //                                     .startDate
-          //                                     .day
-          //                                     .toString()
-          //                                     .padLeft(2, "0")),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ),
-          //                     Icon(
-          //                       Icons.arrow_forward_rounded,
-          //                       color: Colors.black.withOpacity(0.5),
-          //                     ),
-          //                     Expanded(
-          //                       child: GestureDetector(
-          //                         onTap: () {
-          //                           picker.showCupertinoDatePicker(
-          //                               context: context,
-          //                               initialDate: NepaliDateTime.now(),
-          //                               firstDate: context
-          //                                   .read<DateRangeManagement>()
-          //                                   .startDate,
-          //                               lastDate: NepaliDateTime.now(),
-          //                               onDateChanged:
-          //                                   (NepaliDateTime value) async {
-          //                                 if (NepaliDateTime.now()
-          //                                     .isAfter(value)) {
-          //                                   context
-          //                                       .read<DateRangeManagement>()
-          //                                       .setEndDate(value);
-          //                                   context
-          //                                       .read<DateRangeManagement>()
-          //                                       .isRequestDisabled = true;
-          //                                   await OrderService()
-          //                                       .getPerformanceDateRange(
-          //                                           context
-          //                                               .read<
-          //                                                   DateRangeManagement>()
-          //                                               .startDate
-          //                                               .toString()
-          //                                               .substring(0, 19),
-          //                                           context
-          //                                               .read<
-          //                                                   DateRangeManagement>()
-          //                                               .endDate
-          //                                               .toString()
-          //                                               .substring(0, 19),
-          //                                           context);
-          //
-          //                                   context
-          //                                       .read<DateRangeManagement>()
-          //                                       .isRequestDisabled = false;
-          //                                 }
-          //                               });
-          //                         },
-          //                         child: Container(
-          //                           decoration: BoxDecoration(
-          //                             borderRadius: BorderRadius.circular(12),
-          //                             color: const Color(0xffF1F2F6),
-          //                           ),
-          //                           child: Center(
-          //                             child: Text(
-          //                               context
-          //                                       .watch<DateRangeManagement>()
-          //                                       .endDate
-          //                                       .month
-          //                                       .toString()
-          //                                       .padLeft(2, "0") +
-          //                                   "-" +
-          //                                   context
-          //                                       .watch<DateRangeManagement>()
-          //                                       .endDate
-          //                                       .day
-          //                                       .toString()
-          //                                       .padLeft(2, "0"),
-          //                             ),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ],
-          //                 ),
-          //               ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          context.read<AverageVolumeState>().isWeekly == 1
-              ? TodayProgress(
-    context.watch<AverageVolumeState>().isWeekly,
-                  context.watch<AverageVolumeState>().todaySKUVariance,
-                  context.watch<TodayProgressState>().stdQuantitySales,
-                  context.watch<AverageVolumeState>().todaySaleVolume,
-                  context.watch<TodayProgressState>().successVisitText,
-                  context.watch<TodayProgressState>().scheduleVisit)
-              : context.read<AverageVolumeState>().isWeekly == 2
-                  ? TodayProgress(context.watch<AverageVolumeState>().isWeekly,
-                      context.watch<AverageVolumeState>().weeklySKUVariance,
-                      context.watch<TodayProgressState>().stdQuantitySales,
-                      context.watch<AverageVolumeState>().weeklySaleVolume,
-                      context.watch<TodayProgressState>().successVisitText,
-                      context.watch<TodayProgressState>().scheduleVisit)
-                  : context.read<AverageVolumeState>().isWeekly == 3
-                      ? TodayProgress(context.watch<AverageVolumeState>().isWeekly,
-                          context.watch<AverageVolumeState>().monthlySKUVariance,
-                          context.watch<TodayProgressState>().stdQuantitySales,
-                          context.watch<AverageVolumeState>().monthlySaleVolume,
-                          context.watch<TodayProgressState>().successVisitText,
-                          context.watch<TodayProgressState>().scheduleVisit)
-                      : Container(),
+          TodayProgress(
+              context.watch<AverageVolumeState>().isWeekly,
+              performance!
+                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+                  .avgSKU,
+              performance
+                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+                  .stdQuantitySales,
+              performance
+                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+                  .netValueSales,
+              performance
+                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+                  .successVisit,
+              performance
+                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+                  .scheduleVisit,
+              performance
+                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+                  .productiveVisit),
         ],
       ),
     );

@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/LocalNoSQL/PerformanceService.dart';
 import 'package:psr_application/StateManagement/AverageVolume.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/apis/Entities/Beat.dart';
 import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 
+import '../../LocalNoSQL/Performance.dart';
 import '../../StateManagement/BeatManagement.dart';
 import '../../StateManagement/MapManagement.dart';
 import '../../database.dart';
@@ -25,6 +27,7 @@ class TourPlanService {
         'session_id': (meUser?.sessionID ?? ""),
       },
     );
+    print(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> aMap = jsonDecode(response.body);
       Map<String, dynamic> beatPlanMap = aMap["beat_plans"];
@@ -65,37 +68,24 @@ class TourPlanService {
               double.parse(beatPlanMap[e]["distributor_lat"].toString()),
               double.parse(beatPlanMap[e]["distributor_lng"].toString())))
           .toList();
-      context.read<AverageVolumeState>().todaySKUVariance =
-          int.parse(aMap["daily"]["sku"].toString());
-      context.read<AverageVolumeState>().monthlySKUVariance =
-          int.parse(aMap["monthly"]["sku"].toString());
-      context.read<AverageVolumeState>().todaySaleVolume =
-          double.parse(aMap["daily"]["sales"].toString()) + 0.0;
-      context.read<AverageVolumeState>().monthlySaleVolume =
-          double.parse(aMap["monthly"]["sales"].toString()) + 0.0;
-      context.read<AverageVolumeState>().weeklySaleVolume =
-          double.parse(aMap["weekly"]["sales"].toString()) + 0.0;
-      context.read<AverageVolumeState>().weeklySKUVariance =
-          int.parse(aMap["weekly"]["sku"].toString());
-      int stdQuantity = 0;
-      for (var element in orders) {
-        for (var element in element.items) {
-          stdQuantity += element.primaryCount;
-        }
-      }
-      context.read<TodayProgressState>().stdQuantitySales = stdQuantity;
-      context.read<TodayProgressState>().successVisitText = orders.length;
+      ["daily", "weekly", "monthly"].asMap().entries.forEach((element) async {
+        await context.read<TodayProgressState>().performanceBox?.put(
+            element.key,
+            Performance(
+                scheduleVisit: int.parse(aMap[element.value]["total"].toString()),
+                successVisit: int.parse(aMap[element.value]["visited"].toString()),
+                productiveVisit:
+                int.parse(aMap[element.value]["productive"].toString()),
+                stdQuantitySales: int.parse(aMap[element.value]["std"].toString()),
+                netValueSales:
+                double.parse(aMap[element.value]["sales"].toString()) + 0.0,
+                rewardPoints: int.parse(aMap[element.value]["reward"].toString()),
+                avgSKU: int.parse(aMap[element.value]["sku"].toString())));
+      });
       context.read<BeatManagement>().beats = beats;
       context.read<BeatManagement>().outletOrders = orders;
       context.read<TodayProgressState>().inProgressBeat =
           beats.firstWhere((element) => element.inProgress);
-      context.read<TodayProgressState>().scheduleVisit =
-          context.read<LogInManagement>().allOutletsLocal.length;
-      context.read<TodayProgressState>().visitText = context
-          .read<LogInManagement>()
-          .allOutletsLocal
-          .where((element) => element.isDone)
-          .length;
       return true;
     }
     throw "couldnt complete";
