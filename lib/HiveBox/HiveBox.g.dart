@@ -1,50 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'Performance.dart';
+part of 'HiveBox.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PerformanceAdapter extends TypeAdapter<Performance> {
+class HiveBoxAdapter extends TypeAdapter<HiveBox> {
   @override
   final int typeId = 0;
 
   @override
-  Performance read(BinaryReader reader) {
+  HiveBox read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Performance(
-      scheduleVisit: fields[0] as int,
-      successVisit: fields[1] as int,
-      productiveVisit: fields[2] as int,
-      stdQuantitySales: fields[3] as int,
-      netValueSales: fields[4] as double,
-      rewardPoints: fields[5] as int,
-      avgSKU: fields[6] as int,
+    return HiveBox(
+      performances: (fields[0] as List).cast<Performance>(),
+      outletOrders: (fields[1] as List).cast<OutletOrder>(),
+      outlets: (fields[2] as List).cast<Outlet>(),
+      subgroups: (fields[3] as List).cast<SubGroup>(),
+      beats: (fields[4] as List).cast<HollowBeat>(),
+      user: fields[5] as User,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Performance obj) {
+  void write(BinaryWriter writer, HiveBox obj) {
     writer
-      ..writeByte(7)
-      ..writeByte(0)
-      ..write(obj.scheduleVisit)
-      ..writeByte(1)
-      ..write(obj.successVisit)
-      ..writeByte(2)
-      ..write(obj.productiveVisit)
-      ..writeByte(3)
-      ..write(obj.stdQuantitySales)
-      ..writeByte(4)
-      ..write(obj.netValueSales)
-      ..writeByte(5)
-      ..write(obj.rewardPoints)
       ..writeByte(6)
-      ..write(obj.avgSKU);
+      ..writeByte(0)
+      ..write(obj.performances)
+      ..writeByte(1)
+      ..write(obj.outletOrders)
+      ..writeByte(2)
+      ..write(obj.outlets)
+      ..writeByte(3)
+      ..write(obj.subgroups)
+      ..writeByte(4)
+      ..write(obj.beats)
+      ..writeByte(5)
+      ..write(obj.user);
   }
 
   @override
@@ -53,7 +50,7 @@ class PerformanceAdapter extends TypeAdapter<Performance> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PerformanceAdapter &&
+      other is HiveBoxAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

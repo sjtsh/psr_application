@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/BeatManagement.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
 
+import '../../../StateManagement/AverageVolume.dart';
 import '../../../StateManagement/LogInManagement.dart';
 import 'IndividualBeat.dart';
 
@@ -22,17 +23,21 @@ class SelectBeat extends StatelessWidget {
               fontSize: 16,
             ),
           ),
-          SizedBox(height: 6,),
+          SizedBox(
+            height: 6,
+          ),
           Column(
             children: [
               ...context
-                  .watch<BeatManagement>()
+                  .watch<DataManagement>()
+                  .hiveBox
                   .beats
                   .where((element) => !element.isDone)
                   .map((e) => IndividualBeat(e))
                   .toList(),
               ...context
-                  .watch<BeatManagement>()
+                  .watch<DataManagement>()
+                  .hiveBox
                   .beats
                   .where((element) => element.isDone)
                   .map((e) => IndividualBeat(e))

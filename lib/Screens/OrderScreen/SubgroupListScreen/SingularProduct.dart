@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/NoOrderScreen.dart';
-import 'package:psr_application/Screens/OrderScreen/SubGroupDetails.dart';
+import 'package:psr_application/Screens/OrderScreen/SubgroupListScreen/SubGroupDetails.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../../StateManagement/LogInManagement.dart';
 import '../../../StateManagement/OrderScreenManagement.dart';

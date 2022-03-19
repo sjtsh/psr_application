@@ -1,22 +1,14 @@
-import 'package:expandable/expandable.dart';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
-import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
-
-import '../../StateManagement/MapManagement.dart';
-import '../../StateManagement/OrderScreenManagement.dart';
+import 'package:psr_application/Screens/OrderHistory/UnSyncedOrderItem.dart';
 import '../../apis/Entities/OutletOrder.dart';
-import '../../apis/Entities/SKU.dart';
-import '../../apis/Entities/SubGroup.dart';
 import '../../database.dart';
-import 'OrderItemsScreen.dart';
 
-class SingularOrder extends StatelessWidget {
-  final OutletOrder outletOrder;
+class UnSyncedOrder extends StatelessWidget {
+  final OutletOrder outletOrderLocal;
   final bool editable;
 
-  SingularOrder(this.outletOrder, {this.editable = false});
+  UnSyncedOrder(this.outletOrderLocal, {this.editable = false});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +29,7 @@ class SingularOrder extends StatelessWidget {
           child: InkWell(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return OrderItemsScreen(outletOrder);
+                return UnSyncedOrderItem(outletOrderLocal);
               }));
             },
             child: Padding(
@@ -59,7 +51,7 @@ class SingularOrder extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              getInitials(outletOrder.outletName),
+                              getInitials(outletOrderLocal.outletName),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -75,11 +67,11 @@ class SingularOrder extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                outletOrder.outletName,
+                                outletOrderLocal.outletName,
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                outletOrder.beatName,
+                                outletOrderLocal.beatName,
                                 style: TextStyle(
                                   color: Colors.black.withOpacity(0.5),
                                 ),
@@ -87,51 +79,65 @@ class SingularOrder extends StatelessWidget {
                             ],
                           ),
                         ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.yellow,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 4.0),
+                            child: Text(
+                              "Not Synced",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
                         editable
                             ? GestureDetector(
                                 onTap: () {
-                                  Map<SubGroup, Map<SKU, int>> aMap = {};
-                                  List<int> skus = [];
-                                  List<int> count = [];
-                                  List.generate(outletOrder.items.length,
-                                      (index) {
-                                    skus.add(outletOrder.items[index].skuID);
-                                    count.add(
-                                        outletOrder.items[index].primaryCount);
-                                  });
-                                  context
-                                      .read<OrderScreenManagement>()
-                                      .data
-                                      .forEach((element1) {
-                                    for (var e2 in element1.skus) {
-                                      if (skus.contains(e2.id)) {
-                                        if (!aMap.containsKey(element1)) {
-                                          aMap[element1] = {
-                                            e2: count[skus.indexOf(e2.id)]
-                                          };
-                                        } else {
-                                          aMap[element1]![e2] =
-                                              count[skus.indexOf(e2.id)];
-                                        }
-                                      }
-                                    }
-                                  });
-                                  context
-                                      .read<OrderScreenManagement>()
-                                      .currentlyExpanded = null;
-                                  context
-                                      .read<OrderScreenManagement>()
-                                      .singularOrder = aMap;
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) {
-                                        return OrderScreen(
-                                          order: outletOrder,
-                                        );
-                                      },
-                                    ),
-                                  );
+                                  // Map<SubGroup, Map<SKU, int>> aMap = {};
+                                  // List<int> skus = [];
+                                  // List<int> count = [];
+                                  // List.generate(outletOrderLocal.items.length,
+                                  //         (index) {
+                                  //       skus.add(outletOrderLocal.items[index].skuID);
+                                  //       count.add(
+                                  //           outletOrderLocal.items[index].primaryCount);
+                                  //     });
+                                  // context
+                                  //     .read<OrderScreenManagement>()
+                                  //     .data
+                                  //     .forEach((element1) {
+                                  //   for (var e2 in element1.skus) {
+                                  //     if (skus.contains(e2.id)) {
+                                  //       if (!aMap.containsKey(element1)) {
+                                  //         aMap[element1] = {
+                                  //           e2: count[skus.indexOf(e2.id)]
+                                  //         };
+                                  //       } else {
+                                  //         aMap[element1]![e2] =
+                                  //         count[skus.indexOf(e2.id)];
+                                  //       }
+                                  //     }
+                                  //   }
+                                  // });
+                                  // context
+                                  //     .read<OrderScreenManagement>()
+                                  //     .currentlyExpanded = null;
+                                  // context
+                                  //     .read<OrderScreenManagement>()
+                                  //     .singularOrder = aMap;
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (_) {
+                                  //       return OrderScreen(
+                                  //         order: outletOrderLocal,
+                                  //       );
+                                  //     },
+                                  //   ),
+                                  // );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -160,11 +166,13 @@ class SingularOrder extends StatelessWidget {
                     children: [
                       [
                         "Order ID :",
-                        "#OR${outletOrder.id.toString().padLeft(4, '0')}"
+                        "Not Synced",
                       ],
                       [
                         "Date :",
-                        (outletOrder.timeCreated.toString().substring(0, 19))
+                        (outletOrderLocal.timeCreated
+                            .toString()
+                            .substring(0, 19))
                       ],
                     ]
                         .map(

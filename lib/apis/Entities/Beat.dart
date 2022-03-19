@@ -1,14 +1,26 @@
-import 'Outlet.dart';
+import 'package:hive/hive.dart';
 
-class HollowBeat {
+part 'Beat.g.dart';
+
+@HiveType(typeId: 1)
+class HollowBeat extends HiveObject {
+  @HiveField(0)
   final int beatPlanID;
+  @HiveField(1)
   final int beatID;
+  @HiveField(2)
   final bool isDone;
+  @HiveField(3)
   final bool inProgress;
+  @HiveField(4)
   final String beatName;
+  @HiveField(5)
   final String distributorID;
+  @HiveField(6)
   final String distributorName;
+  @HiveField(7)
   final double distributorLat;
+  @HiveField(8)
   final double distributorLng;
 
   HollowBeat(
@@ -21,15 +33,4 @@ class HollowBeat {
       this.distributorName,
       this.distributorLat,
       this.distributorLng);
-}
-
-class Beat {
-  int id;
-  String name;
-  String distributorID;
-  String userID;
-  bool deactivated;
-  List<Outlet> outlets = [];
-
-  Beat(this.id, this.name, this.distributorID, this.userID, this.deactivated);
 }

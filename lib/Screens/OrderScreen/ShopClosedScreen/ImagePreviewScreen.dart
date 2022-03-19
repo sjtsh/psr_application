@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
-import 'package:psr_application/StateManagement/TodayProgress.dart';
 import 'package:psr_application/database.dart';
 
 import '../../../apis/Services/ShopClosed.dart';

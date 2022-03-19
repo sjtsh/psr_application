@@ -57,8 +57,6 @@ dependencies:
   image_gallery_saver:
   flushbar:
   hive:
-  hive_generator:
-  build_runner:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -68,6 +66,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator:
+  build_runner:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

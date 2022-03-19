@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/LocalNoSQL/Performance.dart';
+import 'package:psr_application/HiveBox/HiveBox.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
+import 'package:psr_application/apis/Entities/Performance.dart';
 import 'package:psr_application/StateManagement/AverageVolume.dart';
-
-import 'package:nepali_date_picker/nepali_date_picker.dart' as picker;
-import '../../../Skeletons/CustomVolumeSkeleton.dart';
-import '../../../StateManagement/DateRangeManagement.dart';
-import '../../../StateManagement/TodayProgress.dart';
-import '../../../apis/Services/OrderService.dart';
 import 'TodayProgress.dart';
 
 class AverageVolume extends StatefulWidget {
@@ -23,7 +24,6 @@ class AverageVolume extends StatefulWidget {
 class _AverageVolumeState extends State<AverageVolume> {
   @override
   Widget build(BuildContext context) {
-    Box<dynamic>? performance = context.read<TodayProgressState>().performanceBox;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -106,23 +106,35 @@ class _AverageVolumeState extends State<AverageVolume> {
           ),
           TodayProgress(
               context.watch<AverageVolumeState>().isWeekly,
-              performance!
-                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+              context
+                  .read<DataManagement>()
+                  .hiveBox
+                  .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .avgSKU,
-              performance
-                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+              context
+                  .read<DataManagement>()
+                  .hiveBox
+                  .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .stdQuantitySales,
-              performance
-                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+              context
+                  .read<DataManagement>()
+                  .hiveBox
+                  .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .netValueSales,
-              performance
-                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+              context
+                  .read<DataManagement>()
+                  .hiveBox
+                  .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .successVisit,
-              performance
-                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+              context
+                  .read<DataManagement>()
+                  .hiveBox
+                  .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .scheduleVisit,
-              performance
-                  .getAt(context.read<AverageVolumeState>().isWeekly - 1)!
+              context
+                  .read<DataManagement>()
+                  .hiveBox
+                  .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .productiveVisit),
         ],
       ),

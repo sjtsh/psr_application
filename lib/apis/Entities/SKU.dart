@@ -1,16 +1,34 @@
+import 'package:hive/hive.dart';
+
+part 'SKU.g.dart';
+
+@HiveType(typeId: 6)
 class SKU {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final double mrp;
+  @HiveField(3)
   final double ptr;
+  @HiveField(4)
   final String img;
+  @HiveField(5)
   final String primaryUnit;
+  @HiveField(6)
   final String secondaryUnit;
+  @HiveField(7)
   final int cf;
+  @HiveField(8)
   final bool isTrending;
+  @HiveField(9)
   final bool isPromoted;
+  @HiveField(10)
   final bool isNew;
+  @HiveField(11)
   final int reward;
+  @HiveField(12)
   final String erpID;
 
   SKU(

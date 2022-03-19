@@ -5,11 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ShopClosedScreen/ShopClosedScreen.dart';
 import 'package:psr_application/StateManagement/AverageVolume.dart';
-import 'package:psr_application/StateManagement/ShopClosedController.dart';
-
-import '../../../StateManagement/MapManagement.dart';
-import '../../../StateManagement/TodayProgress.dart';
-import '../../MapScreen/MapScreen.dart';
 
 class TodayProgress extends StatelessWidget {
   final int isWeekly;
@@ -44,7 +39,7 @@ class TodayProgress extends StatelessWidget {
               ),
               Expanded(child: Container()),
               Text(
-                context.watch<TodayProgressState>().inProgressBeat?.beatName ??
+                context.watch<AverageVolumeState>().inProgressBeat?.beatName ??
                     "",
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.5),

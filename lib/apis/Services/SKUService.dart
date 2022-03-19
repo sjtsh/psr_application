@@ -12,7 +12,7 @@ import '../../database.dart';
 import '../Entities/SKU.dart';
 
 class SKUService {
-  Future<void> getSKUs(BuildContext context) async {
+  Future<List<SubGroup>> getSKUs() async {
     Response res = await http.get(
       Uri.parse(
           "https://asia-south1-psr-application-342007.cloudfunctions.net/getSKUs"),
@@ -39,14 +39,7 @@ class SKUService {
           );
         },
       ).toList();
-      context.read<OrderScreenManagement>().data = subgroups;
-      context
-          .read<OrderScreenManagement>()
-          .expandableController =
-          List.generate(
-              subgroups
-                  .length,
-                  (index) => false);
+      return subgroups;
     } else {
       throw "Status code is ${res.statusCode}";
     }

@@ -5,11 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../apis/Entities/Outlet.dart';
 
 class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
-  List<Outlet> allOutlets = [];
   Outlet? selectedOutlet;
   Outlet? carouselOutlet;
   GoogleMapController? controller;
@@ -28,6 +29,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
         ))));
     selectedOutlet = sortedOutlets[index];
   }
+
   changeSelectedMarkerOutletByCarousel(int index) {
     controller?.showMarkerInfoWindow(
         sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
@@ -62,11 +64,11 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  void initializeMarkers(LatLng userPosition) {
+  void initializeMarkers(LatLng userPosition, BuildContext context) {
     this.userPosition = userPosition;
-    int count = min(5, allOutlets.length);
+    int count = min(5, context.read<DataManagement>().hiveBox.outlets.length);
     List<Outlet> sortedOutlet = [];
-    sortedOutlet.addAll(allOutlets);
+    sortedOutlet.addAll(context.read<DataManagement>().hiveBox.outlets);
     sortedOutlet.sort(
       (a, b) {
         return Geolocator.distanceBetween(
@@ -103,8 +105,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           onTap: () {
             selectedOutlet = sortedOutlets[index];
             carouselController.jumpToPage(index);
-             //   .animateToPage(index);
-
+            //   .animateToPage(index);
           },
           markerId: MarkerId(sortedOutlet[index].name),
           position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
@@ -121,6 +122,4 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
     );
     notifyListeners();
   }
-
-
 }

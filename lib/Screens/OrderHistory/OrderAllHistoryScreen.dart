@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/StateManagement/DataManagement.dart';
 import 'package:psr_application/apis/Services/OrderService.dart';
 
-import '../Skeletons/OrdersSkeleton.dart';
-import '../StateManagement/BeatManagement.dart';
-import '../StateManagement/DateRangeManagement.dart';
-import '../database.dart';
-import 'package:nepali_date_picker/nepali_date_picker.dart' as picker;
+import '../../Skeletons/OrdersSkeleton.dart';
+import '../../StateManagement/AverageVolume.dart';
 
-import 'OrderScreen/SingularOrder.dart';
+import 'SingularOrder.dart';
 
 class OrderAllHistoryScreen extends StatelessWidget {
   @override
@@ -45,21 +43,25 @@ class OrderAllHistoryScreen extends StatelessWidget {
               ),
               Expanded(
                 child:
-                    context
-                        .watch<BeatManagement>()
-                        .outletOrders
-                            .isEmpty
+                    context.watch<DataManagement>().hiveBox.outletOrders.isEmpty
                         ? Center(child: Text("No Orders Found"))
                         : ListView(
-                        children: context
-                            .watch<BeatManagement>()
-                            .outletOrders.reversed
-                            .map(
-                              (e) => SingularOrder(e),
-                        )
-                            .toList()),
+                            children: [
+                              ...context
+                                  .watch<DataManagement>()
+                                  .hiveBox
+                                  .outletOrders
+                                  .reversed
+                                  .map(
+                                    (e) => SingularOrder(e),
+                                  )
+                                  .toList(),
+                            ],
+                          ),
               ),
-              SizedBox(height: 12,),
+              SizedBox(
+                height: 12,
+              ),
             ],
           )),
     );

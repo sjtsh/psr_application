@@ -2,8 +2,8 @@ import 'package:hive/hive.dart';
 
 part 'Performance.g.dart';
 
-@HiveType(typeId: 0)
-class Performance extends HiveObject {
+@HiveType(typeId: 5)
+class Performance {
   @HiveField(0)
   int scheduleVisit;
   @HiveField(1)

@@ -8,6 +8,7 @@ import 'package:psr_application/StateManagement/NoOrderManagement.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:psr_application/StateManagement/OrderVariation.dart';
 
+import '../../../StateManagement/DataManagement.dart';
 import '../../../StateManagement/ShopClosedController.dart';
 import '../../../apis/Entities/SubGroup.dart';
 import '../ConfirmOrderScreen/ConfirmOrderScreen.dart';
@@ -55,8 +56,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               Expanded(
                 child: ListView(
                   children: context
-                      .watch<OrderScreenManagement>()
-                      .data
+                      .watch<DataManagement>()
+                      .hiveBox
+                      .subgroups
                       .asMap()
                       .entries
                       .map((e) => SubGroupBanner(e.key, e.value))
@@ -67,9 +69,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                 onTap: () {
                   if (context.read<OrderVariation>().isAllDone) {
                     if (context
-                            .read<OrderScreenManagement>()
-                            .singularOrder
-                            .isEmpty) {
+                        .read<OrderScreenManagement>()
+                        .singularOrder
+                        .isEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return ConfirmOrder();
                       }));
