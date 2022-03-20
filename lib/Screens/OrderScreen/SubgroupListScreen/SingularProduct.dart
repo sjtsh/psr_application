@@ -52,13 +52,11 @@ class SingularProduct extends StatelessWidget {
                                       child: Text("SKU Header",
                                           style: TextStyle(fontSize: 20))),
                                 ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.arrow_back_ios,
-                                    color: Colors.transparent,
-                                  ),
-                                ),
+                                Text(
+                                  " ${context
+                                      .watch<OrderScreenManagement>()
+                                      .skuIndex +1 }/${subGroup.skus.length}"),
+                                SizedBox(width: 12,)
                               ],
                             ),
                           ),
