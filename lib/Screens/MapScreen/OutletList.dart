@@ -310,6 +310,15 @@ class OutletList extends StatelessWidget {
                                                 .singularOrder = {};
                                             context
                                                 .read<OrderScreenManagement>()
+                                                .competitiveExistingStock = {};
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .ownExistingStock = {};
+                                            context
+                                                .read<OrderScreenManagement>()
+                                                .noOrderReasons = {};
+                                            context
+                                                .read<OrderScreenManagement>()
                                                 .dataToDisplay = null;
                                             context.read<OrderVariation>().isAllDone = false;
                                             context

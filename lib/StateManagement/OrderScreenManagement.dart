@@ -125,12 +125,9 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
           context.read<OrderScreenManagement>().checkContains(element);
       if (message == "Order to be taken") {
         context.read<OrderVariation>().isAllDone = false;
-        print(context.read<OrderVariation>().isAllDone );
-        print("found");
         break;
       }
     }
-    print(context.read<OrderVariation>().isAllDone );
   }
 
   String checkContains(SubGroup subGroup) {

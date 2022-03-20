@@ -287,6 +287,7 @@ class SingularProduct extends StatelessWidget {
                                   context
                                       .read<OrderScreenManagement>()
                                       .singularOrder;
+                              context.read<OrderScreenManagement>().validation(context);
                               Navigator.pop(context);
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
