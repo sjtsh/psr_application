@@ -74,10 +74,10 @@ class SingularProduct extends StatelessWidget {
                                 carouselController: controller,
                                 options: CarouselOptions(
                                     initialPage: 0,
-                                    height: height / 2,
+                                    height: 350,
                                     enableInfiniteScroll: false,
                                     reverse: false,
-                                    viewportFraction: 0.6,
+                                    viewportFraction: 0.8,
                                     autoPlayCurve: Curves.fastOutSlowIn,
                                     enlargeCenterPage: true,
                                     scrollDirection: Axis.horizontal,
@@ -95,20 +95,15 @@ class SingularProduct extends StatelessWidget {
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(16),
                                             image: DecorationImage(
                                               image:
                                                   AssetImage("assets/oats.jpg"),
                                               fit: BoxFit.cover,
                                             ),
                                             // color: Color(0xffE8F5E9),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.1),
-                                                blurRadius: 3,
-                                                offset: Offset(0, 3),
-                                              ),
-                                            ]),
+                                        ),
                                       ),
                                       subGroup.skus[index].reward != 0
                                           ? Positioned(

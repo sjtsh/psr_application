@@ -72,7 +72,7 @@ packages:
     source: hosted
     version: "2.0.6"
   build_runner:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: build_runner
       url: "https://pub.dartlang.org"
@@ -519,7 +519,7 @@ packages:
     source: hosted
     version: "2.0.6"
   hive_generator:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: hive_generator
       url: "https://pub.dartlang.org"

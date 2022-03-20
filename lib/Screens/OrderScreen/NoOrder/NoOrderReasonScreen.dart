@@ -83,7 +83,7 @@ class _NoOrderReasonScreenState extends State<NoOrderReasonScreen> {
                               borderSide: const BorderSide(color: Colors.green)),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
-                              borderSide: BorderSide(color: Colors.black))),
+                              borderSide: BorderSide(color: Colors.grey))),
                       maxLines: 100,
                     ),
                   ),

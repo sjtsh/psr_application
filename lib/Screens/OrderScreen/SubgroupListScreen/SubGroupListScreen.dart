@@ -100,7 +100,31 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                       : Colors.blueGrey,
                   child: Center(
                     child: Text(
-                      "Confirm",
+                      "Confirm" " ("+
+                          (context
+                                      .watch<OrderScreenManagement>()
+                                      .noOrderReasons
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .competitiveExistingStock
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .ownExistingStock
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .singularOrder
+                                      .length)
+                              .toString() +
+                          "/" +
+                          context
+                              .read<DataManagement>()
+                              .hiveBox
+                              .subgroups
+                              .length
+                              .toString() + ")",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
