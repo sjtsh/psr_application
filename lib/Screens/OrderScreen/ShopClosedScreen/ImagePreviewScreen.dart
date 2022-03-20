@@ -85,7 +85,7 @@ class ImagePreviewScreen extends StatelessWidget {
                                 .read<ShopClosedController>()
                                 .remarkTextEditingController
                                 .text,
-                            outletId)
+                            outletId, context)
                         .then((value) {
                           context.read<ShopClosedController>().imageSent();
                       Navigator.pop(context);

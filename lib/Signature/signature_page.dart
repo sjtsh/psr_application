@@ -144,18 +144,6 @@ class _SignaturePageState extends State<SignaturePage> {
                                           await exportSignature();
                                       if (signature != null &&
                                           ownerPicture != null) {
-                                        String ownerUrl =
-                                            await OutletClosedService().uploadFile(
-                                                file: File(ownerPicture.path),
-                                                name:
-                                                    "owner/${NepaliDateTime.now()}",
-                                                userID: context.watch<DataManagement>().hiveBox.user.id);
-                                        String signatureUrl =
-                                            await OutletClosedService().uploadFile(
-                                                file: File(ownerPicture.path),
-                                                name:
-                                                    "signature/${NepaliDateTime.now()}",
-                                                userID: context.watch<DataManagement>().hiveBox.user.id);
                                         bool success = await OrderService()
                                             .insertOrder(
                                                 context
@@ -171,8 +159,8 @@ class _SignaturePageState extends State<SignaturePage> {
                                                     .read<MapManagement>()
                                                     .selectedOutlet!
                                                     .outletPlanId,
-                                                signatureUrl,
-                                                ownerUrl,
+                                                ownerPicture.path,
+                                                ownerPicture.path,
                                                 context
                                                     .read<
                                                         OrderScreenManagement>()
@@ -184,8 +172,7 @@ class _SignaturePageState extends State<SignaturePage> {
                                                 context
                                                     .read<
                                                         OrderScreenManagement>()
-                                                    .noOrderReasons);
-                                        print(success);
+                                                    .noOrderReasons, context);
                                       }
                                     }catch(e){
                                       print(e);

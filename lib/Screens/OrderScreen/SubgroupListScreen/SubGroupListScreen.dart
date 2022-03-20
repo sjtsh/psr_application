@@ -3,17 +3,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmOrder.dart';
+
 import 'package:psr_application/Screens/OrderScreen/DialogPrompt/TakeOrderDialog.dart';
 import 'package:psr_application/Screens/OrderScreen/OrderScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/SubgroupListScreen/SingularProduct.dart';
 import 'package:psr_application/Screens/OrderScreen/SubgroupListScreen/SubGroupBanner.dart';
-import 'package:psr_application/StateManagement/NoOrderManagement.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:psr_application/StateManagement/OrderVariation.dart';
 
 import '../../../StateManagement/DataManagement.dart';
-import '../../../StateManagement/ShopClosedController.dart';
-import '../../../apis/Entities/SubGroup.dart';
 import '../ConfirmOrderScreen/ConfirmOrderScreen.dart';
 import '../NoOrder/NoOrderScreen.dart';
 
@@ -68,8 +66,10 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                         .toList(),
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
+
+              GestureDetector(
+                onTap: () {
+                  // if (context.read<OrderVariation>().isAllDone) {
                     if (context
                         .read<OrderVariation>()
                         .isAllDone) {
@@ -96,46 +96,55 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                         } catch (e) {}
                       });
                     }
-                  },
-                  child: Container(
-                    height: 60,
-                    color: context
-                        .watch<OrderVariation>()
-                        .isAllDone
-                        ? Colors.green
-                        : Colors.blueGrey,
-                    child: Center(
-                      child: Text(
-                        "Confirm" " (" +
-                            (context
-                                .watch<OrderScreenManagement>()
-                                .noOrderReasons
-                                .length +
-                                context
-                                    .watch<OrderScreenManagement>()
-                                    .competitiveExistingStock
-                                    .length +
-                                context
-                                    .watch<OrderScreenManagement>()
-                                    .ownExistingStock
-                                    .length +
-                                context
-                                    .watch<OrderScreenManagement>()
-                                    .singularOrder
-                                    .length)
-                                .toString() +
-                            "/" +
-                            context
-                                .read<DataManagement>()
-                                .hiveBox
-                                .subgroups
-                                .length
-                                .toString() + ")",
-                        style: TextStyle(color: Colors.white),
-                      ),
+                  // } else {
+                  //   context
+                  //       .read<OrderScreenManagement>()
+                  //       .keys
+                  //       .forEach((element) {
+                  //     try {
+                  //       final dynamic tooltip = element.currentState;
+                  //       tooltip.ensureTooltipVisible();
+                  //     } catch (e) {}
+                  //   });
+                  // }
+                },
+                child: Container(
+                  height: 60,
+                  color: context.watch<OrderVariation>().isAllDone
+                      ? Colors.green
+                      : Colors.blueGrey,
+                  child: Center(
+                    child: Text(
+                      "Confirm" " ("+
+                          (context
+                                      .watch<OrderScreenManagement>()
+                                      .noOrderReasons
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .competitiveExistingStock
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .ownExistingStock
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .singularOrder
+                                      .length)
+                              .toString() +
+                          "/" +
+                          context
+                              .read<DataManagement>()
+                              .hiveBox
+                              .subgroups
+                              .length
+                              .toString() + ")",
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 )
+              ),
               ],
             ),
           ),

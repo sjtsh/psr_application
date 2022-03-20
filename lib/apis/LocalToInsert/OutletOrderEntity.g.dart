@@ -35,7 +35,7 @@ class OutletOrderEntityAdapter extends TypeAdapter<OutletOrderEntity> {
     writer
       ..writeByte(8)
       ..writeByte(0)
-      ..write(obj.aMap)
+      ..write(obj.singularOrder)
       ..writeByte(1)
       ..write(obj.remarks)
       ..writeByte(2)

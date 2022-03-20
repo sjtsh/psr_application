@@ -35,8 +35,5 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
   @override
   void dispose(){
     timer?.cancel();
-    print("cancelled");
-    controller?.dispose();
-    print("disposed");
   }
 }

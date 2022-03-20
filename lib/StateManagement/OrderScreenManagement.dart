@@ -120,7 +120,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
     context.read<OrderVariation>().isAllDone = true;
     for (var element in context
         .read<DataManagement>()
-        .hiveBox.subgroups.sublist(0, 2)) {
+        .hiveBox.subgroups) {
       String message =
           context.read<OrderScreenManagement>().checkContains(element);
       if (message == "Order to be taken") {
