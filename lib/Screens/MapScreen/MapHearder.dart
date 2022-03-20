@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/StateManagement/MapManagement.dart';
-import 'package:psr_application/StateManagement/TodayProgress.dart';
+
+import '../../StateManagement/AverageVolume.dart';
 
 class MapHeader extends StatelessWidget {
   final Function page;
@@ -36,7 +36,7 @@ class MapHeader extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                context.read<TodayProgressState>().inProgressBeat?.beatName ??
+                context.read<AverageVolumeState>().inProgressBeat?.beatName ??
                     "",
                 style: const TextStyle(fontSize: 16),
               ),

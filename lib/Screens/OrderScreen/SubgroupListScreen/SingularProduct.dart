@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/NoOrder/NoOrderScreen.dart';
-import 'package:psr_application/Screens/OrderScreen/SubGroupDetails.dart';
+import 'package:psr_application/Screens/OrderScreen/SubgroupListScreen/SubGroupDetails.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
 import '../../../StateManagement/LogInManagement.dart';
 import '../../../StateManagement/OrderScreenManagement.dart';
@@ -23,18 +23,19 @@ class SingularProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Builder(builder: (context) {
-        return Scaffold(
-          backgroundColor: Color(0xffF6F6F6),
-          body: Builder(builder: (context) {
-            double height = MediaQuery.of(context).size.height;
-            return Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: SizedBox(
-                      height: height,
+    return Builder(builder: (context) {
+      double height =
+          MediaQuery.of(context).size.height - kBottomNavigationBarHeight;
+      return SafeArea(
+        child: Scaffold(
+          body: LayoutBuilder(builder: (context, BoxConstraints size) {
+            print(height.toString() + " " + size.maxHeight.toString());
+            return SingleChildScrollView(
+              child: SizedBox(
+                height: height,
+                child: Column(
+                  children: [
+                    Expanded(
                       child: Column(
                         children: [
                           Container(
@@ -199,7 +200,8 @@ class SingularProduct extends StatelessWidget {
                                             image: const DecorationImage(
                                               image:
                                                   AssetImage("assets/oats.jpg"),
-                                              fit: BoxFit.cover,
+
+                                              fit: BoxFit.contain,
                                             ),
                                           ),
                                         ),
@@ -258,57 +260,61 @@ class SingularProduct extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      right: 12, left: 12, top: 8, bottom: 12),
-                  child: Container(
-                    clipBehavior: Clip.hardEdge,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: MaterialButton(
-                      height: 50,
-                      onPressed: () async {
-                        if (context
-                            .read<OrderVariation>()
-                            .tempSubGroupVariation
-                            .isNotEmpty) {
-                          context
-                                  .read<OrderScreenManagement>()
-                                  .singularOrder[subGroup] =
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 12, left: 12, top: 8, bottom: 12),
+                      child: Container(
+                        clipBehavior: Clip.hardEdge,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: MaterialButton(
+                          height: 50,
+                          onPressed: () async {
+                            if (context
+                                .read<OrderVariation>()
+                                .tempSubGroupVariation
+                                .isNotEmpty) {
                               context
-                                  .read<OrderVariation>()
-                                  .tempSubGroupVariation;
-                          context.read<OrderScreenManagement>().singularOrder =
+                                      .read<OrderScreenManagement>()
+                                      .singularOrder[subGroup] =
+                                  context
+                                      .read<OrderVariation>()
+                                      .tempSubGroupVariation;
                               context
-                                  .read<OrderScreenManagement>()
-                                  .singularOrder;
-                          Navigator.pop(context);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Please insert quantity")));
-                        }
-                      },
-                      child: Center(
-                        child: !context.watch<LogInManagement>().isLoading
-                            ? const Text(
-                                "Confirm ",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            : CircularProgressIndicator(color: Colors.white),
+                                      .read<OrderScreenManagement>()
+                                      .singularOrder =
+                                  context
+                                      .read<OrderScreenManagement>()
+                                      .singularOrder;
+                              Navigator.pop(context);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text("Please insert quantity")));
+                            }
+                          },
+                          child: Center(
+                            child: !context.watch<LogInManagement>().isLoading
+                                ? const Text(
+                                    "Confirm ",
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                : CircularProgressIndicator(
+                                    color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             );
           }),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }

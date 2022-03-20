@@ -5,22 +5,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ShopClosedScreen/ShopClosedScreen.dart';
 import 'package:psr_application/StateManagement/AverageVolume.dart';
-import 'package:psr_application/StateManagement/ShopClosedController.dart';
-
-import '../../../StateManagement/MapManagement.dart';
-import '../../../StateManagement/TodayProgress.dart';
-import '../../MapScreen/MapScreen.dart';
 
 class TodayProgress extends StatelessWidget {
   final int isWeekly;
   final int todaySKUVariance;
   final int rewardPoints;
   final double totalSaleVolume;
-  final int successVisitText;
+  final int successVisit;
   final int scheduledVisit;
+  final int productiveVisit;
 
   TodayProgress(this.isWeekly, this.todaySKUVariance, this.rewardPoints,
-      this.totalSaleVolume, this.successVisitText, this.scheduledVisit);
+      this.totalSaleVolume, this.successVisit, this.scheduledVisit, this.productiveVisit);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +39,7 @@ class TodayProgress extends StatelessWidget {
               ),
               Expanded(child: Container()),
               Text(
-                context.watch<TodayProgressState>().inProgressBeat?.beatName ??
+                context.watch<AverageVolumeState>().inProgressBeat?.beatName ??
                     "",
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.5),
@@ -74,12 +70,12 @@ class TodayProgress extends StatelessWidget {
                   children: [
                     Countup(
                       begin: 0,
-                      end: context.watch<TodayProgressState>().visitText + 0.0,
+                      end: successVisit + 0.0,
                       suffix: "/${scheduledVisit.toString()} visits",
                       style: TextStyle(color: Colors.black, fontSize: 30),
                     ),
                     Text(
-                      successVisitText.toString() + " productive visits",
+                      productiveVisit.toString() + " productive visits",
                       style: TextStyle(color: Colors.green, fontSize: 16),
                     ),
                   ],

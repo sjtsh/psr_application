@@ -16,10 +16,11 @@ class OrderScreen extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back_ios)),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back_ios),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Text(

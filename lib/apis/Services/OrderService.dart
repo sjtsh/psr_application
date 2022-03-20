@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -12,75 +13,9 @@ import '../../database.dart';
 import '../Entities/OutletOrderItem.dart';
 import '../Entities/SKU.dart';
 import '../Entities/SubGroup.dart';
+import 'ShopClosed.dart';
 
 class OrderService {
-  Future<void> getPerformanceDateRange(
-      String startDate, String endDate, BuildContext context) async {
-    Response res = await http.get(
-      Uri.parse(
-          "https://asia-south1-psr-application-342007.cloudfunctions.net/getProgressDateRange"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'session_id': (meUser?.sessionID ?? ""),
-        'start_date': startDate,
-        "end_date": endDate,
-      },
-    );
-    if (res.statusCode == 200) {
-      Map<String, dynamic> a = jsonDecode(res.body);
-      // context.read<AverageVolumeState>().customSaleVolume  = double.parse(a["sales"].toString());
-      // context.read<AverageVolumeState>().customSKUVariance  = int.parse(a["sku"].toString());
-      return;
-    } else {
-      throw "Status code is ${res.statusCode}";
-    }
-  }
-
-  Future<void> getOrdersDateRange(
-      String startDate, String endDate, BuildContext context) async {
-    Response res = await http.get(
-      Uri.parse(
-          "https://asia-south1-psr-application-342007.cloudfunctions.net/getOrdersDateRange"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-        'session_id': (meUser?.sessionID ?? ""),
-        'start_date': startDate,
-        "end_date": endDate,
-      },
-    );
-    if (res.statusCode == 200) {
-      Map<String, dynamic> a = jsonDecode(res.body);
-      Map<String, dynamic> ordersMap = a["orders"];
-      List<OutletOrder> orders = ordersMap.keys.map((e) {
-        Map<String, dynamic> items = ordersMap[e]["items"];
-        return OutletOrder(
-          int.parse(e.toString()),
-          ordersMap[e]["outlet_plan_id"],
-          DateTime.parse(ordersMap[e]["time_created"]),
-          ordersMap[e]["remarks"],
-          ordersMap[e]["beat_name"],
-          ordersMap[e]["outlet_name"],
-          int.parse(ordersMap[e]["outlet_id"].toString()),
-          items.keys
-              .map((f) => OutletOrderItem(
-                  int.parse(f.toString()),
-                  items[f]["sku_id"],
-                  items[f]["name"],
-                  items[f]["primary_count"],
-                  items[f]["primary_unit"],
-                  items[f]["secondary_unit"],
-                  items[f]["cf"],
-                  double.parse(items[f]["ptr"].toString()),
-                  double.parse(items[f]["mrp"].toString())))
-              .toList(),
-        );
-      }).toList();
-      context.read<DateRangeManagement>().requestedOrders = orders;
-      return;
-    } else {
-      throw "Status code is ${res.statusCode}";
-    }
-  }
 
   Future<bool> insertOrder(
       Map<SubGroup, Map<SKU, int>> aMap,
@@ -92,6 +27,7 @@ class OrderService {
       Map<SubGroup, Map<String, String>> ownExistingStock,
       // the value for a subgroup to have two keys first one should be stock_count and other should be img url
       Map<SubGroup, String> noOrderReasons) async {
+    print("into the insert function");
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -116,14 +52,24 @@ class OrderService {
     }
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
-    bodyMap["signature_img_url"] = signatureImgUrl;
-    bodyMap["owner_img_url"] = ownerImgUrl;
-    bodyMap["owner_img_url"] = resultCompetitiveExistingStock;
-    bodyMap["own_existing_stock"] = resultownExistingStockStock;
+    bodyMap["signature_img"] = signatureImgUrl;
+    bodyMap["owner_img"] = ownerImgUrl;
+    bodyMap["competitive_existing_stocks"] = resultCompetitiveExistingStock;
+
+    List keys = resultownExistingStockStock.keys.toList();
+    for(int i=0; i<keys.length; i++){
+      String path = resultownExistingStockStock[keys[i]]["img"];
+      String ownerUrl = await OutletClosedService().uploadFile(
+          file: File(path),
+          name: "existing_stock/${NepaliDateTime.now()}",
+          userID: meUser!.id);
+      resultownExistingStockStock[keys[i]]["img"] = ownerUrl;
+    }
+
+    bodyMap["own_existing_stocks"] = resultownExistingStockStock;
     bodyMap["no_order_reasons"] = resultNoOrderReasons;
     bodyMap["time_created"] = NepaliDateTime.now().toString().substring(0, 19);
-
-
+    print(bodyMap);
     Response res = await http.post(
         Uri.parse(
             "https://asia-south1-psr-application-342007.cloudfunctions.net/createOutletOrder"),
@@ -132,6 +78,7 @@ class OrderService {
           'session_id': (meUser?.sessionID ?? ""),
         },
         body: jsonEncode(bodyMap));
+    print(res.body);
     if (res.statusCode == 200) {
       return true;
     } else {

@@ -12,7 +12,10 @@ import 'package:psr_application/Screens/MapScreen/MapSideUI.dart';
 import 'package:psr_application/Screens/MapScreen/OutletList.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
+import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/apis/Entities/Outlet.dart';
+
+import '../../StateManagement/DataManagement.dart';
 
 class MapScreen extends StatelessWidget {
   final Function page;
@@ -50,6 +53,11 @@ class MapScreen extends StatelessWidget {
                       .watch<MapManagement>()
                       .sortedOutlets[index]
                       .marker!).toSet(),
+              polylines: {
+                Polyline(
+                    polylineId: PolylineId("polylineId"),
+                    points: context.watch<ShopClosedController>().latlngs)
+              },
               onMapCreated: (GoogleMapController controller) async {
                 bool cameraRotate = false;
                 context.read<MapManagement>().controller = controller;
@@ -63,7 +71,7 @@ class MapScreen extends StatelessWidget {
                     cameraRotate = true;
                   }
                   context.read<MapManagement>().initializeMarkers(
-                      LatLng(event.latitude, event.longitude));
+                      LatLng(event.latitude, event.longitude), context);
                 });
               },
             ),
@@ -77,7 +85,7 @@ class MapScreen extends StatelessWidget {
             const MapSideUI(),
 
             //List of outlets UI
-            context.watch<MapManagement>().allOutlets.isNotEmpty
+            context.read<DataManagement>().hiveBox.outlets.isNotEmpty
                 ? Positioned(
                     bottom: 0,
                     height: 300,

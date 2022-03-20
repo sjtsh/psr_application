@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/StateManagement/OrderVariation.dart';
 
-import '../../StateManagement/OrderScreenManagement.dart';
-import '../../apis/Entities/SKU.dart';
-import '../../apis/Entities/SubGroup.dart';
+import '../../../StateManagement/OrderScreenManagement.dart';
+import '../../../apis/Entities/SKU.dart';
+import '../../../apis/Entities/SubGroup.dart';
 
 class SubgroupDetails extends StatefulWidget {
   final SKU sku;

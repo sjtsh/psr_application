@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmOrder.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmNoOrderScreen.dart';
 import 'package:psr_application/Screens/OrderScreen/ConfirmOrderScreen/ConfirmVariation.dart';
+import 'package:psr_application/Signature/signature_page.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/apis/Services/OrderService.dart';
 
@@ -256,77 +257,10 @@ class ConfirmOrderScreen extends StatelessWidget {
                               ),
                               child: MaterialButton(
                                 onPressed: () async {
-                                  if (context
-                                          .read<OrderScreenManagement>()
-                                          .singularOrder
-                                          .isNotEmpty &&
-                                      !context
-                                          .read<OrderScreenManagement>()
-                                          .confirmButtonDisabled) {
-                                    context
-                                        .read<OrderScreenManagement>()
-                                        .confirmButtonDisabled = true;
-                                    bool success = false;
-                                    try {
-                                      if (order == null) {
-                                        //needed to revise
-                                        // success = await OrderService()
-                                        //     .insertOrder(
-                                        //         context
-                                        //             .read<
-                                        //                 OrderScreenManagement>()
-                                        //             .singularOrder,
-                                        //     context
-                                        //         .read<OrderScreenManagement>()
-                                        //         .confirmOrderRemarkController.text ,
-                                        //         context
-                                        //             .read<MapManagement>()
-                                        //             .selectedOutlet!
-                                        //             .outletPlanId);
-                                      } else {
-                                        success = await OrderService()
-                                            .updateOrder(
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .singularOrder,
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .confirmOrderRemarkController
-                                                    .text,
-                                                order!.id);
-                                      }
-                                    } catch (e) {
-                                      print(e);
-                                    }
-                                    if (success) {
-                                      // ScaffoldMessenger.of(context)
-                                      //     .showSnackBar(
-                                      //   const SnackBar(
-                                      //     content: Text("Successful"),
-                                      //   ),
-                                      // );
-                                      // Navigator.pop(context);
-                                      // Navigator.pop(context);
-                                      // Navigator.push(context, MaterialPageRoute(builder: (_){
-                                      //   return ConfirmOrder();
-                                      // }));
-                                    } else {
-                                      Navigator.push(context, MaterialPageRoute(builder: (_){
-                                        return ConfirmOrder();
-                                      }));
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text("Unsuccessful"),
-                                        ),
-                                      );
-                                    }
-                                    context
-                                        .read<OrderScreenManagement>()
-                                        .confirmButtonDisabled = false;
-                                  }
+                                  Navigator.push(context, MaterialPageRoute(builder: (_){
+
+                                    return SignaturePage();
+                                  }));
                                 },
                                 child: Center(
                                   child: context

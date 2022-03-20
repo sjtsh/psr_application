@@ -8,6 +8,7 @@ import 'package:psr_application/StateManagement/NoOrderManagement.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:psr_application/StateManagement/OrderVariation.dart';
 
+import '../../../StateManagement/DataManagement.dart';
 import '../../../StateManagement/ShopClosedController.dart';
 import '../../../apis/Entities/SubGroup.dart';
 import '../ConfirmOrderScreen/ConfirmOrderScreen.dart';
@@ -55,8 +56,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               Expanded(
                 child: ListView(
                   children: context
-                      .watch<OrderScreenManagement>()
-                      .data
+                      .watch<DataManagement>()
+                      .hiveBox
+                      .subgroups
                       .asMap()
                       .entries
                       .map((e) => SubGroupBanner(e.key, e.value))
@@ -65,15 +67,11 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  String indicator=  context
-                      .read<OrderScreenManagement>()
-                      .keys.toString() +"/"+  context.watch<OrderScreenManagement>()
-                      .data.length.toString();
                   if (context.read<OrderVariation>().isAllDone) {
                     if (context
-                            .read<OrderScreenManagement>()
-                            .singularOrder
-                            .isEmpty) {
+                        .read<OrderScreenManagement>()
+                        .singularOrder
+                        .isEmpty) {
                       Navigator.push(context, MaterialPageRoute(builder: (_) {
                         return ConfirmOrder();
                       }));
@@ -90,9 +88,6 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                       try {
                         final dynamic tooltip = element.currentState;
                         tooltip.ensureTooltipVisible();
-                        context
-                            .read<OrderScreenManagement>()
-                      .greenKeysIncrement;
                       } catch (e) {}
                     });
                   }
@@ -104,10 +99,31 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                       : Colors.blueGrey,
                   child: Center(
                     child: Text(
-                      "Confirm" + context
-                          .watch<OrderScreenManagement>()
-                          .greenKeys.toString() +"/"+  context.watch<OrderScreenManagement>()
-                          .data.length.toString(),
+                      "Confirm" +
+                          (context
+                                      .watch<OrderScreenManagement>()
+                                      .noOrderReasons
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .competitiveExistingStock
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .ownExistingStock
+                                      .length +
+                                  context
+                                      .watch<OrderScreenManagement>()
+                                      .singularOrder
+                                      .length)
+                              .toString() +
+                          "/" +
+                          context
+                              .read<DataManagement>()
+                              .hiveBox
+                              .subgroups
+                              .length
+                              .toString(),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

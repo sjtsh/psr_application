@@ -11,6 +11,7 @@ import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/StateManagement/OrderScreenManagement.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../StateManagement/DataManagement.dart';
 import '../../StateManagement/MapManagement.dart';
 import '../../StateManagement/ShopClosedController.dart';
 import '../OrderScreen/NoOrder/NoOrderScreen.dart';
@@ -315,9 +316,8 @@ class OutletList extends StatelessWidget {
                                                 .keys =
                                                 List.generate(
                                                     context
-                                                        .read<
-                                                        OrderScreenManagement>()
-                                                        .data
+                                                        .read<DataManagement>()
+                                                        .hiveBox.subgroups
                                                         .length,
                                                         (index) => GlobalKey());
                                             Navigator.of(context).push(
