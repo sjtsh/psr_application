@@ -1,6 +1,9 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:psr_application/database.dart';
+
+import '../../../StateManagement/DataManagement.dart';
 
 
 class BeatHeader extends StatelessWidget {
@@ -44,7 +47,7 @@ class BeatHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(meUser!.name),
+                Text(context.watch<DataManagement>().hiveBox.user.name),
                 Text(
                   "Sales Supervisor",
                   style: TextStyle(

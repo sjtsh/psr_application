@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/HiveBox/HiveBox.dart';
 import 'package:psr_application/StateManagement/DataManagement.dart';
@@ -40,6 +41,19 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
   bool isLoading = false;
   bool isPasswordShown = false;
   bool isVerified = false;
+
+  LoadingFromHive(BuildContext context) async {
+    try {
+      context.read<DataManagement>().hiveBox = Hive.box("box").getAt(0)!;
+      meUser = context.read<DataManagement>().hiveBox.user;
+      final event = await Geolocator.getCurrentPosition();
+      context
+          .read<MapManagement>()
+          .initializeMarkers(LatLng(event.latitude, event.longitude), context);
+    } catch (e) {
+      catchException(e, context);
+    }
+  }
 
   LoadingFromSession(BuildContext context, String sessionID) async {
     try {
@@ -93,6 +107,8 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
           beats: beats,
           user: meUser!);
       await Hive.box("box").put(0, hiveBox);
+      await SharedPreferences.getInstance().then((value) => value.setString(
+          "date", NepaliDateTime.now().toString().substring(0, 10)));
       context.read<DataManagement>().hiveBox = Hive.box("box").getAt(0)!;
       final event = await Geolocator.getCurrentPosition();
       context
