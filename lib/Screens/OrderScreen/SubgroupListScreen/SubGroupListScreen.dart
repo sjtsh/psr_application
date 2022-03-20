@@ -67,6 +67,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               ),
               GestureDetector(
                 onTap: () {
+                  print(context.read<OrderVariation>().isAllDone );
                   if (context.read<OrderVariation>().isAllDone) {
                     if (context
                         .read<OrderScreenManagement>()

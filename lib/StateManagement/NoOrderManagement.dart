@@ -75,6 +75,7 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
     } else {
       _noOrderReasonTextField = "";
     }
+    context.read<OrderScreenManagement>().validation(context);
   }
 
   addNoOrderReason(SubGroup subGroup, BuildContext context) {
