@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'SKU.g.dart';
 
 @HiveType(typeId: 6)
-class SKU {
+class SKU extends HiveObject{
   @HiveField(0)
   final int id;
   @HiveField(1)
