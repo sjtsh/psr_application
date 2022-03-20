@@ -12,6 +12,7 @@ import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:psr_application/database.dart';
 import 'package:signature/signature.dart';
 
+import '../StateManagement/DataManagement.dart';
 import '../StateManagement/MapManagement.dart';
 import '../StateManagement/OrderScreenManagement.dart';
 import '../StateManagement/ShopClosedController.dart';
@@ -148,13 +149,13 @@ class _SignaturePageState extends State<SignaturePage> {
                                                 file: File(ownerPicture.path),
                                                 name:
                                                     "owner/${NepaliDateTime.now()}",
-                                                userID: meUser!.id);
+                                                userID: context.watch<DataManagement>().hiveBox.user.id);
                                         String signatureUrl =
                                             await OutletClosedService().uploadFile(
                                                 file: File(ownerPicture.path),
                                                 name:
                                                     "signature/${NepaliDateTime.now()}",
-                                                userID: meUser!.id);
+                                                userID: context.watch<DataManagement>().hiveBox.user.id);
                                         bool success = await OrderService()
                                             .insertOrder(
                                                 context

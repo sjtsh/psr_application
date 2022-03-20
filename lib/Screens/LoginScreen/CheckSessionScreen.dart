@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/LoginScreen/LoadingScreen.dart';
+import 'package:psr_application/Screens/LoginScreen/SplashScreen.dart';
 import 'package:psr_application/Screens/LoginScreen/loginScreen.dart';
 import 'package:psr_application/StateManagement/LogInManagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,14 +20,14 @@ class CheckSessionScreen extends StatelessWidget {
     return FutureBuilder(
       future: SharedPreferences.getInstance().then((prefs) async {
         String sessionID = prefs.getString("session_id") ?? "";
-        availableCameras().then((value){
+        availableCameras().then((value) {
           context.read<ShopClosedController>().cameras = value;
-          context
-              .read<ShopClosedController>()
-              .initialize();
+          context.read<ShopClosedController>().initialize();
         });
         if (sessionID != "") {
-          context.read<LogInManagement>().LoadingFromSession(context, sessionID);
+          context
+              .read<LogInManagement>()
+              .LoadingFromSession(context, sessionID);
           return sessionID;
         }
         return "";
@@ -40,10 +41,7 @@ class CheckSessionScreen extends StatelessWidget {
             return LoadingScreen();
           }
         }
-        return Scaffold(
-            body: Center(
-          child: SvgPicture.asset("assets/logo.svg"),
-        ));
+        return SplashScreen();
       },
     );
   }

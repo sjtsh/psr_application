@@ -6,6 +6,7 @@ import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/database.dart';
 
+import '../../../StateManagement/DataManagement.dart';
 import '../../../apis/Services/ShopClosed.dart';
 
 class ImagePreviewScreen extends StatelessWidget {
@@ -79,7 +80,7 @@ class ImagePreviewScreen extends StatelessWidget {
                         .insertOutletClosed(
                             File(path),
                             "trying${path.split("\\").last}",
-                            meUser?.id ?? "0",
+                        context.watch<DataManagement>().hiveBox.user.id ,
                             context
                                 .read<ShopClosedController>()
                                 .remarkTextEditingController
