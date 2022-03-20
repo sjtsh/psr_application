@@ -4,7 +4,7 @@ import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 part 'OutletOrder.g.dart';
 
 @HiveType(typeId: 3)
-class OutletOrder {
+class OutletOrder extends HiveObject{
   @HiveField(0)
   final int id;
   @HiveField(1)

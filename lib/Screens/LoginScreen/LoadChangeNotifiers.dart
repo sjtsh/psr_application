@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/HiveBox/HiveBoxLocal.dart';
 import 'package:psr_application/MyApp.dart';
 import 'package:psr_application/Screens/LoginScreen/SplashScreen.dart';
 import 'dart:io';
@@ -9,10 +10,12 @@ import 'package:psr_application/StateManagement/DataManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
 import 'package:psr_application/apis/Entities/Beat.dart';
-import 'package:psr_application/apis/Entities/OutletOrder.dart';
+
+// import 'package:psr_application/apis/Entities/OutletOrder.dart';
 import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
 import 'package:psr_application/apis/Entities/User.dart';
+import 'package:psr_application/apis/LocalToInsert/UploadFileEntity.dart';
 import '../../HiveBox/HiveBox.dart';
 import '../../StateManagement/LogInManagement.dart';
 import '../../StateManagement/AverageVolume.dart';
@@ -22,8 +25,11 @@ import '../../StateManagement/NoOrderManagement.dart';
 import '../../StateManagement/OrderScreenManagement.dart';
 import '../../StateManagement/OrderVariation.dart';
 import '../../apis/Entities/Outlet.dart';
+import '../../apis/Entities/OutletOrder.dart';
 import '../../apis/Entities/Performance.dart';
 import '../../apis/Entities/SKU.dart';
+import '../../apis/LocalToInsert/OutletClosedEntity.dart';
+import '../../apis/LocalToInsert/OutletOrderEntity.dart';
 
 class LoadChangeNotifiers extends StatelessWidget {
   const LoadChangeNotifiers({Key? key}) : super(key: key);
@@ -41,8 +47,13 @@ class LoadChangeNotifiers extends StatelessWidget {
       ..registerAdapter(PerformanceAdapter())
       ..registerAdapter(SKUAdapter())
       ..registerAdapter(SubGroupAdapter())
-      ..registerAdapter(UserAdapter());
+      ..registerAdapter(UserAdapter())
+      ..registerAdapter(OutletClosedEntityAdapter())
+      ..registerAdapter(OutletOrderEntityAdapter())
+      ..registerAdapter(UploadFileEntityAdapter())
+      ..registerAdapter(HiveBoxLocalAdapter());
     await Hive.openBox('box');
+    await Hive.openBox('unsynced');
     return true;
   }
 

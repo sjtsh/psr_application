@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'OutletOrderItem.g.dart';
 
 @HiveType(typeId: 4)
-class OutletOrderItem {
+class OutletOrderItem extends HiveObject{
   @HiveField(0)
   final int id;
   @HiveField(1)

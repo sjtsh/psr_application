@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'Performance.g.dart';
 
 @HiveType(typeId: 5)
-class Performance {
+class Performance extends HiveObject {
   @HiveField(0)
   int scheduleVisit;
   @HiveField(1)
