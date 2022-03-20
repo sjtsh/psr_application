@@ -44,7 +44,7 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   LoadingFromHive(BuildContext context) async {
     try {
-      context.read<DataManagement>().hiveBox = Hive.box("box").getAt(0)!;
+      context.read<DataManagement>().hiveBox = Hive.box("box").getAt(0);
       meUser = context.read<DataManagement>().hiveBox.user;
       final event = await Geolocator.getCurrentPosition();
       context
@@ -97,7 +97,6 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
       List<OutletOrder> orders = tourplan[2] as List<OutletOrder>;
       context.read<AverageVolumeState>().inProgressBeat =
           beats.firstWhere((element) => element.inProgress);
-      notifyListeners();
 
       HiveBox hiveBox = HiveBox(
           performances: performances,
@@ -109,7 +108,7 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
       await Hive.box("box").put(0, hiveBox);
       await SharedPreferences.getInstance().then((value) => value.setString(
           "date", NepaliDateTime.now().toString().substring(0, 10)));
-      context.read<DataManagement>().hiveBox = Hive.box("box").getAt(0)!;
+      context.read<DataManagement>().hiveBox = Hive.box("box").getAt(0);
       final event = await Geolocator.getCurrentPosition();
       context
           .read<MapManagement>()

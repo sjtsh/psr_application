@@ -41,6 +41,7 @@ class CheckTodayScreen extends StatelessWidget {
       builder: (context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           bool a = snapshot.data;
+          print(a);
           if (a) {
             return BeatScreen();
           } else {

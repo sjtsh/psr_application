@@ -22,7 +22,6 @@ class CheckSessionScreen extends StatelessWidget {
         String sessionID = prefs.getString("session_id") ?? "";
         availableCameras().then((value) {
           context.read<ShopClosedController>().cameras = value;
-          context.read<ShopClosedController>().initialize();
         });
         if (sessionID != "") {
           context

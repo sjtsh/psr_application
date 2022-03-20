@@ -67,7 +67,6 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  print(context.read<OrderVariation>().isAllDone );
                   if (context.read<OrderVariation>().isAllDone) {
                     if (context
                         .read<OrderScreenManagement>()
@@ -95,7 +94,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                 },
                 child: Container(
                   height: 60,
-                  color: context.read<OrderVariation>().isAllDone
+                  color: context.watch<OrderVariation>().isAllDone
                       ? Colors.green
                       : Colors.blueGrey,
                   child: Center(

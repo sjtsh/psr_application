@@ -39,28 +39,4 @@ class ShopClosedController with ChangeNotifier, DiagnosticableTreeMixin {
     controller?.dispose();
     print("disposed");
   }
-
-  void initialize() {
-    print("initialization started");
-    NativeDeviceOrientationCommunicator()
-        .orientation(useSensor: true)
-        .then((value) {
-      orientation = value;
-      notifyListeners();
-      print("orientation found $orientation");
-    });
-    controller = CameraController(cameras[0], ResolutionPreset.high,);
-    controller?.initialize();
-    notifyListeners();
-    print("initialized");
-
-    timer = Timer.periodic(Duration(seconds: 2), (timer) {
-      NativeDeviceOrientationCommunicator()
-          .orientation(useSensor: true)
-          .then((value) {
-        orientation = value;
-        notifyListeners();
-      });
-    });
-  }
 }

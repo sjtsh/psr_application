@@ -35,25 +35,27 @@ class LoadChangeNotifiers extends StatelessWidget {
   const LoadChangeNotifiers({Key? key}) : super(key: key);
 
   Future<bool> openBox() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    Directory dir = await getApplicationDocumentsDirectory();
-    Hive
-      ..init(dir.path)
-      ..registerAdapter(HiveBoxAdapter())
-      ..registerAdapter(HollowBeatAdapter())
-      ..registerAdapter(OutletOrderAdapter())
-      ..registerAdapter(OutletAdapter())
-      ..registerAdapter(OutletOrderItemAdapter())
-      ..registerAdapter(PerformanceAdapter())
-      ..registerAdapter(SKUAdapter())
-      ..registerAdapter(SubGroupAdapter())
-      ..registerAdapter(UserAdapter())
-      ..registerAdapter(OutletClosedEntityAdapter())
-      ..registerAdapter(OutletOrderEntityAdapter())
-      ..registerAdapter(UploadFileEntityAdapter())
-      ..registerAdapter(HiveBoxLocalAdapter());
-    await Hive.openBox('box');
-    await Hive.openBox('unsynced');
+    try {
+      WidgetsFlutterBinding.ensureInitialized();
+      Directory dir = await getApplicationDocumentsDirectory();
+      Hive
+        ..init(dir.path)
+        ..registerAdapter(HiveBoxAdapter())
+        ..registerAdapter(HollowBeatAdapter())
+        ..registerAdapter(OutletOrderAdapter())
+        ..registerAdapter(OutletAdapter())
+        ..registerAdapter(OutletOrderItemAdapter())
+        ..registerAdapter(PerformanceAdapter())
+        ..registerAdapter(SKUAdapter())
+        ..registerAdapter(SubGroupAdapter())
+        ..registerAdapter(UserAdapter())
+        ..registerAdapter(OutletClosedEntityAdapter())
+        ..registerAdapter(OutletOrderEntityAdapter())
+        ..registerAdapter(UploadFileEntityAdapter())
+        ..registerAdapter(HiveBoxLocalAdapter());
+      await Hive.openBox('box');
+      await Hive.openBox('unsynced');
+    } catch (e) {}
     return true;
   }
 

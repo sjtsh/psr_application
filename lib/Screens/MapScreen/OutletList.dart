@@ -13,6 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../StateManagement/DataManagement.dart';
 import '../../StateManagement/MapManagement.dart';
+import '../../StateManagement/OrderVariation.dart';
 import '../../StateManagement/ShopClosedController.dart';
 import '../OrderScreen/NoOrder/NoOrderScreen.dart';
 import '../OrderScreen/ShopClosedScreen/ShopClosedScreen.dart';
@@ -310,7 +311,7 @@ class OutletList extends StatelessWidget {
                                             context
                                                 .read<OrderScreenManagement>()
                                                 .dataToDisplay = null;
-
+                                            context.read<OrderVariation>().isAllDone = false;
                                             context
                                                 .read<OrderScreenManagement>()
                                                 .keys =

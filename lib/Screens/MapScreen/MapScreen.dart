@@ -70,8 +70,12 @@ class MapScreen extends StatelessWidget {
                             target: LatLng(event.latitude, event.longitude))));
                     cameraRotate = true;
                   }
-                  context.read<MapManagement>().initializeMarkers(
-                      LatLng(event.latitude, event.longitude), context);
+                  try{
+                    context.read<MapManagement>().initializeMarkers(
+                        LatLng(event.latitude, event.longitude), context);
+                  }catch(e){
+
+                  }
                 });
               },
             ),

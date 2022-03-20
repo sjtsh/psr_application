@@ -18,6 +18,7 @@ class OrderVariation with ChangeNotifier, DiagnosticableTreeMixin {
 
   set isAllDone(bool value) {
     _isAllDone = value;
+    notifyListeners();
   }
 
   Map<SKU, int> get tempSubGroupVariation => _tempSubGroupVariation;
