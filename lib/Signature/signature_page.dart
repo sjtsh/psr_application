@@ -139,55 +139,40 @@ class _SignaturePageState extends State<SignaturePage> {
                                     context
                                         .read<OrderScreenManagement>()
                                         .isConfirmed = true;
-                                    try{
+                                    try {
                                       Uint8List? signature =
                                           await exportSignature();
                                       if (signature != null &&
                                           ownerPicture != null) {
-                                        String ownerUrl =
-                                            await OutletClosedService().uploadFile(
-                                                file: File(ownerPicture.path),
-                                                name:
-                                                    "owner/${NepaliDateTime.now()}",
-                                                userID: context.watch<DataManagement>().hiveBox.user.id);
-                                        String signatureUrl =
-                                            await OutletClosedService().uploadFile(
-                                                file: File(ownerPicture.path),
-                                                name:
-                                                    "signature/${NepaliDateTime.now()}",
-                                                userID: context.watch<DataManagement>().hiveBox.user.id);
-                                        bool success = await OrderService()
-                                            .insertOrder(
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .singularOrder,
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .confirmOrderRemarkController
-                                                    .text,
-                                                context
-                                                    .read<MapManagement>()
-                                                    .selectedOutlet!
-                                                    .outletPlanId,
-                                                signatureUrl,
-                                                ownerUrl,
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .competitiveExistingStock,
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .ownExistingStock,
-                                                context
-                                                    .read<
-                                                        OrderScreenManagement>()
-                                                    .noOrderReasons);
+                                        bool success =
+                                            await OrderService().insertOrder(
+                                          context
+                                              .read<OrderScreenManagement>()
+                                              .singularOrder,
+                                          context
+                                              .read<OrderScreenManagement>()
+                                              .confirmOrderRemarkController
+                                              .text,
+                                          context
+                                              .read<MapManagement>()
+                                              .selectedOutlet!
+                                              .outletPlanId,
+                                          context
+                                              .read<OrderScreenManagement>()
+                                              .competitiveExistingStock,
+                                          context
+                                              .read<OrderScreenManagement>()
+                                              .ownExistingStock,
+                                          context
+                                              .read<OrderScreenManagement>()
+                                              .noOrderReasons,
+                                          ownerPicture.path,
+                                          ownerPicture.path,
+                                          context
+                                        );
                                         print(success);
                                       }
-                                    }catch(e){
+                                    } catch (e) {
                                       print(e);
                                     }
                                     context

@@ -9,6 +9,7 @@ import 'package:psr_application/StateManagement/AverageVolume.dart';
 import 'package:psr_application/StateManagement/DateRangeManagement.dart';
 import 'package:psr_application/apis/Entities/OutletOrder.dart';
 
+import '../../StateManagement/DataManagement.dart';
 import '../../database.dart';
 import '../Entities/OutletOrderItem.dart';
 import '../Entities/SKU.dart';
@@ -21,13 +22,24 @@ class OrderService {
       Map<SubGroup, Map<SKU, int>> aMap,
       String remarks,
       int outletPlanID,
-      String signatureImgUrl,
-      String ownerImgUrl,
       Map<SubGroup, String> competitiveExistingStock,
       Map<SubGroup, Map<String, String>> ownExistingStock,
       // the value for a subgroup to have two keys first one should be stock_count and other should be img url
-      Map<SubGroup, String> noOrderReasons) async {
-    print("into the insert function");
+      Map<SubGroup, String> noOrderReasons, String ownerPicture, String signaturePicture, BuildContext context) async {
+
+    String ownerUrl =
+    await OutletClosedService().uploadFile(
+        file: File(ownerPicture),
+        name:
+        "owner/${NepaliDateTime.now()}",
+        userID: context.watch<DataManagement>().hiveBox.user.id);
+    String signatureUrl =
+    await OutletClosedService().uploadFile(
+        file: File(ownerPicture),
+        name:
+        "signature/${NepaliDateTime.now()}",
+        userID: context.watch<DataManagement>().hiveBox.user.id);
+
     Map<String, dynamic> bodyMap = {};
     for (var element1 in aMap.values) {
       for (var element in element1.entries) {
@@ -52,8 +64,8 @@ class OrderService {
     }
     bodyMap["outlet_plan_id"] = outletPlanID.toString();
     bodyMap["remarks"] = remarks;
-    bodyMap["signature_img"] = signatureImgUrl;
-    bodyMap["owner_img"] = ownerImgUrl;
+    bodyMap["signature_img"] = signatureUrl;
+    bodyMap["owner_img"] = ownerUrl;
     bodyMap["competitive_existing_stocks"] = resultCompetitiveExistingStock;
 
     List keys = resultownExistingStockStock.keys.toList();
