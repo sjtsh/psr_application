@@ -8,7 +8,7 @@ part 'OutletOrderEntity.g.dart';
 @HiveType(typeId: 9)
 class OutletOrderEntity extends HiveObject{
   @HiveField(0)
-  Map<SubGroup, Map<SKU, int>> aMap;
+  Map<SubGroup, Map<SKU, int>> singularOrder;
   @HiveField(1)
   String remarks;
   @HiveField(2)
@@ -25,7 +25,7 @@ class OutletOrderEntity extends HiveObject{
   Map<SubGroup, String> noOrderReasons;
 
   OutletOrderEntity(
-      this.aMap,
+      this.singularOrder,
       this.remarks,
       this.outletPlanID,
       this.signatureImgUrl,

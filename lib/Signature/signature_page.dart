@@ -139,40 +139,42 @@ class _SignaturePageState extends State<SignaturePage> {
                                     context
                                         .read<OrderScreenManagement>()
                                         .isConfirmed = true;
-                                    try {
+                                    try{
                                       Uint8List? signature =
                                           await exportSignature();
                                       if (signature != null &&
                                           ownerPicture != null) {
-                                        bool success =
-                                            await OrderService().insertOrder(
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .singularOrder,
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .confirmOrderRemarkController
-                                              .text,
-                                          context
-                                              .read<MapManagement>()
-                                              .selectedOutlet!
-                                              .outletPlanId,
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .competitiveExistingStock,
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .ownExistingStock,
-                                          context
-                                              .read<OrderScreenManagement>()
-                                              .noOrderReasons,
-                                          ownerPicture.path,
-                                          ownerPicture.path,
-                                          context
-                                        );
-                                        print(success);
+                                        bool success = await OrderService()
+                                            .insertOrder(
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .singularOrder,
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .confirmOrderRemarkController
+                                                    .text,
+                                                context
+                                                    .read<MapManagement>()
+                                                    .selectedOutlet!
+                                                    .outletPlanId,
+                                                ownerPicture.path,
+                                                ownerPicture.path,
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .competitiveExistingStock,
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .ownExistingStock,
+                                                context
+                                                    .read<
+                                                        OrderScreenManagement>()
+                                                    .noOrderReasons, context);
                                       }
-                                    } catch (e) {
+                                    }catch(e){
                                       print(e);
                                     }
                                     context
