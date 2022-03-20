@@ -34,7 +34,7 @@ class OutletList extends StatelessWidget {
           padding: const EdgeInsets.only(right: 12, left: 12, bottom: 2),
           child: GestureDetector(
             onTap: () {
-              context.read<MapManagement>().changeSelectedMarkerOutlet(index);
+            //  context.read<MapManagement>().changeSelectedMarkerOutlet(index);
             },
             child: Container(
               alignment: Alignment.bottomCenter,
@@ -426,7 +426,7 @@ class OutletList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         onPageChanged: (int i , res){
           print(i);
-          context.read<MapManagement>().changeSelectedMarkerOutlet(i);
+          context.read<MapManagement>().changeSelectedMarkerOutletByCarousel(i);
 
         }
       ),
