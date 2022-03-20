@@ -424,6 +424,11 @@ class OutletList extends StatelessWidget {
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: false,
         scrollDirection: Axis.horizontal,
+        onPageChanged: (int i , res){
+          print(i);
+          context.read<MapManagement>().changeSelectedMarkerOutlet(i);
+
+        }
       ),
       carouselController: context.read<MapManagement>().carouselController,
     );

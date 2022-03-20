@@ -109,7 +109,7 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           },
           markerId: MarkerId(sortedOutlet[index].name),
           position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
-          icon: selectedOutlet == sortedOutlets[index] ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen) : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+          icon: selectedOutlet == sortedOutlet[index] ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen) : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           infoWindow: InfoWindow(
               title: sortedOutlet[index].name,
               snippet: sortedOutlet[index].id.toString(),

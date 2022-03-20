@@ -99,7 +99,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                       : Colors.blueGrey,
                   child: Center(
                     child: Text(
-                      "Confirm" +
+                      "Confirm" " ("+
                           (context
                                       .watch<OrderScreenManagement>()
                                       .noOrderReasons
@@ -123,7 +123,7 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                               .hiveBox
                               .subgroups
                               .length
-                              .toString(),
+                              .toString() + ")",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
