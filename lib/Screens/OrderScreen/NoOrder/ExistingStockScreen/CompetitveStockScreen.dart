@@ -73,13 +73,15 @@ class _CompetitiveStockScreenState extends State<CompetitiveStockScreen> {
                     },
                     decoration: InputDecoration(
                         hintText: "Name of competition",
+                        labelText: "Name of competition",
+                        labelStyle: TextStyle(color: Colors.blueAccent),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
-                            borderSide: const BorderSide(color: Colors.green)),
+                            borderSide: const BorderSide(color: Colors.blueAccent)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16),
-                            borderSide: BorderSide(color: Colors.black))),
-                    maxLines: 100,
+                            borderSide: BorderSide(color: Colors.grey))),
+                    maxLines: null,
                   ),
                 ),
               ),

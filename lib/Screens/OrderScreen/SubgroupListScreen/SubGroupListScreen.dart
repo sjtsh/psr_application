@@ -65,6 +65,10 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               ),
               GestureDetector(
                 onTap: () {
+                  String indicator=  context
+                      .read<OrderScreenManagement>()
+                      .keys.toString() +"/"+  context.watch<OrderScreenManagement>()
+                      .data.length.toString();
                   if (context.read<OrderVariation>().isAllDone) {
                     if (context
                             .read<OrderScreenManagement>()
@@ -86,6 +90,9 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                       try {
                         final dynamic tooltip = element.currentState;
                         tooltip.ensureTooltipVisible();
+                        context
+                            .read<OrderScreenManagement>()
+                      .greenKeysIncrement;
                       } catch (e) {}
                     });
                   }
@@ -97,7 +104,10 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                       : Colors.blueGrey,
                   child: Center(
                     child: Text(
-                      "Confirm",
+                      "Confirm" + context
+                          .watch<OrderScreenManagement>()
+                          .greenKeys.toString() +"/"+  context.watch<OrderScreenManagement>()
+                          .data.length.toString(),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

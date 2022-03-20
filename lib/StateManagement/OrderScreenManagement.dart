@@ -22,6 +22,7 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
       {}; // the value for a subgroup to have two keys first one should be stock_count and other should be img url
   Map<SubGroup, String> _noOrderReasons = {};
   List<GlobalKey> keys = [];
+  int _greenKeys = 0;
   bool _confirmButtonDisabled = false;
   int? currentlyExpanded;
   String _dropdownValueFilter = "All";
@@ -43,6 +44,16 @@ class OrderScreenManagement with ChangeNotifier, DiagnosticableTreeMixin {
   String get dropdownValueFilter => _dropdownValueFilter;
 
   int _skuIndex = 0;
+
+  int get greenKeys => _greenKeys;
+
+
+   greenKeysIncrement() {
+    _greenKeys ++ ;
+    print(_greenKeys);
+    notifyListeners();
+
+  }
 
   Map<SubGroup, String> get competitiveExistingStock =>
       _competitiveExistingStock;
