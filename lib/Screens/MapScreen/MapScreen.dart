@@ -48,11 +48,23 @@ class MapScreen extends StatelessWidget {
               zoomGesturesEnabled: true,
               onCameraMove: (CameraPosition a) {},
               markers: List.generate(
-                  context.watch<MapManagement>().sortedOutlets.length,
-                  (index) => context
+                  context.watch<MapManagement>().sortedOutlets.length, (index) {
+                if (context.watch<MapManagement>().sortedOutlets[index].id ==
+                    context.watch<MapManagement>().selectedOutlet?.id) {
+                  return context
                       .watch<MapManagement>()
                       .sortedOutlets[index]
-                      .marker!).toSet(),
+                      .marker!
+                      .copyWith(
+                          iconParam: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueGreen));
+                } else {
+                  return context
+                      .watch<MapManagement>()
+                      .sortedOutlets[index]
+                      .marker!;
+                }
+              }).toSet(),
               polylines: {
                 Polyline(
                     polylineId: PolylineId("polylineId"),
@@ -70,12 +82,10 @@ class MapScreen extends StatelessWidget {
                             target: LatLng(event.latitude, event.longitude))));
                     cameraRotate = true;
                   }
-                  try{
+                  try {
                     context.read<MapManagement>().initializeMarkers(
                         LatLng(event.latitude, event.longitude), context);
-                  }catch(e){
-
-                  }
+                  } catch (e) {}
                 });
               },
             ),

@@ -8,6 +8,7 @@ import '../../../StateManagement/NoOrderManagement.dart';
 import '../../../StateManagement/OrderScreenManagement.dart';
 import '../../../StateManagement/OrderVariation.dart';
 import '../../../apis/Entities/SubGroup.dart';
+import '../DialogPrompt/TakeOrderDialog.dart';
 import '../NoOrder/NoOrderScreen.dart';
 import 'SingularProduct.dart';
 
@@ -168,6 +169,10 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
                               padding: const EdgeInsets.all(12.0),
                               child: GestureDetector(
                                 onTap: () {
+                                  print(context
+                                      .read<OrderScreenManagement>()
+                                      .singularOrder
+                                      .containsKey(widget.subgroup));
                                   context
                                       .read<OrderVariation>()
                                       .tempSubGroupVariation = {};
@@ -178,6 +183,7 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
                                               .read<OrderScreenManagement>()
                                               .singularOrder[widget.subgroup] ??
                                           {});
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -186,10 +192,10 @@ class _SubGroupBannerState extends State<SubGroupBanner> {
                                       },
                                     ),
                                   );
+
                                   context
-                                      .read<
-                                      OrderScreenManagement>()
-                                      .skuIndex =0;
+                                      .read<OrderScreenManagement>()
+                                      .skuIndex = 0;
                                 },
                                 child: Container(
                                   height: 40,

@@ -98,7 +98,7 @@ class SingularProduct extends StatelessWidget {
                                             image: DecorationImage(
                                               image:
                                                   AssetImage("assets/oats.jpg"),
-                                              fit: BoxFit.cover,
+                                              fit: BoxFit.contain,
                                             ),
                                             // color: Color(0xffE8F5E9),
                                         ),

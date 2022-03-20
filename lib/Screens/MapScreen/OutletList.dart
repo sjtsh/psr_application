@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:expandable/expandable.dart';
@@ -15,6 +16,7 @@ import '../../StateManagement/DataManagement.dart';
 import '../../StateManagement/MapManagement.dart';
 import '../../StateManagement/OrderVariation.dart';
 import '../../StateManagement/ShopClosedController.dart';
+import '../OrderScreen/DialogPrompt/TakeOrderDialog.dart';
 import '../OrderScreen/NoOrder/NoOrderScreen.dart';
 import '../OrderScreen/ShopClosedScreen/ShopClosedScreen.dart';
 import '../OrderScreen/SubgroupListScreen/SubGroupListScreen.dart';
@@ -28,9 +30,9 @@ class OutletList extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: context.watch<MapManagement>().sortedOutlets.length,
       itemBuilder: (BuildContext context, int index, int realIndex) {
-        context
-            .read<MapManagement>()
-            .changeSelectedMarkerOutletByCarousel(realIndex);
+        // context
+        //     .read<MapManagement>()
+        //     .changeSelectedMarkerOutletByCarousel(realIndex);
         return Padding(
           padding: const EdgeInsets.only(right: 12, left: 12, bottom: 2),
           child: GestureDetector(
@@ -301,26 +303,22 @@ class OutletList extends StatelessWidget {
                                           if (context
                                               .read<MapManagement>()
                                               .sortedOutlets[index].dis! < 20) {
-                                            context
-                                                .read<MapManagement>()
-                                                .changeSelectedMarkerOutlet(
-                                                index);
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .singularOrder = {};
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .competitiveExistingStock = {};
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .ownExistingStock = {};
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .noOrderReasons = {};
-                                            context
-                                                .read<OrderScreenManagement>()
-                                                .dataToDisplay = null;
-                                            context.read<OrderVariation>().isAllDone = false;
+                                          //   context
+                                          //       .read<OrderScreenManagement>()
+                                          //       .singularOrder = {};
+                                          //   context
+                                          //       .read<OrderScreenManagement>()
+                                          //       .competitiveExistingStock = {};
+                                          //   context
+                                          //       .read<OrderScreenManagement>()
+                                          //       .ownExistingStock = {};
+                                          //   context
+                                          //       .read<OrderScreenManagement>()
+                                          //       .noOrderReasons = {};
+                                          //   context
+                                          //       .read<OrderScreenManagement>()
+                                          //       .dataToDisplay = null;
+                                          //   context.read<OrderVariation>().isAllDone = false;
                                             context
                                                 .read<OrderScreenManagement>()
                                                 .keys =
@@ -330,11 +328,53 @@ class OutletList extends StatelessWidget {
                                                         .hiveBox.subgroups
                                                         .length,
                                                         (index) => GlobalKey());
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(builder: (_) {
-                                                  return SubGroupListScreen();
-                                                }));
-                                          }
+                                            if (context
+                                                .read<OrderScreenManagement>()
+                                                .singularOrder.isEmpty&&context
+                                                .read<OrderScreenManagement>()
+                                                .ownExistingStock.isEmpty&&context
+                                                .read<OrderScreenManagement>()
+                                                .competitiveExistingStock.isEmpty&&
+                                                context
+                                                    .read<OrderScreenManagement>()
+                                                    .noOrderReasons.isEmpty) {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (_) {
+                                                        return SubGroupListScreen();
+                                                      }));
+
+                                            } else {
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) {
+                                                    return GestureDetector(
+                                                      onTap: () {},
+                                                      child: ClipRect(
+                                                        child: BackdropFilter(
+                                                          filter: ImageFilter
+                                                              .blur(
+                                                              sigmaX: 2.0,
+                                                              sigmaY: 2.0),
+                                                          child: Container(
+
+                                                            decoration: BoxDecoration(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade100
+                                                                    .withOpacity(
+                                                                    0.1)),
+                                                            child: Center(
+                                                              child: TakeOrderDialog(),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  });
+
+                                            }
+                                     }
 
                                         },
                                         child: Text(

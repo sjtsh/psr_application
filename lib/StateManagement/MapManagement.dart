@@ -18,30 +18,19 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   CarouselController carouselController = CarouselController();
   LatLng userPosition = LatLng(0, 0);
 
-  changeSelectedMarkerOutlet(int index) {
-
-    selectedOutlet = sortedOutlets[index];
-    controller?.showMarkerInfoWindow(
-        sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
-    controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 17,
-        target: LatLng(
-          sortedOutlets[index].lat,
-          sortedOutlets[index].lng,
-        ))));
-  }
 
   changeSelectedMarkerOutletByCarousel(int index) {
 
     selectedOutlet = sortedOutlets[index];
+    notifyListeners();
     controller?.showMarkerInfoWindow(
         sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
-    controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: 17,
-        target: LatLng(
-          sortedOutlets[index].lat,
-          sortedOutlets[index].lng,
-        ))));
+    // controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+    //     zoom: 17,
+    //     target: LatLng(
+    //       sortedOutlets[index].lat,
+    //       sortedOutlets[index].lng,
+    //     ))));
   }
 
   getCurrentLocation() async {
@@ -106,12 +95,13 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
         outlet.marker = Marker(
           onTap: () {
             selectedOutlet = sortedOutlets[index];
+            notifyListeners();
             carouselController.jumpToPage(index);
             //   .animateToPage(index);
           },
           markerId: MarkerId(sortedOutlet[index].name),
           position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
-          icon: selectedOutlet?.name == sortedOutlet[index].name ? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen) : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           infoWindow: InfoWindow(
               title: sortedOutlet[index].name,
               snippet: sortedOutlet[index].id.toString(),
