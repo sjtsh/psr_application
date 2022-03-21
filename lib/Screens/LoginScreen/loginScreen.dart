@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
 
@@ -19,6 +20,7 @@ class LogInScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SvgPicture.asset("assets/logo.svg"),
                 SizedBox(
                     width: 300,
                     child: TextFormField(
@@ -35,7 +37,7 @@ class LogInScreen extends StatelessWidget {
                       ),
                     )),
                 SizedBox(
-                  height: 12,
+                  height: 30,
                 ),
                 SizedBox(
                   width: 300,
@@ -59,7 +61,7 @@ class LogInScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 30,
                 ),
                 Container(
                   clipBehavior: Clip.hardEdge,

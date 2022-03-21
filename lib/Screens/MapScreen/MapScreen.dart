@@ -107,7 +107,7 @@ class MapScreen extends StatelessWidget {
                     child: const OutletList(),
                   )
                 : Positioned(
-                    bottom: 46,
+                    bottom: 6,
                     child: Container(
                       height: 30,
                       color: Colors.white,

@@ -70,32 +70,32 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
               GestureDetector(
                 onTap: () {
                   // if (context.read<OrderVariation>().isAllDone) {
-                    if (context
-                        .read<OrderVariation>()
-                        .isAllDone) {
-                      if (context
-                          .read<OrderScreenManagement>()
-                          .singularOrder
-                          .isEmpty) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return ConfirmOrder();
-                        }));
-                      } else {
+                  //   if (context
+                  //       .read<OrderVariation>()
+                  //       .isAllDone) {
+                  //     if (context
+                  //         .read<OrderScreenManagement>()
+                  //         .singularOrder
+                  //         .isEmpty) {
+                  //       Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  //         return ConfirmOrder();
+                  //       }));
+                  //     } else {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                           return ConfirmOrderScreen();
                         }));
-                      }
-                    } else {
-                      context
-                          .read<OrderScreenManagement>()
-                          .keys
-                          .forEach((element) {
-                        try {
-                          final dynamic tooltip = element.currentState;
-                          tooltip.ensureTooltipVisible();
-                        } catch (e) {}
-                      });
-                    }
+                     // }
+                  //  } else {
+                  //     context
+                  //         .read<OrderScreenManagement>()
+                  //         .keys
+                  //         .forEach((element) {
+                  //       try {
+                  //         final dynamic tooltip = element.currentState;
+                  //         tooltip.ensureTooltipVisible();
+                  //       } catch (e) {}
+                  //     });
+                  //   }
                   // } else {
                   //   context
                   //       .read<OrderScreenManagement>()
