@@ -344,37 +344,65 @@ class OutletList extends StatelessWidget {
                                                         return SubGroupListScreen();
                                                       }));
 
-                                            } else {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (_) {
-                                                    return GestureDetector(
-                                                      onTap: () {},
-                                                      child: ClipRect(
-                                                        child: BackdropFilter(
-                                                          filter: ImageFilter
-                                                              .blur(
-                                                              sigmaX: 2.0,
-                                                              sigmaY: 2.0),
-                                                          child: Container(
 
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade100
-                                                                    .withOpacity(
-                                                                    0.1)),
-                                                            child: Center(
-                                                              child: TakeOrderDialog(),
+
+                                            } else {
+                                              if(context.read<MapManagement>().selectedOutletIndex !=index ){
+                                                context
+                                                    .read<OrderScreenManagement>()
+                                                    .singularOrder = {};
+                                                context
+                                                    .read<OrderScreenManagement>()
+                                                    .competitiveExistingStock = {};
+                                                context
+                                                    .read<OrderScreenManagement>()
+                                                    .ownExistingStock = {};
+                                                context
+                                                    .read<OrderScreenManagement>()
+                                                    .noOrderReasons = {};
+                                                context
+                                                    .read<OrderScreenManagement>()
+                                                    .dataToDisplay = null;
+                                                context.read<OrderVariation>().isAllDone = false;
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (_) {
+                                                          return SubGroupListScreen();
+                                                        }));
+
+                                              }else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (_) {
+                                                      return GestureDetector(
+                                                        onTap: () {},
+                                                        child: ClipRect(
+                                                          child: BackdropFilter(
+                                                            filter: ImageFilter
+                                                                .blur(
+                                                                sigmaX: 2.0,
+                                                                sigmaY: 2.0),
+                                                            child: Container(
+
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .grey
+                                                                      .shade100
+                                                                      .withOpacity(
+                                                                      0.1)),
+                                                              child: Center(
+                                                                child: TakeOrderDialog(),
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  });
+                                                      );
+                                                    });
+                                              }
 
                                             }
                                      }
+                                          context.read<MapManagement>().changeSelectedOutletIndex(index);
 
                                         },
                                         child: Text(

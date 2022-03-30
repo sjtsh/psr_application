@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/HiveBox/HiveBoxLocal.dart';
 import 'package:psr_application/MyApp.dart';
@@ -9,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:psr_application/StateManagement/DataManagement.dart';
 import 'package:psr_application/StateManagement/MapManagement.dart';
 import 'package:psr_application/StateManagement/ShopClosedController.dart';
+import 'package:psr_application/StateManagement/SignatureManagement.dart';
 import 'package:psr_application/apis/Entities/Beat.dart';
 
 // import 'package:psr_application/apis/Entities/OutletOrder.dart';
@@ -93,12 +95,16 @@ class LoadChangeNotifiers extends StatelessWidget {
                 ),
                 ChangeNotifierProvider(
                   create: (_) => OrderVariation(),
+                ),
+                ChangeNotifierProvider(
+                  create: (_) => SignatureManagement(),
                 )
               ],
               child: const MyApp(),
             );
           }
-          return MaterialApp(home: SplashScreen());
+          return MaterialApp(
+              home: SplashScreen());
         });
   }
 }

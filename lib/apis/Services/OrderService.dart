@@ -118,7 +118,7 @@ class OrderService {
           competitiveExistingStock,
           ownExistingStock,
           noOrderReasons));
-          return true;
+      return true;
     }
   }
 

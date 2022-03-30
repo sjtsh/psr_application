@@ -258,7 +258,6 @@ class ConfirmOrderScreen extends StatelessWidget {
                               child: MaterialButton(
                                 onPressed: () async {
                                   Navigator.push(context, MaterialPageRoute(builder: (_){
-
                                     return SignaturePage();
                                   }));
                                 },

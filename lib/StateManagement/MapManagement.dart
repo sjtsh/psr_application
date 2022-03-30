@@ -17,6 +17,11 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> sortedOutlets = [];
   CarouselController carouselController = CarouselController();
   LatLng userPosition = LatLng(0, 0);
+  int ? selectedOutletIndex;
+
+  changeSelectedOutletIndex (int index){
+    selectedOutletIndex = index;
+  }
 
 
   changeSelectedMarkerOutletByCarousel(int index) {
@@ -32,6 +37,9 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
     //       sortedOutlets[index].lng,
     //     ))));
   }
+
+
+
 
   getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition();

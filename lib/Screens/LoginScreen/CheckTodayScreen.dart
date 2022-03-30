@@ -6,6 +6,7 @@ import 'package:nepali_date_picker/nepali_date_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/HiveBox/HiveBoxLocal.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
+import 'package:psr_application/StateManagement/SignatureManagement.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../StateManagement/DataManagement.dart';
@@ -24,8 +25,11 @@ class CheckTodayScreen extends StatelessWidget {
         String? lastLogIn = prefs.getString("date");
         availableCameras().then((value) async {
           context.read<ShopClosedController>().cameras = value;
+          context.read<SignatureManagement>().cameras = value;
           context.read<ShopClosedController>().controller =  CameraController(value[0], ResolutionPreset.max);
           await context.read<ShopClosedController>().controller?.initialize();
+          context.read<SignatureManagement>().cameraController =  CameraController(value[1], ResolutionPreset.max);
+          await context.read<SignatureManagement>().cameraController?.initialize();
         });
         try {
           context.read<DataManagement>().hiveBoxLocal =
