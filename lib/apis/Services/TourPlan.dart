@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
-import 'package:psr_application/HiveBox/PerformanceService.dart';
 import 'package:psr_application/StateManagement/AverageVolume.dart';
 import 'package:psr_application/apis/Entities/Beat.dart';
 import 'package:psr_application/apis/Entities/OutletOrderItem.dart';
@@ -66,6 +65,7 @@ class TourPlanService {
           .toList();
       List<Performance> performances = [];
       ["daily", "weekly", "monthly"].asMap().entries.forEach((element) async {
+        Map<String, dynamic> uniqueSKUs=aMap[element.value]["sku"];
         performances.add(Performance(
             scheduleVisit: int.parse(aMap[element.value]["total"].toString()),
             successVisit: int.parse(aMap[element.value]["visited"].toString()),
@@ -75,7 +75,7 @@ class TourPlanService {
             netValueSales:
             double.parse(aMap[element.value]["sales"].toString()) + 0.0,
             rewardPoints: int.parse(aMap[element.value]["reward"].toString()),
-            avgSKU: int.parse(aMap[element.value]["sku"].toString())));
+            avgSKU: uniqueSKUs.entries.map((e) => (e.value as int)).toSet()));
       });
       return [performances, beats, orders];
     }

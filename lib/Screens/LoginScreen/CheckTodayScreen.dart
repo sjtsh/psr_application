@@ -1,8 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:hive/hive.dart';
 import 'package:nepali_date_picker/nepali_date_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:psr_application/HiveBox/HiveBoxLocal.dart';
 import 'package:psr_application/Screens/BeatScreen/BeatScreen.dart';
@@ -23,6 +25,11 @@ class CheckTodayScreen extends StatelessWidget {
     return FutureBuilder(
       future: SharedPreferences.getInstance().then((prefs) async {
         String? lastLogIn = prefs.getString("date");
+        LocationPermission checkPermission = await Geolocator.checkPermission();
+        await Permission.camera.request();
+        if (checkPermission == LocationPermission.denied) {
+          Geolocator.requestPermission();
+        }
         availableCameras().then((value) async {
           context.read<ShopClosedController>().cameras = value;
           context.read<SignatureManagement>().cameras = value;

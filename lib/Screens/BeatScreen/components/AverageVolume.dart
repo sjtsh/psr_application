@@ -107,32 +107,32 @@ class _AverageVolumeState extends State<AverageVolume> {
           TodayProgress(
               context.watch<AverageVolumeState>().isWeekly,
               context
-                  .read<DataManagement>()
+                  .watch<DataManagement>()
                   .hiveBox
                   .performances[context.read<AverageVolumeState>().isWeekly - 1]
-                  .avgSKU,
+                  .avgSKU.length,
               context
-                  .read<DataManagement>()
+                  .watch<DataManagement>()
                   .hiveBox
                   .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .stdQuantitySales,
               context
-                  .read<DataManagement>()
+                  .watch<DataManagement>()
                   .hiveBox
                   .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .netValueSales,
               context
-                  .read<DataManagement>()
+                  .watch<DataManagement>()
                   .hiveBox
                   .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .successVisit,
               context
-                  .read<DataManagement>()
+                  .watch<DataManagement>()
                   .hiveBox
                   .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .scheduleVisit,
               context
-                  .read<DataManagement>()
+                  .watch<DataManagement>()
                   .hiveBox
                   .performances[context.read<AverageVolumeState>().isWeekly - 1]
                   .productiveVisit),

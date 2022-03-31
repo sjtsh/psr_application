@@ -28,21 +28,9 @@ class SignatureManagement with ChangeNotifier, DiagnosticableTreeMixin {
 
   int get cir => _cir;
 
-  incrementValue(){
-    _cir = 0;
-    Timer ? timer;
-    timer = Timer.periodic(Duration(milliseconds: 100),(_){
-      _cir = _cir+1;
-      if(_cir >= 100){
-        timer?.cancel();
-        // percent=0;
-      }
-      print(_cir);
-      notifyListeners();
-
-    }
-
-    );
-  }
+  incrementValue(int i){
+  _cir = i;
   notifyListeners();
+  }
+
 }

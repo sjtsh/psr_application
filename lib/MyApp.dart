@@ -13,20 +13,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ask() async {
-    LocationPermission checkPermission = await Geolocator.checkPermission();
-    await Permission.camera.request();
-    if (checkPermission == LocationPermission.denied) {
-      Geolocator.requestPermission();
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    ask();
-  }
 
   @override
   Widget build(BuildContext context) {

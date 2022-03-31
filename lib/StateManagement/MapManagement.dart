@@ -17,29 +17,26 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
   List<Outlet> sortedOutlets = [];
   CarouselController carouselController = CarouselController();
   LatLng userPosition = LatLng(0, 0);
-  int ? selectedOutletIndex;
+  int? selectedOutletIndex;
 
-  changeSelectedOutletIndex (int index){
+  changeSelectedOutletIndex(int index) {
     selectedOutletIndex = index;
   }
 
-
   changeSelectedMarkerOutletByCarousel(int index) {
-
-    selectedOutlet = sortedOutlets[index];
-    notifyListeners();
-    controller?.showMarkerInfoWindow(
-        sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
-    // controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-    //     zoom: 17,
-    //     target: LatLng(
-    //       sortedOutlets[index].lat,
-    //       sortedOutlets[index].lng,
-    //     ))));
+    if (index < sortedOutlets.length) {
+      selectedOutlet = sortedOutlets[index];
+      notifyListeners();
+      controller?.showMarkerInfoWindow(
+          sortedOutlets[index].marker?.markerId ?? const MarkerId("0"));
+      // controller?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      //     zoom: 17,
+      //     target: LatLng(
+      //       sortedOutlets[index].lat,
+      //       sortedOutlets[index].lng,
+      //     ))));
+    }
   }
-
-
-
 
   getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition();
@@ -109,7 +106,8 @@ class MapManagement with ChangeNotifier, DiagnosticableTreeMixin {
           },
           markerId: MarkerId(sortedOutlet[index].name),
           position: LatLng(sortedOutlet[index].lat, sortedOutlet[index].lng),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           infoWindow: InfoWindow(
               title: sortedOutlet[index].name,
               snippet: sortedOutlet[index].id.toString(),
