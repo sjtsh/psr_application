@@ -141,11 +141,13 @@ class _SignaturePageState extends State<SignaturePage> {
                                         .controller
                                         ?.takePicture();
                                     context
+                                        .read<SignatureManagement>()
+                                        .incrementValue(10);
+                                    context
                                         .read<OrderScreenManagement>()
                                         .isConfirmed = true;
                                     try {
-                                      Uint8List? signature =
-                                          await exportSignature();
+                                      File? signature = await exportSignature();
                                       if (signature != null &&
                                           ownerPicture != null) {
                                         bool success = await OrderService()
@@ -163,7 +165,7 @@ class _SignaturePageState extends State<SignaturePage> {
                                                     .read<MapManagement>()
                                                     .selectedOutlet!
                                                     .outletPlanId,
-                                                ownerPicture.path,
+                                                signature.path,
                                                 ownerPicture.path,
                                                 context
                                                     .read<
@@ -183,13 +185,13 @@ class _SignaturePageState extends State<SignaturePage> {
                                       print(e);
                                     }
                                     context
+                                        .read<SignatureManagement>()
+                                        .incrementValue(100);
+                                    context
                                         .read<OrderScreenManagement>()
                                         .isConfirmed = false;
                                     controller.clear();
                                   }
-                                  context
-                                      .read<SignatureManagement>()
-                                      .incrementValue();
                                 },
                                 child: Container(
                                   height: 60,
@@ -218,7 +220,7 @@ class _SignaturePageState extends State<SignaturePage> {
         ),
       );
 
-  Future<Uint8List?> exportSignature() async {
+  Future<File?> exportSignature() async {
     Directory path = await getApplicationDocumentsDirectory();
     final exportController = SignatureController(
       penStrokeWidth: 2,
@@ -226,18 +228,11 @@ class _SignaturePageState extends State<SignaturePage> {
       exportBackgroundColor: Colors.white,
       points: controller.points,
     );
-    XFile ownerImg = await context
-        .read<SignatureManagement>()
-        .cameraController!
-        .takePicture();
     Uint8List? signature = await exportController.toPngBytes();
-    Image.memory(signature!);
-    File(path.path + "/${NepaliDateTime.now().toString().split(".")[0]}").writeAsBytes(signature);
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return Image.file(File(path.path + "/${NepaliDateTime.now().toString().split(".")[0]}"));
-      }));
-      exportController.dispose();
-
-    return signature;
+    exportController.dispose();
+    return signature == null
+        ? null
+        : File(path.path + "/${NepaliDateTime.now().toString().split(".")[0]}")
+            .writeAsBytes(signature);
   }
 }

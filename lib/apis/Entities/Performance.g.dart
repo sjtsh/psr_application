@@ -23,7 +23,7 @@ class PerformanceAdapter extends TypeAdapter<Performance> {
       stdQuantitySales: fields[3] as int,
       netValueSales: fields[4] as double,
       rewardPoints: fields[5] as int,
-      avgSKU: fields[6] as int,
+      avgSKU: (fields[6] as List).toSet().cast<int>(),
     );
   }
 
@@ -44,7 +44,7 @@ class PerformanceAdapter extends TypeAdapter<Performance> {
       ..writeByte(5)
       ..write(obj.rewardPoints)
       ..writeByte(6)
-      ..write(obj.avgSKU);
+      ..write(obj.avgSKU.toList());
   }
 
   @override

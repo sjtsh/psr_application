@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Screens/BeatScreen/components/SyncButton.dart';
 import 'package:psr_application/database.dart';
 
 import '../../../StateManagement/DataManagement.dart';
@@ -57,15 +58,7 @@ class BeatHeader extends StatelessWidget {
               ],
             ),
             Expanded(child: Container()),
-            IconButton(
-              onPressed: () {
-                context.read<DataManagement>().syncAll(context);
-              },
-              icon: Icon(
-                Icons.sync,
-                color: Colors.blue,
-              ),
-            ),
+            SyncButton(),
             SizedBox(
               width: 12,
             ),

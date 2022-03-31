@@ -12,6 +12,7 @@ import 'package:psr_application/apis/Entities/OutletOrder.dart';
 import 'package:psr_application/apis/LocalToInsert/OutletOrderEntity.dart';
 
 import '../../StateManagement/DataManagement.dart';
+import '../../StateManagement/SignatureManagement.dart';
 import '../../database.dart';
 import '../Entities/OutletOrderItem.dart';
 import '../Entities/SKU.dart';
@@ -36,11 +37,12 @@ class OrderService {
           file: File(ownerPicture),
           name: "owner/${NepaliDateTime.now()}",
           userID: context.read<DataManagement>().hiveBox.user.id);
+      context.read<SignatureManagement>().incrementValue(20);
       String signatureImgUrl = await OutletClosedService().uploadFile(
-          file: File(ownerPicture),
+          file: File(signaturePicture),
           name: "signature/${NepaliDateTime.now()}",
           userID: context.read<DataManagement>().hiveBox.user.id);
-      print("into the insert function");
+      context.read<SignatureManagement>().incrementValue(40);
       Map<String, dynamic> bodyMap = {};
       for (var element1 in aMap.values) {
         for (var element in element1.entries) {
@@ -84,6 +86,7 @@ class OrderService {
       bodyMap["no_order_reasons"] = resultNoOrderReasons;
       bodyMap["time_created"] =
           NepaliDateTime.now().toString().substring(0, 19);
+      context.read<SignatureManagement>().incrementValue(60);
       print(bodyMap);
       Response res = await http.post(
           Uri.parse(
@@ -93,7 +96,7 @@ class OrderService {
             'session_id': (meUser?.sessionID ?? ""),
           },
           body: jsonEncode(bodyMap));
-      print(res.body);
+      context.read<SignatureManagement>().incrementValue(90);
       if (res.statusCode == 200) {
         context.read<DataManagement>().syncOutletOrder(OutletOrderEntity(
             aMap,
@@ -104,6 +107,9 @@ class OrderService {
             competitiveExistingStock,
             ownExistingStock,
             noOrderReasons));
+        while (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
         return true;
       } else {
         throw "Status code is ${res.statusCode}";

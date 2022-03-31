@@ -73,6 +73,7 @@ class MapScreen extends StatelessWidget {
               onMapCreated: (GoogleMapController controller) async {
                 bool cameraRotate = false;
                 context.read<MapManagement>().controller = controller;
+                context.read<MapManagement>().changeSelectedMarkerOutletByCarousel(0);
                 Geolocator.getPositionStream().listen((event) {
                   if (cameraRotate == false) {
                     controller.animateCamera(CameraUpdate.newCameraPosition(
@@ -99,7 +100,7 @@ class MapScreen extends StatelessWidget {
             const MapSideUI(),
 
             //List of outlets UI
-            context.read<DataManagement>().hiveBox.outlets.isNotEmpty
+            context.watch<DataManagement>().hiveBox.outlets.isNotEmpty
                 ? Positioned(
                     bottom: 0,
                     height: 300,

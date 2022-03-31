@@ -87,7 +87,6 @@ class LogInManagement with ChangeNotifier, DiagnosticableTreeMixin {
     if (meUser != null) {
       updateLoading(20, "Loading the beats...");
       List<Outlet> outlets = await OutletService().getOutlets();
-
       updateLoading(40, "Loading the SKUs...");
       List<SubGroup> subgroups = await SKUService().getSKUs();
       updateLoading(70, "Loading the tourplan...");

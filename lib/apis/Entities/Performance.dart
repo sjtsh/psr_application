@@ -17,7 +17,7 @@ class Performance extends HiveObject {
   @HiveField(5)
   int rewardPoints;
   @HiveField(6)
-  int avgSKU;
+  Set<int> avgSKU;
 
   Performance(
       {required this.scheduleVisit,
