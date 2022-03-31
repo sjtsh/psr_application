@@ -88,7 +88,6 @@ class SingularProduct extends StatelessWidget {
                                 itemBuilder: (BuildContext context, int index,
                                     int realIndex) {
                                   return Stack(
-                                    clipBehavior: Clip.none,
                                     // overflow: Overflow.visible,
                                     children: [
                                       Container(
@@ -105,38 +104,50 @@ class SingularProduct extends StatelessWidget {
                                       ),
                                       subGroup.skus[index].reward != 0
                                           ? Positioned(
-                                              right: -6,
-                                              top: -18,
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Color(0xffDCF1F8),
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                      color:
-                                                          Colors.greenAccent),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                        offset: Offset(0, 2),
-                                                        blurRadius: 2,
-                                                        color: Colors.black
-                                                            .withOpacity(0.1)),
-                                                  ],
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Column(
+                                              right: 30,
+                                              top: 0,
+                                              child: Column(
+                                                children: [
+                                                  Row(
                                                     children: [
-                                                      Text("⭐"),
-                                                      SizedBox(
-                                                        height: 3,
+                                                      Container(
+                                                        height: 30,
+                                                        width:5,
+                                                        color: Colors.red,
                                                       ),
-                                                      Text(subGroup
-                                                          .skus[index].reward
-                                                          .toString()),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(left: 2, right: 2),
+                                                        child: Container(
+                                                          height: 30,
+                                                          width:10,
+                                                          color: Colors.blueAccent,
+                                                        ),
+                                                      ),
+                                                      Container(
+                                                        height: 30,
+                                                        width:5,
+                                                        color: Colors.red,
+                                                      )
                                                     ],
+
                                                   ),
-                                                ),
+                                                  Container(
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.blue,
+                                                        shape: BoxShape.circle
+                                                      ),child: Padding(
+                                                        padding: const EdgeInsets.all(3.0),
+                                                        child: Text("⭐", style: TextStyle(fontSize: 16, color: Colors.white),),
+                                                      )),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Center(
+                                                    child: Text(subGroup
+                                                        .skus[index].reward
+                                                        .toString()),
+                                                  ),
+                                                ],
                                               ))
                                           : Container()
                                     ],
