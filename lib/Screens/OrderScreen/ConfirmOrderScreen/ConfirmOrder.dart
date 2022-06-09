@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psr_application/Signature/signature_page.dart';
 import 'package:psr_application/apis/Entities/SubGroup.dart';
 
 import '../../../StateManagement/OrderScreenManagement.dart';
 
-class ConfirmOrder extends StatelessWidget {
+class ConfirmNoOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SubGroup subGroup;
@@ -211,7 +212,9 @@ class ConfirmOrder extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_)=> SignaturePage()));
+                  },
                   child: Center(
                     child: Text(
                       "CONFIRM AND SEND",

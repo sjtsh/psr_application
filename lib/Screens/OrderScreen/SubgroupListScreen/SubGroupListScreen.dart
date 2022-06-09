@@ -20,72 +20,102 @@ class SubGroupListScreen extends StatefulWidget {
   State<SubGroupListScreen> createState() => _SubGroupListScreenState();
 }
 
+
 class _SubGroupListScreenState extends State<SubGroupListScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (context
+        .read<OrderScreenManagement>()
+        .singularOrder
+        .isNotEmpty || context
+        .read<OrderScreenManagement>()
+        .competitiveExistingStock
+        .isNotEmpty ||  context
+        .read<OrderScreenManagement>()
+        .noOrderReasons
+        .isNotEmpty ||  context
+        .read<OrderScreenManagement>()
+        .ownExistingStock
+        .isNotEmpty ) {
+      Future.delayed(Duration(milliseconds: 1)).then((value) {
+        showDialog(
+            context: context,
+            builder: (_) {
+              return TakeOrderDialog();
+            });
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-      return SafeArea(
-        child: Scaffold(
-          body: Container(
-            color: Color(0Xfff2f2f2),
-            child: Column(
-              children: [
-                Container(
-                  height: 50,
-                  color: Colors.white,
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back_ios)),
-                      Expanded(
-                        child: Center(
-                            child: Text("Take Order",
-                                style: TextStyle(fontSize: 20))),
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          color: Color(0Xfff2f2f2),
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back_ios)),
+                    Expanded(
+                      child: Center(
+                          child: Text("Take Order",
+                              style: TextStyle(fontSize: 20))),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.transparent,
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.transparent,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: ListView(
-                    children: context
-                        .watch<DataManagement>()
-                        .hiveBox
-                        .subgroups
-                        .asMap()
-                        .entries
-                        .map((e) => SubGroupBanner(e.key, e.value))
-                        .toList(),
-                  ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: context
+                      .watch<DataManagement>()
+                      .hiveBox
+                      .subgroups
+                      .asMap()
+                      .entries
+                      .map((e) => SubGroupBanner(e.key, e.value))
+                      .toList(),
                 ),
+              ),
 
               GestureDetector(
-                onTap: () {
-                  // if (context.read<OrderVariation>().isAllDone) {
-                  //   if (context
-                  //       .read<OrderVariation>()
-                  //       .isAllDone) {
-                  //     if (context
-                  //         .read<OrderScreenManagement>()
-                  //         .singularOrder
-                  //         .isEmpty) {
-                  //       Navigator.push(context, MaterialPageRoute(builder: (_) {
-                  //         return ConfirmOrder();
-                  //       }));
-                  //     } else {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return ConfirmOrderScreen();
-                        }));
-                     // }
-                  //  } else {
+                  onTap: () {
+                    // if (context.read<OrderVariation>().isAllDone) {
+                    //   if (context
+                    //       .read<OrderVariation>()
+                    //       .isAllDone) {
+                        if (context
+                            .read<OrderScreenManagement>()
+                            .singularOrder
+                            .isEmpty) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) {
+                            return ConfirmNoOrder();
+                          }));
+                        } else {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return ConfirmOrderScreen();
+                    }));
+                    }
+                     }
+
+                  //   else {
                   //     context
                   //         .read<OrderScreenManagement>()
                   //         .keys
@@ -96,62 +126,54 @@ class _SubGroupListScreenState extends State<SubGroupListScreen> {
                   //       } catch (e) {}
                   //     });
                   //   }
-                  // } else {
-                  //   context
-                  //       .read<OrderScreenManagement>()
-                  //       .keys
-                  //       .forEach((element) {
-                  //     try {
-                  //       final dynamic tooltip = element.currentState;
-                  //       tooltip.ensureTooltipVisible();
-                  //     } catch (e) {}
-                  //   });
                   // }
-                },
-                child: Container(
-                  height: 60,
-                  color: context.watch<OrderVariation>().isAllDone
-                      ? Colors.green
-                      : Colors.blueGrey,
-                  child: Center(
-                    child: Text(
-                      "Confirm" " ("+
-                          (context
-                                      .watch<OrderScreenManagement>()
-                                      .noOrderReasons
-                                      .length +
-                                  context
-                                      .watch<OrderScreenManagement>()
-                                      .competitiveExistingStock
-                                      .length +
-                                  context
-                                      .watch<OrderScreenManagement>()
-                                      .ownExistingStock
-                                      .length +
-                                  context
-                                      .watch<OrderScreenManagement>()
-                                      .singularOrder
-                                      .length)
-                              .toString() +
-                          "/" +
-                          context
-                              .read<DataManagement>()
-                              .hiveBox
-                              .subgroups
-                              .length
-                              .toString() + ")",
-                      style: TextStyle(color: Colors.white),
+                ,
+                  child: Container(
+                    height: 60,
+                    color: context
+                        .watch<OrderVariation>()
+                        .isAllDone
+                        ? Colors.green
+                        : Colors.blueGrey,
+                    child: Center(
+                      child: Text(
+                        "Confirm" " (" +
+                            (context
+                                .watch<OrderScreenManagement>()
+                                .noOrderReasons
+                                .length +
+                                context
+                                    .watch<OrderScreenManagement>()
+                                    .competitiveExistingStock
+                                    .length +
+                                context
+                                    .watch<OrderScreenManagement>()
+                                    .ownExistingStock
+                                    .length +
+                                context
+                                    .watch<OrderScreenManagement>()
+                                    .singularOrder
+                                    .length)
+                                .toString() +
+                            "/" +
+                            context
+                                .read<DataManagement>()
+                                .hiveBox
+                                .subgroups
+                                .length
+                                .toString() + ")",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                  ),
-                )
+                  )
               ),
-              ],
-            ),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}
 
 
 

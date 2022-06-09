@@ -67,10 +67,6 @@ class TakeOrderDialog extends StatelessWidget {
                             GestureDetector(
                               onTap: (){
                                 Navigator.pop(context);
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(builder: (_) {
-                                      return SubGroupListScreen();
-                                    }));
                               },
                               child: Container(
                                 height: 40,

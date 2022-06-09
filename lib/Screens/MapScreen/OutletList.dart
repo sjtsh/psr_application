@@ -370,34 +370,13 @@ class OutletList extends StatelessWidget {
                                                           return SubGroupListScreen();
                                                         }));
 
-                                              }else {
-                                                showDialog(
-                                                    context: context,
-                                                    builder: (_) {
-                                                      return GestureDetector(
-                                                        onTap: () {},
-                                                        child: ClipRect(
-                                                          child: BackdropFilter(
-                                                            filter: ImageFilter
-                                                                .blur(
-                                                                sigmaX: 2.0,
-                                                                sigmaY: 2.0),
-                                                            child: Container(
-
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade100
-                                                                      .withOpacity(
-                                                                      0.1)),
-                                                              child: Center(
-                                                                child: TakeOrderDialog(),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    });
+                                              }
+                                              else{
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (_) {
+                                                          return SubGroupListScreen();
+                                                        }));
                                               }
 
                                             }
