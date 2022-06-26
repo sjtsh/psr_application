@@ -14,3 +14,4 @@ class SubGroup extends HiveObject{
   final List<SKU> skus;
   SubGroup(this.name, this.productName, this.skus);
 }
+

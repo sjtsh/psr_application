@@ -19,7 +19,6 @@ class ShopClosedScreen extends StatefulWidget {
 }
 
 class _ShopClosedScreenState extends State<ShopClosedScreen> {
-
   @override
   Widget build(BuildContext context) {
     return (!(context

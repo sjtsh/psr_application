@@ -41,7 +41,7 @@ class NoOrderManagement with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  initializeNoOrder(SubGroup subGroup, BuildContext context) {
+  initializeNoOrder(subGroup, BuildContext context) {
     if (context
         .read<OrderScreenManagement>()
         .competitiveExistingStock
